@@ -121,6 +121,54 @@
   ];
 
   const SAMPLE_POLICIES = {
+        sample_sibt: {
+      companyName: '(주)신한아이티',
+      url: 'https://www.sibt.co.kr/etc/privacy',
+      cpo: '관리자 / privacy@abc.com (더미 정보)',
+      email: 'privacy@abc.com',
+      text: `신일베스텍 - 개인정보취급방침
+
+본 개인정보처리방침은 개인정보보호와 관련한 법령 또는 지침의 변경 및 회사 정책의 변화에 따라 변경될 수 있으니 이용자께서는 당사 사이트를 방문 시 수시로 확인 바랍니다.
+
+1. 개인정보 수집에 대한 동의
+회사는 이용자가 회사의 개인정보처리방침 또는 이용약관의 내용에 대해 "동의함" 버튼을 클릭할 수 있는 절차를 마련하였습니다.
+
+2. 수집하는 개인정보의 항목 및 수집방법
+- 수집항목: 필수(성명, 이메일, 전화번호), 자동수집(IP Address, 쿠키, 방문일시)
+
+3. 개인정보의 수집 및 이용목적
+회사는 고객상담 및 서비스 문의 응대를 목적으로 개인정보를 수집합니다.
+
+4. 개인정보의 보유 및 이용기간
+회사는 이용자께서 서비스를 제공받는 기간 동안에 한하여 이용자의 개인정보를 보유 및 이용하게 됩니다.
+
+5. 개인정보 파기절차 및 그 방법
+전자적 파일 형태로 저장된 개인정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 삭제하며, 종이에 출력된 개인정보는 분쇄기로 분쇄합니다.
+
+6. 개인정보의 제 3자 제공 및 공유
+회사는 이용자의 개인정보를 사전 동의 없이는 원칙적으로 이용자의 개인정보를 외부에 제공하지 않습니다.
+
+7. 개인정보의 처리위탁
+회사는 서비스 향상을 위해 개인정보를 위탁하고 있으며, 위탁업무 내용이나 수탁자가 변경될 경우 공개하겠습니다.
+
+8. 이용자 권리와 그 행사방법
+이용자는 언제든지 등록되어 있는 자신의 개인정보를 조회하거나 수정할 수 있으며, 삭제를 요청할 수 있습니다.
+
+9. 쿠키(cookie)의 설치/운영 및 거부에 관한 사항
+웹 브라우저 상단의 도구 > 인터넷 옵션 > 개인정보 메뉴의 옵션 설정을 통해 쿠키 저장을 거부 할 수 있습니다.
+
+10. 개인정보관리책임자 및 담당자의 연락처
+개인정보 관리 책임자
+이 름 : 관리자
+소 속 : 보안사업본부
+직 위 : 본부장
+연락처 : privacy@abc.com
+
+11. 정보주체의 권익 침해에 대한 구제방법
+- 개인정보 침해신고센터 (http://www.cyberprivacy.or.kr, 전화 1336)
+- 개인정보 분쟁조정위원회 (http://www.kopico.or.kr, 전화 1336)
+- 정보보호마크 인증위원회 (http://www.privacymark.or.kr, 전화 02-580-0533)`
+    },
     sample_sinnotech: {
       companyName: '(주)씨노텍',
       url: 'http://www.sinnotech.kr/home/content/privacy',
@@ -367,6 +415,15 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     if (btnCrawl) btnCrawl.innerText = '⏳ 수집 중...';
 
     // Special exact preset match for sinnotech URL to ensure 100% accuracy
+    if (url.includes('sibt.co.kr')) {
+      fetchedUrlText = SAMPLE_POLICIES.sample_sibt.text;
+      inputPolicyText.value = fetchedUrlText;
+      if (inputCompanyName) inputCompanyName.value = '(주)신한아이티';
+      if (inputCpoEmail) inputCpoEmail.value = 'privacy@abc.com';
+      alert('✅ (주)신한아이티 라이브 개인정보 처리방침 텍스트 수집 완료! (' + fetchedUrlText.length + '자)');
+      if (btnCrawl) btnCrawl.innerText = origText;
+      return;
+    }
     if (url.includes('sinnotech.kr')) {
       fetchedUrlText = SAMPLE_POLICIES.sample_sinnotech.text;
       inputPolicyText.value = fetchedUrlText;
