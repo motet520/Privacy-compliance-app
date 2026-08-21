@@ -1,5 +1,5 @@
 // ============================================================
-// 중소기업 개인정보 처리방침 AI 진단 솔루션 (v9.3.0 - Gemini 1.5 Native JSON Mode & Few-Shot RAG)
+// 중소기업 개인정보 처리방침 AI 진단 솔루션 (v10.0 - 1-Click 1:1 맞춤형 보완 조항 즉시 복사)
 // ============================================================
 
 (function () {
@@ -15,7 +15,7 @@
       regex: /(수집|목적|처리하는\s*개인정보|수집항목|수집하는\s*개인정보|개인정보\s*파일)/i,
       subRegex: /(이름|성명|이메일|연락처|전화번호|주소|서비스|필수|선택|회원|목적)/i,
       fixGuide: '수집하는 필수 항목과 선택 항목을 구체적으로 구분하고, 회원가입·서비스 이행 등 개별 목적을 명확히 작성하세요.',
-      standardClause: '제1조(개인정보의 수집·이용 목적 및 항목)\n회사는 다음의 목적을 위하여 최소한의 개인정보를 처리합니다.\n- 필수항목: 성명, 이메일, 휴대전화번호, 비밀번호 (목적: 회원가입, 본인확인, 서비스 제공)\n- 선택항목: 회사명, 직책 (목적: 고객 문의 대응 및 맞춤 서비스)'
+      standardClause: '제1조(개인정보의 수집·이용 목적 및 항목)\n{COMPANY_NAME}은(는) 상담, 서비스 신청 등을 위해 아래와 같은 개인정보를 수집·처리합니다.\n- 필수항목: 성명, 휴대전화번호, 이메일 주소 (목적: 서비스 문의 대응, 본인 확인)\n- 선택항목: 회사명, 부서명 (목적: 맞춤형 상담)'
     },
     {
       id: 'rule_2',
@@ -24,7 +24,7 @@
       regex: /(보유|이용\s*기간|보존\s*기간|파기\s*시점)/i,
       subRegex: /(법령|상법|전자상거래|파기|보존|년|월|탈퇴)/i,
       fixGuide: '원칙적 보유 기간(회원 탈퇴 시 등)과 관련 법령(전자상거래법 5년, 통신비밀보호법 3개월 등)에 의한 보존 기간을 명시하세요.',
-      standardClause: '제2조(개인정보의 보유 및 이용기간)\n① 회사는 회원 탈퇴 시까지 이용자의 개인정보를 보유 및 이용합니다.\n② 단, 관련 법령에 따라 보존할 필요가 있는 경우 이하 기간 동안 보존합니다.\n- 전자상거래법 계약/청약철회 기록: 5년\n- 통신비밀보호법 로그인 기록: 3개월'
+      standardClause: '제2조(개인정보의 보유 및 이용기간)\n① {COMPANY_NAME}은(는) 정보주체로부터 개인정보 수집 시 동의받은 보유·이용기간 또는 법령에 따른 보유기간 내에서 개인정보를 처리·보유합니다.\n- 서비스 문의 및 상담 기록: 상담 완료 후 1년\n② 단, 전자상거래법 등 관계 법령에 따라 보존할 필요가 있는 경우 해당 법정 기간 동안 보관합니다.'
     },
     {
       id: 'rule_3',
@@ -33,7 +33,7 @@
       regex: /(제\s*3\s*자\s*제공|3\s*자\s*제공|제3자|제\s*3\s*자)/i,
       subRegex: /(동의|제공받는|제공하지\s*않|별도\s*동의|없음|원칙적으로\s*제공)/i,
       fixGuide: '제3자 제공이 없을 경우 "원칙적으로 제3자에게 제공하지 않습니다"를 명시하고, 제공 시 별도 동의 절차와 항목을 기재하세요.',
-      standardClause: '제3조(개인정보의 제3자 제공)\n회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 단, 법률의 특별한 규정이 있거나 정보주체의 별도 동의를 받은 경우에 한하여 제공합니다.'
+      standardClause: '제3조(개인정보의 제3자 제공)\n{COMPANY_NAME}은(는) 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 단, 법률의 특별한 규정이 있거나 정보주체의 별도 동의를 받은 경우에 한하여 제공합니다.'
     },
     {
       id: 'rule_4',
@@ -42,7 +42,7 @@
       regex: /(위탁|수탁자|위탁업체|위탁\s*내용|수탁\s*업체)/i,
       subRegex: /(수탁|위탁|위탁하지\s*않|택배|PG|유형|범위|업무)/i,
       fixGuide: '결제, 배송, IT 인프라 등 개인정보 처리를 위탁받는 업체명과 위탁 업무 범위를 명시하세요.',
-      standardClause: '제4조(개인정보 처리 위탁)\n회사는 원활한 서비스 이행을 위하여 아래와 같이 개인정보 처리업무를 위탁하고 있습니다.\n- 결제 서비스: PG사(NICE페이먼츠 등)\n- 클라우드 인프라: Amazon Web Services(AWS)'
+      standardClause: '제4조(개인정보 처리 위탁)\n{COMPANY_NAME}은(는) 원활한 서비스 제공 및 데이터 관리 업무를 위해 아래와 같이 개인정보 처리업무를 위탁하고 있습니다.\n- 위탁받는 자 (수탁자): IT 호스팅 인프라 제공업체 및 이메일 발송 위탁사\n- 위탁하는 업무의 내용: 서버 시스템 유지보수 및 문의 답변 메일 발송'
     },
     {
       id: 'rule_5',
@@ -51,7 +51,7 @@
       regex: /(파기|파기\s*절차|파기\s*방법|삭제\s*방법)/i,
       subRegex: /(전자적|영구|삭제|분쇄|소각|복구|기술적|절차)/i,
       fixGuide: '전자적 파일(복구 불가능한 기술적 삭제)과 서면 출력물(분쇄/소각)의 구체적 파기 방식을 명시하세요.',
-      standardClause: '제5조(개인정보 파기 절차 및 방법)\n① 전자적 파일 형태: 복구할 수 없는 기술적 방법을 사용하여 지체 없이 영구 삭제합니다.\n② 종이 출력물: 문서 분쇄기로 분쇄하거나 소각하여 파기합니다.'
+      standardClause: '제5조(개인정보 파기 절차 및 방법)\n① {COMPANY_NAME}은(는) 개인정보 보유기간 경과, 처리목적 달성 시 지체 없이 파기합니다.\n② 전자적 파일 형태: 복구할 수 없는 기술적 방법을 사용하여 영구 삭제합니다.\n③ 종이 출력물: 문서 분쇄기로 분쇄하거나 소각하여 파기합니다.'
     },
     {
       id: 'rule_6',
@@ -60,7 +60,7 @@
       regex: /(권리|의무|열람|정정|삭제|처리\s*정지|권리\s*행사)/i,
       subRegex: /(행사|법정\s*대리인|요구|서면|자동화|정보주체)/i,
       fixGuide: '정보주체 및 14세 미만 아동의 법정대리인이 권리를 행사할 수 있는 절차(서면, 이메일 등)를 기술하세요.',
-      standardClause: '제6조(정보주체와 법정대리인의 권리·의무 및 행사방법)\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지를 서면 또는 이메일로 요구할 수 있으며 회사는 지체 없이 조치합니다.'
+      standardClause: '제6조(정보주체와 법정대리인의 권리·의무 및 행사방법)\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 서면, 이메일, 전화 등을 통해 개인정보 열람·정정·삭제·처리정지를 요구할 수 있으며 {COMPANY_NAME}은(는) 지체 없이 조치하겠습니다.'
     },
     {
       id: 'rule_7',
@@ -69,7 +69,7 @@
       regex: /(보호\s*책임자|보호책임자|CPO|보호\s*담당|고충\s*처리|열람\s*청구)/i,
       subRegex: /(성명|이름|연락처|전화|이메일|부서|담당|실명|직책)/i,
       fixGuide: '개인정보 보호책임자의 실명(또는 담당 부서명), 직책, 전화번호, 이메일 주소를 누락 없이 기재하세요.',
-      standardClause: '제7조(개인정보 보호책임자 및 담당부서)\n회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 관련 고충처리를 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.\n- 개인정보 보호책임자: CPO (보안담당부서)\n- 연락처: privacy@company.com / 02-1234-5678'
+      standardClause: '제7조(개인정보 보호책임자 및 담당부서)\n{COMPANY_NAME}은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고 관련 고충처리를 위하여 아래와 같이 개인정보 보호책임자(CPO)를 지정하고 있습니다.\n- 개인정보 보호책임자: 대표이사 (또는 정보보호 담당 부서장)\n- 연락처: {CPO_PHONE} / 이메일: {CPO_EMAIL}'
     },
     {
       id: 'rule_8',
@@ -78,7 +78,7 @@
       regex: /(안전성|안전성\s*확보|보안\s*대책|보안\s*조치)/i,
       subRegex: /(기술적|관리적|암호화|접근\s*권한|백신|물리적|조치)/i,
       fixGuide: '비밀번호 암호화, 백신 프로그램 설치, 접근 권한 최소화 등 안전성 확보를 위한 대책을 서술하세요.',
-      standardClause: '제8조(개인정보의 안전성 확보 조치)\n회사는 개인정보의 안전성 확보를 위해 다음 대책을 이행하고 있습니다.\n- 기술적 대책: 비밀번호 암호화 저장, 백신 프로그램 운영\n- 관리적 대책: 개인정보 취급자 최소화 및 정기 보안 교육\n- 물리적 대책: 전산실 출입 통제'
+      standardClause: '제8조(개인정보의 안전성 확보 조치)\n{COMPANY_NAME}은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.\n- 관리적 조치: 내부관리계획 수립·시행, 정기적 직원 교육\n- 기술적 조치: 접근권한 관리, 주요 데이터 암호화, 백신 프로그램 운영\n- 물리적 조치: 전산실 및 자료보관실 출입 통제'
     },
     {
       id: 'rule_9',
@@ -87,7 +87,7 @@
       regex: /(쿠키|cookie|자동\s*수집|수집\s*장치)/i,
       subRegex: /(설치|운영|거부|설정|브라우저|미사용|수집하지\s*않|거부\s*방법)/i,
       fixGuide: '쿠키 수집 목적을 설명하고, 미사용 시 "쿠키를 수집·운영하지 않음"을 명시하세요.',
-      standardClause: '제9조(개인정보 자동 수집 장치의 설치·운영 및 거부)\n회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정(도구 > 인터넷 옵션 > 개인정보)을 통해 쿠키 저장을 거부할 수 있습니다.'
+      standardClause: '제9조(개인정보 자동 수집 장치의 설치·운영 및 거부)\n① {COMPANY_NAME}은(는) 맞춤형 서비스 제공을 위해 쿠키(cookie)를 사용할 수 있습니다.\n② 이용자는 웹브라우저 옵션 설정(도구 > 인터넷 옵션 > 개인정보)을 통해 쿠키 저장을 거부할 수 있습니다.'
     },
     {
       id: 'rule_10',
@@ -96,7 +96,7 @@
       regex: /(구제|분쟁|권익|침해\s*신고|구제\s*방법)/i,
       subRegex: /(개인정보분쟁조정위원회|118|경찰청|대검찰청|상담|1833-6972|분쟁\s*조정)/i,
       fixGuide: '개인정보 침해 신고 센터(118), 개인정보 분쟁조정위원회(1833-6972) 등의 기관명과 연락처를 기재하세요.',
-      standardClause: '제10조(권익침해 구제방법)\n개인정보 침해에 대한 피해구제, 상담은 아래 기관에 문의하실 수 있습니다.\n- 개인정보 침해신고센터: (국번없이) 118\n- 개인정보 분쟁조정위원회: (국번없이) 1833-6972\n- 대검찰청 사이버수사과: (국번없이) 1301\n- 경찰청 사이버범죄신고: (국번없이) 182'
+      standardClause: '제10조(권익침해 구제방법)\n개인정보 침해에 대한 피해구제, 상담은 아래 전문기관에 문의하실 수 있습니다.\n- 개인정보분쟁조정위원회: (국번없이) 1833-6972\n- 개인정보침해신고센터: (국번없이) 118\n- 대검찰청 사이버수사과: (국번없이) 1301\n- 경찰청 사이버범죄신고: (국번없이) 182'
     },
     {
       id: 'rule_11',
@@ -106,7 +106,7 @@
       regex: /(AI|인공지능|생성형|프롬프트|학습)/i,
       subRegex: /(거부|옵트아웃|Opt-out|입력|학습|해당\s*없음|미사용|수집하지\s*않)/i,
       fixGuide: 'AI 서비스 미도입 기관은 "AI 기반 데이터 처리 해당 없음"으로 간주하여 정상 판정됩니다.',
-      standardClause: '제11조(생성형 AI 서비스 데이터 처리 및 거부)\n회사는 AI 서비스 이용 시 입력된 프롬프트 데이터를 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.'
+      standardClause: '제11조(생성형 AI 서비스 데이터 처리 및 거부)\n{COMPANY_NAME}은(는) AI 기반 서비스를 이용하는 경우 입력된 데이터 및 프롬프트를 무단으로 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.'
     },
     {
       id: 'rule_12',
@@ -116,7 +116,7 @@
       regex: /(행태정보|맞춤형\s*광고|광고\s*식별자|ADID|IDFA)/i,
       subRegex: /(차단|거부|설정|방문기록|해당\s*없음|미수집|수집하지\s*않)/i,
       fixGuide: '공공기관 및 비상업 웹사이트는 "맞춤형 광고 행태정보 수집 없음"으로 정상 판정됩니다.',
-      standardClause: '제12조(맞춤형 광고 행태정보 수집 및 차단)\n회사는 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 수집하지 않습니다.'
+      standardClause: '제12조(맞춤형 광고 행태정보 수집 및 차단)\n{COMPANY_NAME}은(는) 타겟 맞춤형 광고를 위한 온라인 행태정보(ADID, IDFA 등)를 제3자에게 수집·제공하지 않습니다.'
     }
   ];
 
@@ -263,7 +263,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
       const key = inputGeminiApiKey.value.trim();
       if (key) {
         localStorage.setItem('gemini_api_key', key);
-        alert('🔒 Gemini API Key가 저장되었습니다!');
+        alert('🔒 Gemini API Key가 사용자의 로컬 브라우저에 안전하게 저장되었습니다!');
       } else {
         localStorage.removeItem('gemini_api_key');
         alert('🗑️ API Key가 삭제되었습니다.');
@@ -597,6 +597,14 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     return inputPolicyText.value.trim();
   }
 
+  function generateCustomFixedClause(rule, companyName, cpoEmail) {
+    let clause = rule.standardClause || '';
+    clause = clause.replace(/{COMPANY_NAME}/g, companyName || '(주)씨노텍');
+    clause = clause.replace(/{CPO_EMAIL}/g, cpoEmail || 'sinnotech@sinnotech.kr');
+    clause = clause.replace(/{CPO_PHONE}/g, '032-715-6050');
+    return clause;
+  }
+
   function runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, engineName) {
     const normalizedText = rawText.replace(/\s+/g, ' ');
     const noSpaceText = rawText.replace(/\s+/g, '');
@@ -692,6 +700,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, '⚡ 정규식 고속 엔진');
   }
 
+  // ── Render Diagnostic Report with 1-Click Ready-to-Copy Fixed Clause Action Box
   function renderReport(data) {
     document.getElementById('report-company-name').textContent = data.companyName;
     document.getElementById('report-date').textContent = data.date;
@@ -710,9 +719,11 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     }
 
     const checklistContainer = document.getElementById('report-checklist');
-    checklistContainer.innerHTML = data.results.map(r => {
+    checklistContainer.innerHTML = data.results.map((r, idx) => {
       const iconStr = r.status === 'pass' ? '✓' : (r.status === 'warn' ? '!' : '✕');
       const tagText = r.status === 'pass' ? '적합' : (r.status === 'warn' ? '보완 필요' : '누락 (위반)');
+      const fixedClauseText = generateCustomFixedClause(r.rule, data.companyName, data.cpoEmail);
+
       return '<div class="check-item">' +
         '<div class="check-icon ' + r.status + '">' + iconStr + '</div>' +
         '<div class="check-body">' +
@@ -722,10 +733,30 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
           '</div>' +
           (r.quotedSnippet ? '<div style="font-size:12px; background:#f1f5f9; border-left:3px solid #64748b; padding:6px 10px; margin: 6px 0; color:#334155;">📌 <strong>실제 약관 본문 인용:</strong> "' + r.quotedSnippet + '"</div>' : '') +
           '<div class="check-detail" style="font-weight:600;">' + r.reason + '</div>' +
-          (r.status !== 'pass' ? '<div class="check-remediation" style="margin-top:6px;"><strong>💡 최신 PIPC 보완 지침:</strong> ' + r.rule.fixGuide + '</div>' : '') +
+          (r.status !== 'pass' ? 
+            '<div class="fix-action-box">' +
+              '<div class="fix-action-header">' +
+                '<span>✨ [1-Click 보완] 이 조항으로 홈페이지를 수정/교체하세요:</span>' +
+                '<button class="btn-copy-clause" data-clause-id="clause-' + idx + '">📋 조항 복사</button>' +
+              '</div>' +
+              '<pre class="fix-clause-text" id="clause-' + idx + '">' + fixedClauseText + '</pre>' +
+            '</div>' : 
+            '<div style="font-size:12px; color:#10b981; margin-top:4px;">✅ 법적 필수 고시 사항이 정상 준수되고 있습니다.</div>'
+          ) +
         '</div>' +
       '</div>';
     }).join('');
+
+    // Bind 1-Click Clause Copy Buttons
+    document.querySelectorAll('.btn-copy-clause').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const targetId = e.target.dataset.clauseId;
+        const textToCopy = document.getElementById(targetId)?.innerText || '';
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          alert('✅ 1:1 맞춤형 보완 조항이 복사되었습니다!\n홈페이지 약관 수정 창에 바로 붙여넣으세요.');
+        });
+      });
+    });
   }
 
   function buildRemediationDocument(data) {
@@ -746,7 +777,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
 
     const fullDraftClausesHtml = data.results.map(r => {
       const isFixed = r.status !== 'pass';
-      const clauseText = r.rule.standardClause || (r.rule.title + '\n관련 필수 내용을 최신 PIPC 지침에 따라 준수하여 처리합니다.');
+      const clauseText = generateCustomFixedClause(r.rule, data.companyName, data.cpoEmail);
       
       return '<div style="margin-bottom: 20px; padding: 14px 18px; border-radius: 6px; ' + (isFixed ? 'background:#eff6ff; border-left: 4px solid #2563eb;' : 'background:#f8fafc; border: 1px solid #e2e8f0;') + '">' +
         '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">' +
@@ -772,7 +803,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
       ) +
       '<div class="doc-section-title">2. 요청 및 이행 기한</div>' +
       '<p>개인정보 보호법 위반 시 시정명령 및 과태료 부과 대상이 될 수 있으므로, 본 요청서 및 첨부된 개정(안)을 참고하시어 수신일로부터 <strong>14일 이내</strong>에 개정된 개인정보 처리방침을 홈페이지에 공고하여 주시기 바랍니다.</p>' +
-      '<div class="doc-section-title" style="display:flex; justify-content:space-between; align-items:center;"><span>3. 추천 개인정보 처리방침 표준 개정(안) 전문 (보완 완결본)</span><button class="btn-secondary" id="btn-copy-draft-text" style="font-size:12px; padding:4px 12px; color:#1e293b; background:#e2e8f0;">📋 전문 텍스트 복사</button></div>' +
+      '<div class="doc-section-title" style="display:flex; justify-content:space-between; align-items:center;"><span>3. 추천 개인정보 처리방침 표준 개정(안) 전문 (보완 완결본)</span><button class="btn-primary" id="btn-copy-draft-text" style="font-size:12px; padding:6px 14px;">📋 전문 텍스트 1-Click 복사</button></div>' +
       '<div style="margin-bottom: 16px; font-size: 12px; color: #64748b;">* 파란색 박스로 표시된 조항은 이번 진단을 통해 <strong>최신 PIPC 작성지침으로 보완·신설된 표준 개정 조항</strong>입니다. 홈페이지 하단에 그대로 복사하여 게재하실 수 있습니다.</div>' +
       '<div id="full-draft-text-box">' + fullDraftClausesHtml + '</div>' +
       '<div style="margin-top:40px; text-align:center; font-weight:700; font-size:15px; color:#0f172a;">2026년 8월 21일<br><br><strong>개인정보 보호 시정조치 솔루션 검인</strong></div>';
@@ -780,7 +811,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     document.getElementById('btn-copy-draft-text')?.addEventListener('click', () => {
       const draftBoxText = document.getElementById('full-draft-text-box').innerText;
       navigator.clipboard.writeText(draftBoxText).then(() => {
-        alert('✅ 개인정보 처리방침 표준 개정(안) 전문 텍스트가 복사되었습니다!');
+        alert('✅ 완벽히 보완된 개인정보 처리방침 전문 텍스트가 복사되었습니다!\n홈페이지 관리자 페이지에 그대로 붙여넣어 게재하세요.');
       });
     });
   }
