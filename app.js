@@ -1,6 +1,6 @@
 ﻿// ============================================================
-// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v3.0 - Multimodal Engine)
-// URL 웹 크롤링 파싱 & 이미지 OCR 광학 분석 지원
+// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v3.5 - 오진 방지 및 공공기관 스마트 진단)
+// 크롤링 파싱 보완 및 "해당 없음" 조항 스마트 예외 처리
 // ============================================================
 
 (function () {
@@ -13,7 +13,7 @@
       title: '1. 개인정보의 수집·이용 목적 및 항목',
       desc: '처리하는 개인정보의 필수/선택 항목과 수집 목적이 구체적으로 구분 명시되어야 합니다.',
       keywords: ['목적', '수집', '항목'],
-      subKeywords: ['이름', '이메일', '연락처', '전화번호', '주소', '서비스', '필수', '선택'],
+      subKeywords: ['이름', '이메일', '연락처', '전화번호', '주소', '서비스', '필수', '선택', '개인정보파일'],
       fixGuide: '수집하는 필수 항목과 선택 항목을 구체적으로 구분하고, 회원가입·서비스 이행 등 개별 목적을 명확히 작성하세요.'
     },
     {
@@ -21,7 +21,7 @@
       title: '2. 개인정보의 보유 및 이용 기간',
       desc: '원칙적 파기 시점 및 전자상거래법, 통신비밀보호법 등 관계 법령에 따른 보존 기간이 기재되어야 합니다.',
       keywords: ['보유', '이용기간', '보존기간'],
-      subKeywords: ['법령', '상법', '전자상거래', '파기', '보존'],
+      subKeywords: ['법령', '상법', '전자상거래', '파기', '보존', '년'],
       fixGuide: '원칙적 보유 기간(회원 탈퇴 시 등)과 관련 법령(전자상거래법 5년, 통신비밀보호법 3개월 등)에 의한 보존 기간을 명시하세요.'
     },
     {
@@ -29,15 +29,15 @@
       title: '3. 개인정보의 제3자 제공에 관한 사항',
       desc: '제3자 제공 여부, 제공받는 자, 목적, 항목, 보유기간이 명시되어야 합니다.',
       keywords: ['제3자', '제공'],
-      subKeywords: ['동의', '제공받는', '제공하지 않습니다', '별도 동의', '없음'],
+      subKeywords: ['동의', '제공받는', '제공하지 않습니다', '별도 동의', '없음', '제3자 제공'],
       fixGuide: '제3자 제공이 없을 경우 "원칙적으로 제3자에게 제공하지 않습니다"를 명시하고, 제공 시 별도 동의 절차와 항목을 기재하세요.'
     },
     {
       id: 'rule_4',
       title: '4. 개인정보 처리 위탁 내용 및 수탁자',
-      desc: '외주/위탁 업무 내용과 수탁업체 사명(또는 대규모 수탁 시 유형별 그룹)이 기재되어야 합니다.',
+      desc: '외주/위탁 업무 내용과 수탁업체 사명이 기재되어야 합니다.',
       keywords: ['위탁', '수탁자'],
-      subKeywords: ['수탁', '위탁업체', '위탁하지 않습니다', '택배', 'PG', '유형'],
+      subKeywords: ['수탁', '위탁업체', '위탁하지 않습니다', '택배', 'PG', '유형', '위탁내용'],
       fixGuide: '결제, 배송, IT 인프라 등 개인정보 처리를 위탁받는 업체명과 위탁 업무 범위를 명시하세요.'
     },
     {
@@ -45,7 +45,7 @@
       title: '5. 개인정보의 파기 절차 및 방법',
       desc: '전자적 파일의 영구 삭제 방법 및 종이 출력물 분쇄/소각 방법이 명시되어야 합니다.',
       keywords: ['파기절차', '파기방법', '파기'],
-      subKeywords: ['전자적', '영구', '삭제', '분쇄', '소각', '복구'],
+      subKeywords: ['전자적', '영구', '삭제', '분쇄', '소각', '복구', '파기 절차'],
       fixGuide: '전자적 파일(복구 불가능한 기술적 삭제)과 서면 출력물(분쇄/소각)의 구체적 파기 방식을 명시하세요.'
     },
     {
@@ -53,7 +53,7 @@
       title: '6. 정보주체와 법정대리인의 권리·의무 및 행사방법',
       desc: '열람·정정·삭제·처리정지 요구권, 자동화된 결정 거부권 및 법정대리인 행사 방법이 기재되어야 합니다.',
       keywords: ['권리', '열람', '정정', '삭제', '처리정지'],
-      subKeywords: ['행사', '법정대리인', '요구', '서면', '자동화'],
+      subKeywords: ['행사', '법정대리인', '요구', '서면', '자동화', '의무'],
       fixGuide: '정보주체 및 14세 미만 아동의 법정대리인이 권리를 행사할 수 있는 절차(서면, 이메일 등)를 기술하세요.'
     },
     {
@@ -61,52 +61,54 @@
       title: '7. 개인정보 보호책임자(CPO) 성명 및 연락처',
       desc: '개인정보 보호책임자의 성명(또는 담당 부서명), 직책, 전화번호, 이메일이 반드시 포함되어야 합니다.',
       keywords: ['보호책임자', 'CPO'],
-      subKeywords: ['성명', '이름', '연락처', '전화번호', '이메일', '부서'],
+      subKeywords: ['성명', '이름', '연락처', '전화번호', '이메일', '부서', '담당부서'],
       fixGuide: '개인정보 보호책임자의 실명(또는 담당 부서명), 직책, 전화번호, 이메일 주소를 누락 없이 기재하세요.'
     },
     {
       id: 'rule_8',
       title: '8. 개인정보의 안전성 확보 조치',
-      desc: '기술적, 관리적, 물리적 보안 대책(비밀번호 암호화, 접근통제, 백신 등)이 작성되어야 합니다.',
+      desc: '기술적, 관리적, 물리적 보안 대책이 작성되어야 합니다.',
       keywords: ['안전성', '보안', '안전성 확보'],
-      subKeywords: ['기술적', '관리적', '암호화', '접근권한', '백신'],
-      fixGuide: '비밀번호 암호화, 백신 프로그램 설치, 접근 권한 최소화 등 안전성 확보를 위한 3대 대책을 서술하세요.'
+      subKeywords: ['기술적', '관리적', '암호화', '접근권한', '백신', '물리적'],
+      fixGuide: '비밀번호 암호화, 백신 프로그램 설치, 접근 권한 최소화 등 안전성 확보를 위한 대책을 서술하세요.'
     },
     {
       id: 'rule_9',
       title: '9. 개인정보 자동 수집 장치(쿠키)의 설치·운영 및 거부',
       desc: '쿠키의 사용 목적 및 웹브라우저/모바일 차단 설정 통한 쿠키 거부 방법이 안내되어야 합니다.',
       keywords: ['쿠키', 'cookie', '자동 수집'],
-      subKeywords: ['설치', '운영', '거부', '설정', '웹브라우저'],
-      fixGuide: '쿠키 수집 목적을 설명하고, 브라우저(Chrome, Edge 등) 옵션에서 쿠키 차단 설정 경로를 명시하세요.'
+      subKeywords: ['설치', '운영', '거부', '설정', '웹브라우저', '미사용', '수집하지 않습니다'],
+      fixGuide: '쿠키 수집 목적을 설명하고, 미사용 시 "쿠키를 수집·운영하지 않음"을 명시하세요.'
     },
     {
       id: 'rule_10',
       title: '10. 권익침해 구제방법 및 전문기관 연락처',
       desc: '개인정보분쟁조정위원회(1833-6972), 침해신고센터(118), 대검찰청, 경찰청 등의 안내가 포함되어야 합니다.',
       keywords: ['구제', '분쟁', '권익'],
-      subKeywords: ['개인정보분쟁조정위원회', '118', '경찰청', '대검찰청', '상담', '1833-6972'],
+      subKeywords: ['개인정보분쟁조정위원회', '118', '경찰청', '대검찰청', '상담', '1833-6972', '구제방법'],
       fixGuide: '개인정보 침해 신고 센터(118), 개인정보 분쟁조정위원회(1833-6972) 등의 기관명과 연락처를 기재하세요.'
     },
     {
       id: 'rule_11',
       title: '11. 생성형 AI 서비스 프롬프트·데이터 처리 및 거부(Opt-out) [최신 지침]',
-      desc: '생성형 AI 기능 이용 시 입력 프롬프트 저장 여부, AI 학습 활용 및 거부(Opt-out) 절차가 명시되어야 합니다.',
+      desc: '생성형 AI 기능 이용 시 프롬프트 저장 여부 및 AI 학습 거부권이 명시되어야 합니다. (미도입 시 해당 없음)',
+      isOptional: true,
       keywords: ['AI', '인공지능', '생성형', '프롬프트', '학습'],
-      subKeywords: ['거부', '옵트아웃', 'Opt-out', '입력 데이터', '학습 활용', '해당 없음'],
-      fixGuide: 'AI 서비스가 포함된 경우 프롬프트 저장/학습 활용 여부 및 이용자 거부권을 안내하고, 미도입 시 "AI 기반 수집 해당 없음"을 명시하세요.'
+      subKeywords: ['거부', '옵트아웃', 'Opt-out', '입력 데이터', '학습 활용', '해당 없음', '미사용', '수집하지'],
+      fixGuide: 'AI 서비스 미도입 기관은 "AI 기반 데이터 처리 해당 없음"으로 간주하여 정상 판정됩니다.'
     },
     {
       id: 'rule_12',
       title: '12. 맞춤형 광고 행태정보(ADID) 수집·이용 및 차단 옵션 [최신 지침]',
-      desc: '맞춤형 광고를 위한 온라인 행태정보(ADID, 방문기록 등) 수집 여부 및 이용자 차단 설정 방법이 포함되어야 합니다.',
+      desc: '맞춤형 광고용 행태정보 수집 여부 및 차단 방법이 명시되어야 합니다. (미수집 시 해당 없음)',
+      isOptional: true,
       keywords: ['행태정보', '맞춤형 광고', '광고 식별자', 'ADID', 'IDFA'],
-      subKeywords: ['차단', '거부', '설정', '방문기록', '해당 없음'],
-      fixGuide: '맞춤형 광고용 행태정보 수집 목적과 차단 방법(앱/브라우저 설정)을 안내하거나 "맞춤형 광고용 행태정보를 수집하지 않음"을 기재하세요.'
+      subKeywords: ['차단', '거부', '설정', '방문기록', '해당 없음', '미수집', '수집하지 않'],
+      fixGuide: '공공기관 및 비상업 웹사이트는 "맞춤형 광고 행태정보 수집 없음"으로 정상 판정됩니다.'
     }
   ];
 
-  // ── 샘플 데이터 (중소기업 처리방침 예시)
+  // ── 샘플 데이터
   const SAMPLE_POLICIES = {
     sample_bad: {
       companyName: '(주)에이비씨 쇼핑몰',
@@ -205,7 +207,7 @@
   };
 
   // ── 애플리케이션 상태
-  let activeInputMode = 'url'; // 'url', 'image', 'text'
+  let activeInputMode = 'url';
   let extractedOcrText = '';
   let fetchedUrlText = '';
   let lastDiagnosticResult = null;
@@ -219,7 +221,6 @@
   let panelScan, panelReport, panelRequestDoc, panelHistory;
   let navScanBtn, navReportBtn, navDocBtn, navHistoryBtn;
 
-  // ── 초기화
   document.addEventListener('DOMContentLoaded', () => {
     inputCompanyName = document.getElementById('input-company-name');
     inputCpoEmail    = document.getElementById('input-cpo-email');
@@ -257,21 +258,17 @@
   });
 
   function bindEvents() {
-    // 탭 전환
     navScanBtn.addEventListener('click', () => switchTab('scan'));
     navReportBtn.addEventListener('click', () => switchTab('report'));
     navDocBtn.addEventListener('click', () => switchTab('doc'));
     navHistoryBtn.addEventListener('click', () => switchTab('history'));
 
-    // 입력 모드 셀렉터 (URL / Image / Text)
     btnModeUrl.addEventListener('click', () => switchInputMode('url'));
     btnModeImage.addEventListener('click', () => switchInputMode('image'));
     btnModeText.addEventListener('click', () => switchInputMode('text'));
 
-    // URL 파싱 버튼
     document.getElementById('btn-crawl-url')?.addEventListener('click', handleUrlFetch);
 
-    // 이미지 업로드 및 Drag & Drop
     imageDropzone.addEventListener('click', () => inputImageFile.click());
     imageDropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -295,7 +292,6 @@
       resetImageInput();
     });
 
-    // Preset 버튼 클릭
     document.querySelectorAll('.btn-preset').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const key = e.target.dataset.preset;
@@ -305,10 +301,8 @@
       });
     });
 
-    // 진단 실행 버튼
     btnRunScan.addEventListener('click', runDiagnostic);
 
-    // 보완조치 요청서 생성 버튼
     document.getElementById('btn-generate-doc')?.addEventListener('click', () => {
       if (!lastDiagnosticResult) {
         alert('먼저 개인정보 처리방침 진단을 실행해주세요.');
@@ -318,7 +312,6 @@
       switchTab('doc');
     });
 
-    // 복사 & 다운로드 버튼
     document.getElementById('btn-copy-doc')?.addEventListener('click', copyDocToClipboard);
     document.getElementById('btn-print-doc')?.addEventListener('click', () => window.print());
     document.getElementById('btn-email-doc')?.addEventListener('click', sendEmailDraft);
@@ -360,7 +353,6 @@
     }
   }
 
-  // ── URL 크롤링 / 파서
   async function handleUrlFetch() {
     const url = inputUrlLink.value.trim();
     if (!url) {
@@ -372,7 +364,6 @@
     document.getElementById('btn-crawl-url').innerText = '⏳ 수집 중...';
 
     try {
-      // AllOrigins CORS 프록시 활용
       const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
       const res = await fetch(proxyUrl);
       const data = await res.json();
@@ -380,8 +371,6 @@
       if (data.contents) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data.contents, 'text/html');
-        
-        // HTML 요소 제거 및 순수 텍스트 추출
         doc.querySelectorAll('script, style, nav, footer, header').forEach(el => el.remove());
         const bodyText = doc.body.innerText || doc.body.textContent || '';
         
@@ -393,7 +382,6 @@
       }
     } catch (err) {
       console.warn('CORS Proxy fetch fallback:', err);
-      // 샘플 파싱 폴백
       fetchedUrlText = inputPolicyText.value || SAMPLE_POLICIES.sample_bad.text;
       alert(`🌐 URL 접속 시뮬레이션 완료 (${url})\n약관 텍스트 파싱을 완료하였습니다.`);
     } finally {
@@ -401,14 +389,12 @@
     }
   }
 
-  // ── 이미지 업로드 & OCR 광학 인식
   function processImageFile(file) {
     const reader = new FileReader();
     reader.onload = (e) => {
       imagePreview.src = e.target.result;
       dropzonePrompt.style.display = 'none';
       imagePreviewContainer.style.display = 'flex';
-
       runTesseractOcr(e.target.result);
     };
     reader.readAsDataURL(file);
@@ -435,7 +421,6 @@
         inputPolicyText.value = extractedOcrText;
         alert(`✨ 이미지 광학 문자 인식(OCR) 완료! (${extractedOcrText.length}자 추출됨)`);
       } else {
-        // Fallback OCR simulation if CDN unavailable
         extractedOcrText = SAMPLE_POLICIES.sample_bad.text;
         inputPolicyText.value = extractedOcrText;
         alert('🖼️ 이미지 약관 텍스트 추출 완료!');
@@ -458,7 +443,7 @@
     fetchedUrlText = sample.text;
   }
 
-  // ── 진단 실행 엔진 (Diagnostic Engine)
+  // ── 진단 실행 엔진 (Diagnostic Engine - 스마트 예외 처리 반영)
   function runDiagnostic() {
     let text = '';
     if (activeInputMode === 'url') {
@@ -480,6 +465,7 @@
 
     const results = [];
     let passCount = 0;
+    const isPublicOrg = companyName.includes('청') || companyName.includes('부') || companyName.includes('공사') || text.includes('지방중소벤처기업청') || text.includes('공공기관');
 
     DIAGNOSTIC_RULES.forEach(rule => {
       const hasMainKw = rule.keywords.some(kw => text.includes(kw));
@@ -488,7 +474,12 @@
       let status = 'fail';
       let reason = '';
 
-      if (hasMainKw && hasSubKw) {
+      // 신규 옵션 항목(AI, ADID) 및 공공기관 특성 스마트 판정
+      if (rule.isOptional && (isPublicOrg || text.includes('해당 없음') || text.includes('수집하지 않') || text.includes('미사용'))) {
+        status = 'pass';
+        reason = '비상업 공공기관 또는 미도입 서비스로 "해당 사항 없음(정상)"으로 처리되었습니다.';
+        passCount++;
+      } else if (hasMainKw && hasSubKw) {
         status = 'pass';
         reason = '최신 작성지침 필수 기준이 명확하게 기재되어 있습니다.';
         passCount++;
@@ -527,7 +518,6 @@
     switchTab('report');
   }
 
-  // ── 진단 리포트 UI 렌더링
   function renderReport(data) {
     document.getElementById('report-company-name').textContent = data.companyName;
     document.getElementById('report-date').textContent = data.date;
@@ -568,7 +558,6 @@
     }).join('');
   }
 
-  // ── 보완조치 요청서 공문 생성기
   function buildRemediationDocument(data) {
     const docContainer = document.getElementById('doc-paper-content');
     const failedItems = data.results.filter(r => r.status !== 'pass');
