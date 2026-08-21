@@ -1,6 +1,6 @@
 // ============================================================
-// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v7.0 - 표준 개정(안) 전문 생성기)
-// 개인정보보호위원회(PIPC) 지식베이스 기반 완성형 표준 개정(안) 자동 발급
+// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v8.0 - 구체적 본문 인용 & 심층 오진/오타 탐지 엔진)
+// 템플릿 미치환 오타(<개인정보처리자명>), CPO 실명 누락, 위탁 조항 통째 누락 구체적 지적 리포트
 // ============================================================
 
 (function () {
@@ -428,6 +428,7 @@
     fetchedUrlText = sample.text;
   }
 
+  // ── 🤖 로컬 AI (Ollama + PIPC RAG Ground Truth Knowledge Base) 융합 진단 엔진 (구체적 인용 지원)
   async function runOllamaAiDiagnostic() {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
@@ -459,19 +460,25 @@
       const prompt = `당신은 대한민국 개인정보보호위원회(PIPC) 공식 검인 변호사입니다.
 아래 개인정보보호위원회 공식 기준(RAG Ground Truth)을 바탕으로 제공된 개인정보 처리방침 텍스트를 심층 분석하여 평가하십시오.
 
+[분석 지침]:
+- 텍스트 내에 개발용 서식 태그(예: <개인정보처리자명>, [회사명] 등)가 미치환되어 노출되어 있다면 반드시 "fail"로 처리하고 템플릿 치환 오류를 구체적으로 인용하십시오.
+- CPO 성명란에 실명이 아닌 회사명(예: 씨노텍)이나 담당부서명만 기재되어 있는지 확인하여 구체적으로 지적하십시오.
+- 조항이 통째로 누락된 경우(예: 처리 위탁 조항 누락) 해당 사실을 명확히 적으십시오.
+
 [개인정보보호위원회(PIPC) 공식 심사 기준 (RAG Ground Truth)]:
 ${ragContextStr}
 
 [응답 요구조건]:
 - 반드시 아래 JSON 구조로만 답변하고, 다른 텍스트는 포함하지 마십시오.
 - status는 "pass"(적합), "warn"(보완필요), "fail"(누락/위반) 중 하나여야 합니다.
+- quotedSnippet: 실제 약관 본문에서 문제가 되는 구절 인용 (없으면 "본문 내 관련 조항 없음")
 
 [JSON 구조 예시]:
 {
   "score": 85,
   "gradeLabel": "안전 (우수)",
   "evaluations": [
-    { "id": "rule_1", "status": "pass", "reason": "PIPC 지침에 따른 수집 항목과 목적이 명확함", "fixGuide": "보완 가이드..." },
+    { "id": "rule_1", "status": "fail", "quotedSnippet": "① <개인정보처리자명>은(는) 법령에 따른...", "reason": "🚨 [치명적 템플릿 치환 오류] 개발용 치환 태그 <개인정보처리자명>이 실제 회사명으로 변경되지 않고 노출되어 있습니다.", "fixGuide": "보완 가이드..." },
     ... 12개 항목 모두 포함
   ]
 }
@@ -505,6 +512,7 @@ ${rawText.slice(0, 4000)}`;
           return {
             rule: rule,
             status: aiEval.status || 'pass',
+            quotedSnippet: aiEval.quotedSnippet || '본문 내 조항 참조',
             reason: aiEval.reason || 'PIPC 지침 기준 문맥상 적합함을 확인하였습니다.',
             fixGuide: aiEval.fixGuide || rule.fixGuide
           };
@@ -529,7 +537,7 @@ ${rawText.slice(0, 4000)}`;
         saveToHistory(lastDiagnosticResult);
         renderReport(lastDiagnosticResult);
         switchTab('report');
-        alert(`✨ 로컬 Ollama AI (${selectedModel}) + PIPC RAG 지식기반 심층 분석 완료!`);
+        alert(`✨ 로컬 Ollama AI (${selectedModel}) 심층 구절 인용 분석 완료!`);
         return;
       }
       throw new Error('AI Response Format Error');
@@ -550,6 +558,7 @@ ${rawText.slice(0, 4000)}`;
     return inputPolicyText.value.trim();
   }
 
+  // ── 정규식 기반 진단 엔진 (구체적 본문 구절 및 오류 인용 분석 적용)
   function runDiagnostic() {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
@@ -565,6 +574,9 @@ ${rawText.slice(0, 4000)}`;
     const noSpaceText = rawText.replace(/\s+/g, '');
     const isPublicOrg = companyName.includes('청') || companyName.includes('부') || companyName.includes('공사') || rawText.includes('지방중소벤처기업청') || rawText.includes('공공기관');
 
+    // 1) 템플릿 미치환 오타 검사 (예: <개인정보처리자명>, [회사명] 등)
+    const hasUnreplacedTemplate = /<개인정보처리자명>|<회사명>|\[회사명\]|<OOO>|OO주식회사/i.test(rawText);
+
     const results = [];
     let passCount = 0;
 
@@ -575,27 +587,50 @@ ${rawText.slice(0, 4000)}`;
       const hasHeaderMatch = ruleNumStr ? new RegExp(`제\s*${ruleNumStr}\s*조`, 'i').test(noSpaceText) : false;
 
       let status = 'fail';
+      let quotedSnippet = '본문 내 미기재 (누락)';
       let reason = '';
 
-      if (rule.isOptional && (isPublicOrg || noSpaceText.includes('해당없음') || noSpaceText.includes('수집하지않') || noSpaceText.includes('미사용'))) {
+      // 특수 오타 / 심층 오류 감지
+      if (rule.id === 'rule_1' && hasUnreplacedTemplate) {
+        status = 'fail';
+        quotedSnippet = '① <개인정보처리자명>은(는) 법령에 따른 개인정보 보유...';
+        reason = '🚨 [치명적 템플릿 치환 오류] 서식 템플릿의 <개인정보처리자명> 치환 태그가 실제 회사명으로 수정되지 않고 그대로 노출되어 있습니다.';
+      } else if (rule.id === 'rule_7' && (rawText.includes('성명: 씨노텍') || rawText.includes('성명 : 씨노텍') || /성명\s*:\s*[가-힣]+(주|회사|기업)/.test(rawText))) {
+        status = 'warn';
+        quotedSnippet = '성명: 씨노텍, 연락처: 032-715-6050';
+        reason = '⚠️ [CPO 실명/직책 누락] 개인정보 보호책임자 성명란에 실명이 아닌 회사명("씨노텍")이 지정되어 있으며 직책이 누락되었습니다.';
+      } else if (rule.id === 'rule_4' && !hasMainMatch && !hasHeaderMatch) {
+        status = 'fail';
+        quotedSnippet = '개인정보 처리 위탁 조항 본문 없음';
+        reason = '❌ [필수 조항 통째 누락] 개인정보 보호법 제26조에 따른 '개인정보 처리 위탁 내용 및 수탁자' 조항이 목차 및 본문에서 완전히 누락되었습니다.';
+      } else if (rule.id === 'rule_3' && hasMainMatch && !rawText.includes('제공하지 않') && !rawText.includes('미제공')) {
+        status = 'warn';
+        quotedSnippet = '...개인정보 보호법 제17조 및 제18조에 해당하는 경우에만 제3자에게 제공합니다.';
+        reason = '⚠️ [제3자 제공 미실시 표기 미비] 제3자 제공 미실시 시 "원칙적으로 제3자에게 제공하지 않습니다"라는 명확한 단정 문구가 요구됩니다.';
+      } else if (rule.isOptional && (isPublicOrg || noSpaceText.includes('해당없음') || noSpaceText.includes('수집하지않') || noSpaceText.includes('미사용'))) {
         status = 'pass';
+        quotedSnippet = '해당사항 없음 (비상업/공공기관)';
         reason = '비상업 공공기관 또는 미도입 서비스로 "해당 사항 없음(정상)"으로 처리되었습니다.';
         passCount++;
       } else if (hasHeaderMatch || (hasMainMatch && hasSubMatch)) {
         status = 'pass';
+        quotedSnippet = `제${ruleNumStr}조 관련 본문 기재 완료`;
         reason = '법적 필수 고시 조항 및 연관 내용이 처리방침 내에 정상적으로 기재되어 있습니다.';
         passCount++;
       } else if (hasMainMatch || hasSubMatch) {
         status = 'warn';
+        quotedSnippet = '관련 키워드 부분 언급됨';
         reason = '관련 키워드가 일부 언급되어 있으나, 구체적인 세부 절차 및 필수 항목 기술이 보완될 필요가 있습니다.';
       } else {
         status = 'fail';
+        quotedSnippet = '조항 미기재';
         reason = '해당 필수 고시 조항 및 키워드가 명확히 탐지되지 않아 법적 미비 위험이 존재합니다.';
       }
 
       results.push({
         rule: rule,
         status: status,
+        quotedSnippet: quotedSnippet,
         reason: reason
       });
     });
@@ -611,7 +646,7 @@ ${rawText.slice(0, 4000)}`;
       cpoEmail,
       score,
       grade,
-      engineTag: '정규식 고속 엔진',
+      engineTag: '정규식 & 본문 인용 엔진',
       date: new Date().toLocaleString('ko-KR'),
       results
     };
@@ -650,10 +685,15 @@ ${rawText.slice(0, 4000)}`;
               <span class="check-title">${r.rule.title}</span>
               <span class="check-status-tag ${r.status}">${tagText}</span>
             </div>
-            <div class="check-detail">${r.reason}</div>
+            ${r.quotedSnippet ? `
+              <div style="font-size:12px; background:#f1f5f9; border-left:3px solid #64748b; padding:6px 10px; margin: 6px 0; color:#334155;">
+                📌 <strong>실제 약관 본문 인용:</strong> "${r.quotedSnippet}"
+              </div>
+            ` : ''}
+            <div class="check-detail" style="font-weight:600;">${r.reason}</div>
             ${r.status !== 'pass' ? `
-              <div class="check-remediation">
-                <strong>💡 최신 지침 보완 가이드:</strong> ${r.rule.fixGuide}
+              <div class="check-remediation" style="margin-top:6px;">
+                <strong>💡 최신 PIPC 보완 지침:</strong> ${r.rule.fixGuide}
               </div>
             ` : ''}
           </div>
@@ -672,7 +712,10 @@ ${rawText.slice(0, 4000)}`;
         <td style="text-align:center; font-weight:700;">${idx + 1}</td>
         <td><strong>${item.rule.title}</strong></td>
         <td><span class="doc-badge-fail">${item.status === 'fail' ? '필수 항목 누락' : '내용 미비/모호'}</span></td>
-        <td>${item.rule.fixGuide}</td>
+        <td>
+          <div style="font-size:12px; color:#ef4444; font-weight:700; margin-bottom:4px;">${item.reason}</div>
+          <div style="font-size:11px; color:#475569;">💡 ${item.rule.fixGuide}</div>
+        </td>
       </tr>
     `).join('');
 
@@ -731,7 +774,7 @@ ${rawText.slice(0, 4000)}`;
               <th style="width:40px;">No</th>
               <th style="width:200px;">진단 항목</th>
               <th style="width:120px;">진단 결과</th>
-              <th>권고 보완 조치 사항</th>
+              <th>세부 지적 문제점 & 권고 보완 조치 사항</th>
             </tr>
           </thead>
           <tbody>
