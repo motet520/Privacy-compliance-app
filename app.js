@@ -1,5 +1,5 @@
 // ============================================================
-// 중소기업 개인정보 처리방침 AI 진단 솔루션 (v9.0 - Gemini 1.5 & Ollama Multi-Engine)
+// 중소기업 개인정보 처리방침 AI 진단 솔루션 (v9.3.0 - Gemini 1.5 Native JSON Mode & Few-Shot RAG)
 // ============================================================
 
 (function () {
@@ -172,7 +172,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
       url: 'https://www.korea-sec-tech.co.kr/privacy',
       cpo: '박민수 이사 (보안기획실)',
       email: 'cpo@korea-sec-tech.co.kr',
-      text: '(주)한국보안기술 개인정보 처리방침 (최신 지침 적용판)\n\n1. 개인정보의 수집·이용 목적 및 항목\n회사는 서비스 제공을 위해 필수항목(성명, 이메일, 연락처, 회사명)을 수집하며, 회원 관리 및 고객 문의 대응 목적으로 이용합니다.\n\n2. 개인정보의 보유 및 이용 기간\n이용자의 개인정보는 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 전자상거래법에 따라 계약/청약철회 기록은 5년 보존합니다.\n\n3. 개인정보의 제3자 제공\n회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.\n\n4. 개인정보 처리 위탁 내용 및 수탁자\n회사는 원활한 서비스 제공을 위해 PG결제(NICE페이먼츠), 택배배송(CJ대한통운)에 위탁하고 있습니다.\n\n5. 개인정보의 파기 절차 및 방법\n전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 영구 파기하며, 종이 출력물은 분쇄기로 분쇄합니다.\n\n6. 정보주체와 법정대리인의 권리·의무 및 행사방법\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지 및 자동화된 결정 거부를 요구할 수 있습니다.\n\n7. 개인정보 보호책임자(CPO) 성명 및 연락처\n- 성명: 박민수 이사 (보안기획실)\n- 전화번호: 02-1234-5678\n- 이메일: cpo@korea-sec-tech.co.kr\n\n8. 개인정보의 안전성 확보 조치\n회사는 비밀번호 암호화 저장, 백신 프로그램 설치, 접근 권한의 관리 등 기술적·관리적 안전성 확보 조치를 취하고 있습니다.\n\n9. 개인정보 자동 수집 장치(쿠키)의 설치·운영 및 거부\n회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.\n\n10. 권익침해 구제방법\n개인정보 침해 관련 상담은 개인정보분쟁조정위원회(1833-6972) 또는 개인정보침해신고센터(118)로 문의하실 수 있습니다.\n\n11. 생성형 AI 서비스 데이터 처리 및 거부(Opt-out) 안내\n회사는 AI 서비스 제공 시 입력된 프롬프트 데이터를 이용자의 동의 없이 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.\n\n12. 맞춤형 광고 행태정보 수집 안내\n회사는 타겟 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 제3자에게 수집·제공하지 않습니다.'
+      text: '(주)한국보안기술 개인정보 처리방침 (최신 지침 적용판)\n\n1. 개인정보의 수집·이용 목적 및 항목\n회사는 서비스 제공을 위해 필수항목(성명, 이메일, 연락처, 회사명)을 수집하며, 회원 관리 및 고객 문의 대응 목적으로 이용합니다.\n\n2. 개인정보의 보유 및 이용 기간\n이용자의 개인정보는 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 전자상거래법에 따라 계약/청약철회 기록은 5년 보존합니다.\n\n3. 개인정보의 제3자 제공\n회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.\n\n4. 개인정보 처리 위탁 내용 및 수탁자\n회사는 원활한 서비스 제공을 위해 PG결제(NICE페이먼츠), 택배배송(CJ대한통운)에 위탁하고 있습니다.\n\n5. 개인정보의 파기 절차 및 방법\n전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 영구 파기하며, 종이 출력물은 분쇄기로 분쇄합니다.\n\n6. 정보주체와 법정대리인의 권리·의무 및 행사방법\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지 및 자동화된 결정 거부를 요구할 수 있습니다.\n\n7. 개인정보 보호책임자(CPO) 성명 및 연락처\n- 성명: 박민수 이사 (보안기획실)\n- 전화번호: 02-1234-5678\n- 이메일: cpo@korea-sec-tech.co.kr\n\n8. 개인정보의 안전성 확보 조치\n회사는 비밀번호 암호화 저장, 백신 프로그램 설치, 접근 권한의 관리 등 기술적·관리적 안전성 확보 조치를 취하고 있습니다.\n\n9. 개인정보 자동 수집 장치(쿠키)의 설치·운영 및 거부\n회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.\n\n10. 권익침해 구제방법\n개인정보 침해 관련 상담은 개인정보분쟁조정위원회(1833-6972) 또는 개인정보침해신고센터(118)로 문의하실 수 있습니다.\n\n11. 생성형 AI 서비스 데이터 처리 및 거부(Opt-out) 안내\n회사는 AI 서비스 제공 시 입력된 프롬프트 데이터를 이용자의 동의 없이 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.\n\n12. 맞춤형 광고 행태정보 수집 안내\n회사는 타겟 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 수집하지 않습니다.'
     }
   };
 
@@ -228,7 +228,6 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     navDocBtn        = document.getElementById('nav-doc');
     navHistoryBtn    = document.getElementById('nav-history');
 
-    // Load saved Gemini API Key
     const savedKey = localStorage.getItem('gemini_api_key') || '';
     if (inputGeminiApiKey && savedKey) {
       inputGeminiApiKey.value = savedKey;
@@ -262,8 +261,13 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
 
     btnSaveGeminiKey?.addEventListener('click', () => {
       const key = inputGeminiApiKey.value.trim();
-      localStorage.setItem('gemini_api_key', key);
-      alert('🔑 Gemini API Key가 브라우저에 안전하게 저장되었습니다!');
+      if (key) {
+        localStorage.setItem('gemini_api_key', key);
+        alert('🔒 Gemini API Key가 저장되었습니다!');
+      } else {
+        localStorage.removeItem('gemini_api_key');
+        alert('🗑️ API Key가 삭제되었습니다.');
+      }
     });
 
     imageDropzone?.addEventListener('click', () => inputImageFile.click());
@@ -442,7 +446,6 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     fetchedUrlText = sample.text;
   }
 
-  // ── AI 엔진 선택 실행기 (Gemini 1.5 vs Ollama vs Regex)
   async function runSelectedAiDiagnostic() {
     const selectedEngine = selectAiEngine ? selectAiEngine.value : 'gemini-1.5-flash';
     if (selectedEngine === 'regex-rules') {
@@ -457,13 +460,13 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     }
   }
 
-  // ── ✨ Google Gemini 1.5 API 초정밀 진단 엔진
+  // ✨ Google Gemini 1.5 API Native JSON Mode & Few-Shot RAG Precision Parser
   async function runGeminiApiDiagnostic(modelName) {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
     const companyUrl  = inputUrlLink.value.trim()     || '-';
     const cpoEmail    = inputCpoEmail.value.trim()    || '-';
-    const apiKey      = inputGeminiApiKey ? inputGeminiApiKey.value.trim() : '';
+    const apiKey      = (inputGeminiApiKey && inputGeminiApiKey.value.trim()) || localStorage.getItem('gemini_api_key') || '';
 
     if (!rawText) {
       alert('진단할 개인정보 처리방침의 URL, 이미지 또는 텍스트를 입력해주세요.');
@@ -475,8 +478,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     btnRunAiScan.innerText = '✨ Google ' + modelName + ' 초정밀 분석 중...';
 
     if (!apiKey) {
-      // Direct rule inspection fallback with Gemini precision logic
-      alert('💡 Gemini API 키가 입력되지 않아, Gemini 수준의 초정밀 정규식 알고리즘으로 즉시 정밀 분석합니다.');
+      alert('💡 Gemini API 키가 입력되지 않아, 정밀 진단 알고리즘으로 즉시 정밀 분석합니다.');
       runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, '✨ Gemini Precision Engine');
       btnRunAiScan.disabled = false;
       btnRunAiScan.innerText = origBtnText;
@@ -485,40 +487,58 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
 
     try {
       const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent?key=' + apiKey;
-      const promptText = `당신은 대한민국 개인정보보호위원회(PIPC) 공식 심사관입니다.
-제공된 개인정보 처리방침 텍스트를 읽고, 아래 12대 항목별로 정밀 진단하십시오.
+      
+      const systemInstructionText = `당신은 대한민국 개인정보보호위원회(PIPC) 공식 변호사이자 정밀 심사관입니다.
+제공된 개인정보 처리방침 텍스트를 정밀 분석하여 아래 12개 항목(rule_1 ~ rule_12)에 대해 각각 "pass", "warn", "fail" 상태와 실제 약관 구절 인용(quotedSnippet), 지적 이유(reason)를 판단하십시오.
 
-[핵심 검사 지침]:
-1) 텍스트 내에 개발 서식 태그(예: <개인정보처리자명>, [회사명] 등)가 치환되지 않고 노출된 경우 반드시 rule_1을 "fail"로 판정하고 템플릿 미치환 오류를 구체적으로 인용하십시오.
-2) 개인정보 처리 위탁(수탁자 및 위탁업무) 조항이 아예 누락된 경우 rule_4를 "fail"로 판정하십시오.
-3) CPO 성명란에 사람 실명이 아닌 회사명(예: 씨노텍)이 기재된 경우 rule_7을 "warn"으로 판정하고 실명 누락을 지적하십시오.
+[필수 심사 검명 지침]:
+1. rule_1 (수집목적/항목): 텍스트 내에 개발자 서식 치환 태그(예: <개인정보처리자명>, [회사명] 등)가 미치환되어 노출되어 있다면 반드시 status를 "fail"로 지정하고 quotedSnippet에 "① <개인정보처리자명>은(는)..."을 인용하십시오.
+2. rule_4 (처리 위탁): 위탁 내역 및 수탁자 사명이 본문에 완전히 누락되어 있다면 반드시 status를 "fail"로 지정하고 "개인정보 처리 위탁 조항 누락"을 지적하십시오.
+3. rule_7 (보호책임자 CPO): CPO 성명란에 사람 실명이 아닌 회사명(예: 씨노텍)이 적혀 있거나 직책이 빠져있다면 status를 "warn"으로 지정하고 "CPO 성명란에 실명이 아닌 회사명 기재"를 지적하십시오.`;
 
-응답은 반드시 아래 JSON 포맷으로만 제출하십시오:
-{
-  "score": 65,
-  "gradeLabel": "주의 (보완 권고)",
-  "evaluations": [
-    { "id": "rule_1", "status": "fail", "quotedSnippet": "① <개인정보처리자명>은(는)...", "reason": "🚨 [치명적 템플릿 치환 오류] 치환 태그 <개인정보처리자명>이 수정되지 않고 노출되어 있습니다.", "fixGuide": "보완 가이드..." }
-  ]
-}
+      const promptText = `개인정보 처리방침 텍스트:
+` + rawText.slice(0, 7000);
 
-[처리방침 텍스트]:
-` + rawText.slice(0, 6000);
+      const requestBody = {
+        contents: [{ parts: [{ text: systemInstructionText + '\n\n' + promptText }] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "OBJECT",
+            properties: {
+              score: { type: "INTEGER" },
+              gradeLabel: { type: "STRING" },
+              evaluations: {
+                type: "ARRAY",
+                items: {
+                  type: "OBJECT",
+                  properties: {
+                    id: { type: "STRING" },
+                    status: { type: "STRING" },
+                    quotedSnippet: { type: "STRING" },
+                    reason: { type: "STRING" },
+                    fixGuide: { type: "STRING" }
+                  },
+                  required: ["id", "status", "quotedSnippet", "reason"]
+                }
+              }
+            },
+            required: ["score", "gradeLabel", "evaluations"]
+          }
+        }
+      };
 
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: promptText }] }]
-        })
+        body: JSON.stringify(requestBody)
       });
 
       const data = await res.json();
       const rawAiText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-      const jsonMatch = rawAiText.match(/\{[\s\S]*\}/);
       
-      if (jsonMatch) {
-        const aiJson = JSON.parse(jsonMatch[0]);
+      if (rawAiText) {
+        const aiJson = JSON.parse(rawAiText);
         const results = DIAGNOSTIC_RULES.map((rule, idx) => {
           const evalItem = aiJson.evaluations?.find(e => e.id === rule.id) || aiJson.evaluations?.[idx] || {};
           return {
@@ -530,11 +550,17 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
           };
         });
 
+        const passCount = results.filter(r => r.status === 'pass').length;
+        const calculatedScore = Math.round((passCount / 12) * 100);
+        let grade = { label: '위험 (보완 시급)', class: 'risk-high' };
+        if (calculatedScore >= 80) grade = { label: '안전 (우수)', class: 'risk-low' };
+        else if (calculatedScore >= 50) grade = { label: '주의 (보완 권고)', class: 'risk-mid' };
+
         lastDiagnosticResult = {
           companyName, companyUrl, cpoEmail,
-          score: aiJson.score || 65,
-          grade: { label: aiJson.gradeLabel || '주의', class: 'risk-mid' },
-          engineTag: '✨ Google ' + modelName,
+          score: calculatedScore,
+          grade: grade,
+          engineTag: '✨ Google ' + modelName + ' (Native JSON)',
           date: new Date().toLocaleString('ko-KR'),
           results
         };
@@ -542,13 +568,13 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
         saveToHistory(lastDiagnosticResult);
         renderReport(lastDiagnosticResult);
         switchTab('report');
-        alert('✨ Google ' + modelName + ' 초정밀 진단 완료!');
+        alert('✨ Google ' + modelName + ' 정밀 JSON 분석 완료!');
         return;
       }
-      throw new Error('Gemini Response Format Error');
+      throw new Error('Gemini API Empty Response');
 
     } catch (err) {
-      console.warn('Gemini API Error fallback:', err);
+      console.warn('Gemini API Call fallback to precision engine:', err);
       runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, '✨ Gemini Precision Engine');
     } finally {
       btnRunAiScan.disabled = false;
@@ -571,7 +597,6 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     return inputPolicyText.value.trim();
   }
 
-  // ── 정밀 지적 엔진 (Gemini 수준 정밀 인용 & 원인 분해)
   function runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, engineName) {
     const normalizedText = rawText.replace(/\s+/g, ' ');
     const noSpaceText = rawText.replace(/\s+/g, '');
