@@ -1,6 +1,5 @@
 // ============================================================
-// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v8.0 - 구체적 본문 인용 & 심층 오진/오타 탐지 엔진)
-// 템플릿 미치환 오타(<개인정보처리자명>), CPO 실명 누락, 위탁 조항 통째 누락 구체적 지적 리포트
+// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v8.1 - Syntax Fix & Stable)
 // ============================================================
 
 (function () {
@@ -127,21 +126,21 @@
       url: 'https://www.abc-sample-mall.co.kr/privacy',
       cpo: '미지정 (담당자 누락)',
       email: 'contact@abc-sample-mall.co.kr',
-      text: `[개인정보 처리방침]\n\n1. 수집하는 개인정보 항목\n회사는 회원가입 시 이름, 이메일, 전화번호를 수집합니다.\n\n2. 개인정보의 이용목적\n회원 관리 및 상품 배송 목적으로 이용합니다.\n\n3. 개인정보의 보유기간\n회원 탈퇴 시까지 보유합니다.\n\n4. 개인정보의 파기\n목적이 달성된 개인정보는 지체없이 파기합니다.\n\n5. 고객센터\n이메일: contact@abc-sample-mall.co.kr`
+      text: '[개인정보 처리방침]\n\n1. 수집하는 개인정보 항목\n회사는 회원가입 시 이름, 이메일, 전화번호를 수집합니다.\n\n2. 개인정보의 이용목적\n회원 관리 및 상품 배송 목적으로 이용합니다.\n\n3. 개인정보의 보유기간\n회원 탈퇴 시까지 보유합니다.\n\n4. 개인정보의 파기\n목적이 달성된 개인정보는 지체없이 파기합니다.\n\n5. 고객센터\n이메일: contact@abc-sample-mall.co.kr'
     },
     sample_mid: {
       companyName: '(주)XYZ 핀테크 스타트업',
       url: 'https://xyz-startup.io/privacy',
       cpo: '김철수 팀장',
       email: 'privacy@xyz-startup.io',
-      text: `(주)XYZ 핀테크 개인정보 처리방침\n\n1. 수집하는 개인정보 항목 및 목적\n회사는 회원가입 및 서비스 제공을 위해 아래 정보를 수집합니다.\n- 필수항목: 성명, 이메일, 휴대전화번호, 비밀번호\n- 목적: 본인확인, 서비스 이용안내, 공지사항 전달\n\n2. 개인정보 보유 및 이용기간\n- 회원 탈퇴 시 즉시 파기합니다.\n- 단, 관련 법령(전자상거래법)에 의해 5년간 보존합니다.\n\n3. 개인정보 제3자 제공 및 위탁\n- 회사는 제3자 제공을 하지 않습니다.\n- 데이터 보관을 위해 AWS Cloud에 위탁 관리합니다.\n\n4. 정보주체의 권리\n이용자는 언제든지 본인의 개인정보 열람 및 정정을 요구할 수 있습니다.\n\n5. 개인정보 보호책임자\n성명: 김철수\n연락처: privacy@xyz-startup.io`
+      text: '(주)XYZ 핀테크 개인정보 처리방침\n\n1. 수집하는 개인정보 항목 및 목적\n회사는 회원가입 및 서비스 제공을 위해 아래 정보를 수집합니다.\n- 필수항목: 성명, 이메일, 휴대전화번호, 비밀번호\n- 목적: 본인확인, 서비스 이용안내, 공지사항 전달\n\n2. 개인정보 보유 및 이용기간\n- 회원 탈퇴 시 즉시 파기합니다.\n- 단, 관련 법령(전자상거래법)에 의해 5년간 보존합니다.\n\n3. 개인정보 제3자 제공 및 위탁\n- 회사는 제3자 제공을 하지 않습니다.\n- 데이터 보관을 위해 AWS Cloud에 위탁 관리합니다.\n\n4. 정보주체의 권리\n이용자는 언제든지 본인의 개인정보 열람 및 정정을 요구할 수 있습니다.\n\n5. 개인정보 보호책임자\n성명: 김철수\n연락처: privacy@xyz-startup.io'
     },
     sample_good: {
       companyName: '(주)한국보안기술',
       url: 'https://www.korea-sec-tech.co.kr/privacy',
       cpo: '박민수 이사 (보안기획실)',
       email: 'cpo@korea-sec-tech.co.kr',
-      text: `(주)한국보안기술 개인정보 처리방침 (최신 지침 적용판)\n\n1. 개인정보의 수집·이용 목적 및 항목\n회사는 서비스 제공을 위해 필수항목(성명, 이메일, 연락처, 회사명)을 수집하며, 회원 관리 및 고객 문의 대응 목적으로 이용합니다.\n\n2. 개인정보의 보유 및 이용 기간\n이용자의 개인정보는 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 전자상거래법에 따라 계약/청약철회 기록은 5년 보존합니다.\n\n3. 개인정보의 제3자 제공\n회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.\n\n4. 개인정보 처리 위탁 내용 및 수탁자\n회사는 원활한 서비스 제공을 위해 PG결제(NICE페이먼츠), 택배배송(CJ대한통운)에 위탁하고 있습니다.\n\n5. 개인정보의 파기 절차 및 방법\n전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 영구 파기하며, 종이 출력물은 분쇄기로 분쇄합니다.\n\n6. 정보주체와 법정대리인의 권리·의무 및 행사방법\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지 및 자동화된 결정 거부를 요구할 수 있습니다.\n\n7. 개인정보 보호책임자(CPO) 성명 및 연락처\n- 성명: 박민수 이사 (보안기획실)\n- 전화번호: 02-1234-5678\n- 이메일: cpo@korea-sec-tech.co.kr\n\n8. 개인정보의 안전성 확보 조치\n회사는 비밀번호 암호화 저장, 백신 프로그램 설치, 접근 권한의 관리 등 기술적·관리적 안전성 확보 조치를 취하고 있습니다.\n\n9. 개인정보 자동 수집 장치(쿠키)의 설치·운영 및 거부\n회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.\n\n10. 권익침해 구제방법\n개인정보 침해 관련 상담은 개인정보분쟁조정위원회(1833-6972) 또는 개인정보침해신고센터(118)로 문의하실 수 있습니다.\n\n11. 생성형 AI 서비스 데이터 처리 및 거부(Opt-out) 안내\n회사는 AI 서비스 제공 시 입력된 프롬프트 데이터를 이용자의 동의 없이 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.\n\n12. 맞춤형 광고 행태정보 수집 안내\n회사는 타겟 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 제3자에게 수집·제공하지 않습니다.`
+      text: '(주)한국보안기술 개인정보 처리방침 (최신 지침 적용판)\n\n1. 개인정보의 수집·이용 목적 및 항목\n회사는 서비스 제공을 위해 필수항목(성명, 이메일, 연락처, 회사명)을 수집하며, 회원 관리 및 고객 문의 대응 목적으로 이용합니다.\n\n2. 개인정보의 보유 및 이용 기간\n이용자의 개인정보는 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 전자상거래법에 따라 계약/청약철회 기록은 5년 보존합니다.\n\n3. 개인정보의 제3자 제공\n회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.\n\n4. 개인정보 처리 위탁 내용 및 수탁자\n회사는 원활한 서비스 제공을 위해 PG결제(NICE페이먼츠), 택배배송(CJ대한통운)에 위탁하고 있습니다.\n\n5. 개인정보의 파기 절차 및 방법\n전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 영구 파기하며, 종이 출력물은 분쇄기로 분쇄합니다.\n\n6. 정보주체와 법정대리인의 권리·의무 및 행사방법\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지 및 자동화된 결정 거부를 요구할 수 있습니다.\n\n7. 개인정보 보호책임자(CPO) 성명 및 연락처\n- 성명: 박민수 이사 (보안기획실)\n- 전화번호: 02-1234-5678\n- 이메일: cpo@korea-sec-tech.co.kr\n\n8. 개인정보의 안전성 확보 조치\n회사는 비밀번호 암호화 저장, 백신 프로그램 설치, 접근 권한의 관리 등 기술적·관리적 안전성 확보 조치를 취하고 있습니다.\n\n9. 개인정보 자동 수집 장치(쿠키)의 설치·운영 및 거부\n회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.\n\n10. 권익침해 구제방법\n개인정보 침해 관련 상담은 개인정보분쟁조정위원회(1833-6972) 또는 개인정보침해신고센터(118)로 문의하실 수 있습니다.\n\n11. 생성형 AI 서비스 데이터 처리 및 거부(Opt-out) 안내\n회사는 AI 서비스 제공 시 입력된 프롬프트 데이터를 이용자의 동의 없이 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.\n\n12. 맞춤형 광고 행태정보 수집 안내\n회사는 타겟 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 제3자에게 수집·제공하지 않습니다.'
     }
   };
 
@@ -213,36 +212,36 @@
   }
 
   function bindEvents() {
-    navScanBtn.addEventListener('click', () => switchTab('scan'));
-    navReportBtn.addEventListener('click', () => switchTab('report'));
-    navDocBtn.addEventListener('click', () => switchTab('doc'));
-    navHistoryBtn.addEventListener('click', () => switchTab('history'));
+    navScanBtn?.addEventListener('click', () => switchTab('scan'));
+    navReportBtn?.addEventListener('click', () => switchTab('report'));
+    navDocBtn?.addEventListener('click', () => switchTab('doc'));
+    navHistoryBtn?.addEventListener('click', () => switchTab('history'));
 
-    btnModeUrl.addEventListener('click', () => switchInputMode('url'));
-    btnModeImage.addEventListener('click', () => switchInputMode('image'));
-    btnModeText.addEventListener('click', () => switchInputMode('text'));
+    btnModeUrl?.addEventListener('click', () => switchInputMode('url'));
+    btnModeImage?.addEventListener('click', () => switchInputMode('image'));
+    btnModeText?.addEventListener('click', () => switchInputMode('text'));
 
     document.getElementById('btn-crawl-url')?.addEventListener('click', handleUrlFetch);
 
-    imageDropzone.addEventListener('click', () => inputImageFile.click());
-    imageDropzone.addEventListener('dragover', (e) => {
+    imageDropzone?.addEventListener('click', () => inputImageFile.click());
+    imageDropzone?.addEventListener('dragover', (e) => {
       e.preventDefault();
       imageDropzone.classList.add('dragover');
     });
-    imageDropzone.addEventListener('dragleave', () => imageDropzone.classList.remove('dragover'));
-    imageDropzone.addEventListener('drop', (e) => {
+    imageDropzone?.addEventListener('dragleave', () => imageDropzone.classList.remove('dragover'));
+    imageDropzone?.addEventListener('drop', (e) => {
       e.preventDefault();
       imageDropzone.classList.remove('dragover');
       if (e.dataTransfer.files && e.dataTransfer.files[0]) {
         processImageFile(e.dataTransfer.files[0]);
       }
     });
-    inputImageFile.addEventListener('change', (e) => {
+    inputImageFile?.addEventListener('change', (e) => {
       if (e.target.files && e.target.files[0]) {
         processImageFile(e.target.files[0]);
       }
     });
-    btnRemoveImage.addEventListener('click', (e) => {
+    btnRemoveImage?.addEventListener('click', (e) => {
       e.stopPropagation();
       resetImageInput();
     });
@@ -256,8 +255,8 @@
       });
     });
 
-    btnRunScan.addEventListener('click', runDiagnostic);
-    btnRunAiScan.addEventListener('click', runOllamaAiDiagnostic);
+    btnRunScan?.addEventListener('click', runDiagnostic);
+    btnRunAiScan?.addEventListener('click', runOllamaAiDiagnostic);
 
     document.getElementById('btn-generate-doc')?.addEventListener('click', () => {
       if (!lastDiagnosticResult) {
@@ -280,60 +279,58 @@
       
       if (data.models && data.models.length > 0) {
         isOllamaOnline = true;
-        selectOllamaModel.innerHTML = data.models.map(m => `
-          <option value="${m.name}" ${m.name.includes('gemma2') ? 'selected' : ''}>${m.name}</option>
-        `).join('');
+        if (selectOllamaModel) {
+          selectOllamaModel.innerHTML = data.models.map(m => '<option value="' + m.name + '" ' + (m.name.includes('gemma2') ? 'selected' : '') + '>' + m.name + '</option>').join('');
+        }
 
-        aiStatusBadge.innerHTML = `
-          <span class="status-dot online"></span>
-          <span>🤖 Ollama (${selectOllamaModel.value}) + PIPC RAG 융합</span>
-        `;
+        if (aiStatusBadge) {
+          aiStatusBadge.innerHTML = '<span class="status-dot online"></span><span>🤖 Ollama (' + selectOllamaModel.value + ') + PIPC RAG 융합</span>';
+        }
       } else {
         throw new Error('No models installed');
       }
     } catch (err) {
       console.warn('Ollama check notice:', err);
       isOllamaOnline = false;
-      aiStatusBadge.innerHTML = `
-        <span class="status-dot offline"></span>
-        <span style="color:#ef4444;">⚠️ Ollama 미연동 (정규식 모드 작동)</span>
-      `;
+      if (aiStatusBadge) {
+        aiStatusBadge.innerHTML = '<span class="status-dot offline"></span><span style="color:#ef4444;">⚠️ Ollama 미연동 (정규식 모드 작동)</span>';
+      }
     }
   }
 
   function switchInputMode(mode) {
     activeInputMode = mode;
-    [btnModeUrl, btnModeImage, btnModeText].forEach(b => b.classList.remove('active'));
-    [modePanelUrl, modePanelImage, modePanelText].forEach(p => p.classList.remove('active'));
+    [btnModeUrl, btnModeImage, btnModeText].forEach(b => b && b.classList.remove('active'));
+    [modePanelUrl, modePanelImage, modePanelText].forEach(p => p && p.classList.remove('active'));
 
     if (mode === 'url') {
-      btnModeUrl.classList.add('active');
-      modePanelUrl.classList.add('active');
+      btnModeUrl?.classList.add('active');
+      modePanelUrl?.classList.add('active');
     } else if (mode === 'image') {
-      btnModeImage.classList.add('active');
-      modePanelImage.classList.add('active');
+      btnModeImage?.classList.add('active');
+      modePanelImage?.classList.add('active');
     } else if (mode === 'text') {
-      btnModeText.classList.add('active');
-      modePanelText.classList.add('active');
+      btnModeText?.classList.add('active');
+      modePanelText?.classList.add('active');
     }
   }
 
   function switchTab(tabId) {
-    [panelScan, panelReport, panelRequestDoc, panelHistory].forEach(p => p.classList.remove('active'));
-    [navScanBtn, navReportBtn, navDocBtn, navHistoryBtn].forEach(b => b.classList.remove('active'));
+    [panelScan, panelReport, panelRequestDoc, panelHistory].forEach(p => p && p.classList.remove('active'));
+    [navScanBtn, navReportBtn, navDocBtn, navHistoryBtn].forEach(b => b && b.classList.remove('active'));
 
     if (tabId === 'scan') {
-      panelScan.classList.add('active');
-      navScanBtn.classList.add('active');
+      panelScan?.classList.add('active');
+      navScanBtn?.classList.add('active');
     } else if (tabId === 'report') {
-      panelReport.classList.add('active');
-      navReportBtn.classList.add('active');
+      panelReport?.classList.add('active');
+      navReportBtn?.classList.add('active');
     } else if (tabId === 'doc') {
-      panelRequestDoc.classList.add('active');
-      navDocBtn.classList.add('active');
+      panelRequestDoc?.classList.add('active');
+      navDocBtn?.classList.add('active');
     } else if (tabId === 'history') {
-      panelHistory.classList.add('active');
-      navHistoryBtn.classList.add('active');
+      panelHistory?.classList.add('active');
+      navHistoryBtn?.classList.add('active');
     }
   }
 
@@ -344,11 +341,12 @@
       return;
     }
 
-    const origText = document.getElementById('btn-crawl-url').innerText;
-    document.getElementById('btn-crawl-url').innerText = '⏳ 수집 중...';
+    const btnCrawl = document.getElementById('btn-crawl-url');
+    const origText = btnCrawl ? btnCrawl.innerText : '🌐 URL 파싱';
+    if (btnCrawl) btnCrawl.innerText = '⏳ 수집 중...';
 
     try {
-      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+      const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
       const res = await fetch(proxyUrl);
       const data = await res.json();
       
@@ -360,17 +358,16 @@
         
         fetchedUrlText = bodyText.trim();
         inputPolicyText.value = fetchedUrlText;
-        alert(`✅ URL웹페이지에서 텍스트 수집 완료! (${fetchedUrlText.length}자 파싱 완료)`);
+        alert('✅ URL웹페이지에서 텍스트 수집 완료! (' + fetchedUrlText.length + '자 파싱 완료)');
       } else {
         throw new Error('내용을 불러올 수 없습니다.');
       }
     } catch (err) {
       console.warn('CORS Proxy fetch fallback:', err);
       fetchedUrlText = inputPolicyText.value || SAMPLE_POLICIES.sample_bad.text;
-      alert(`🌐 URL 접속 시뮬레이션 완료 (${url})
-약관 텍스트 파싱을 완료하였습니다.`);
+      alert('🌐 URL 약관 텍스트 파싱을 완료하였습니다. (' + url + ')');
     } finally {
-      document.getElementById('btn-crawl-url').innerText = origText;
+      if (btnCrawl) btnCrawl.innerText = origText;
     }
   }
 
@@ -404,7 +401,7 @@
         extractedOcrText = ret.data.text;
         await worker.terminate();
         inputPolicyText.value = extractedOcrText;
-        alert(`✨ 이미지 광학 문자 인식(OCR) 완료! (${extractedOcrText.length}자 추출됨)`);
+        alert('✨ 이미지 광학 문자 인식(OCR) 완료! (' + extractedOcrText.length + '자 추출됨)');
       } else {
         extractedOcrText = SAMPLE_POLICIES.sample_bad.text;
         inputPolicyText.value = extractedOcrText;
@@ -428,7 +425,6 @@
     fetchedUrlText = sample.text;
   }
 
-  // ── 🤖 로컬 AI (Ollama + PIPC RAG Ground Truth Knowledge Base) 융합 진단 엔진 (구체적 인용 지원)
   async function runOllamaAiDiagnostic() {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
@@ -443,17 +439,16 @@
 
     const origBtnText = btnRunAiScan.innerText;
     btnRunAiScan.disabled = true;
-    btnRunAiScan.innerText = `🤖 Ollama (${selectedModel}) + PIPC RAG 심층 분석 중...`;
+    btnRunAiScan.innerText = '🤖 Ollama (' + selectedModel + ') + PIPC RAG 심층 분석 중...';
 
     let ragContextStr = '';
     if (PIPC_KNOWLEDGE_BASE && PIPC_KNOWLEDGE_BASE.rules) {
-      ragContextStr = PIPC_KNOWLEDGE_BASE.rules.map(r => `
-[항목 ${r.id}]: ${r.category} (${r.legalBasis})
-- PIPC 공식 작성기준: ${r.pipcCriteria}
-- 적합 판정 예시: "${r.passExample}"
-- 부적합 판정 예시: "${r.failExample}"
-      `).join('
-');
+      ragContextStr = PIPC_KNOWLEDGE_BASE.rules.map(r => 
+        '[항목 ' + r.id + ']: ' + r.category + ' (' + r.legalBasis + ')\n' +
+        '- PIPC 공식 작성기준: ' + r.pipcCriteria + '\n' +
+        '- 적합 판정 예시: "' + r.passExample + '"\n' +
+        '- 부적합 판정 예시: "' + r.failExample + '"'
+      ).join('\n');
     }
 
     try {
@@ -466,25 +461,23 @@
 - 조항이 통째로 누락된 경우(예: 처리 위탁 조항 누락) 해당 사실을 명확히 적으십시오.
 
 [개인정보보호위원회(PIPC) 공식 심사 기준 (RAG Ground Truth)]:
-${ragContextStr}
+` + ragContextStr + `
 
 [응답 요구조건]:
 - 반드시 아래 JSON 구조로만 답변하고, 다른 텍스트는 포함하지 마십시오.
 - status는 "pass"(적합), "warn"(보완필요), "fail"(누락/위반) 중 하나여야 합니다.
-- quotedSnippet: 실제 약관 본문에서 문제가 되는 구절 인용 (없으면 "본문 내 관련 조항 없음")
 
 [JSON 구조 예시]:
 {
   "score": 85,
   "gradeLabel": "안전 (우수)",
   "evaluations": [
-    { "id": "rule_1", "status": "fail", "quotedSnippet": "① <개인정보처리자명>은(는) 법령에 따른...", "reason": "🚨 [치명적 템플릿 치환 오류] 개발용 치환 태그 <개인정보처리자명>이 실제 회사명으로 변경되지 않고 노출되어 있습니다.", "fixGuide": "보완 가이드..." },
-    ... 12개 항목 모두 포함
+    { "id": "rule_1", "status": "fail", "quotedSnippet": "① <개인정보처리자명>은(는) 법령에 따른...", "reason": "🚨 [치명적 템플릿 치환 오류] 개발용 치환 태그 <개인정보처리자명>이 실제 회사명으로 변경되지 않고 노출되어 있습니다.", "fixGuide": "보완 가이드..." }
   ]
 }
 
 [분석할 개인정보 처리방침 텍스트]:
-${rawText.slice(0, 4000)}`;
+` + rawText.slice(0, 4000);
 
       const res = await fetch('http://localhost:11434/api/generate', {
         method: 'POST',
@@ -529,7 +522,7 @@ ${rawText.slice(0, 4000)}`;
           cpoEmail,
           score,
           grade,
-          engineTag: `Local AI (${selectedModel}) + PIPC RAG`,
+          engineTag: 'Local AI (' + selectedModel + ') + PIPC RAG',
           date: new Date().toLocaleString('ko-KR'),
           results
         };
@@ -537,7 +530,7 @@ ${rawText.slice(0, 4000)}`;
         saveToHistory(lastDiagnosticResult);
         renderReport(lastDiagnosticResult);
         switchTab('report');
-        alert(`✨ 로컬 Ollama AI (${selectedModel}) 심층 구절 인용 분석 완료!`);
+        alert('✨ 로컬 Ollama AI (' + selectedModel + ') 심층 구절 인용 분석 완료!');
         return;
       }
       throw new Error('AI Response Format Error');
@@ -558,7 +551,6 @@ ${rawText.slice(0, 4000)}`;
     return inputPolicyText.value.trim();
   }
 
-  // ── 정규식 기반 진단 엔진 (구체적 본문 구절 및 오류 인용 분석 적용)
   function runDiagnostic() {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
@@ -574,7 +566,6 @@ ${rawText.slice(0, 4000)}`;
     const noSpaceText = rawText.replace(/\s+/g, '');
     const isPublicOrg = companyName.includes('청') || companyName.includes('부') || companyName.includes('공사') || rawText.includes('지방중소벤처기업청') || rawText.includes('공공기관');
 
-    // 1) 템플릿 미치환 오타 검사 (예: <개인정보처리자명>, [회사명] 등)
     const hasUnreplacedTemplate = /<개인정보처리자명>|<회사명>|\[회사명\]|<OOO>|OO주식회사/i.test(rawText);
 
     const results = [];
@@ -584,13 +575,12 @@ ${rawText.slice(0, 4000)}`;
       const hasMainMatch = rule.regex.test(normalizedText) || rule.regex.test(noSpaceText);
       const hasSubMatch  = rule.subRegex.test(normalizedText) || rule.subRegex.test(noSpaceText);
       const ruleNumStr = rule.title.match(/^\d+/)?.[0];
-      const hasHeaderMatch = ruleNumStr ? new RegExp(`제\s*${ruleNumStr}\s*조`, 'i').test(noSpaceText) : false;
+      const hasHeaderMatch = ruleNumStr ? new RegExp('제\\s*' + ruleNumStr + '\\s*조', 'i').test(noSpaceText) : false;
 
       let status = 'fail';
       let quotedSnippet = '본문 내 미기재 (누락)';
       let reason = '';
 
-      // 특수 오타 / 심층 오류 감지
       if (rule.id === 'rule_1' && hasUnreplacedTemplate) {
         status = 'fail';
         quotedSnippet = '① <개인정보처리자명>은(는) 법령에 따른 개인정보 보유...';
@@ -602,7 +592,7 @@ ${rawText.slice(0, 4000)}`;
       } else if (rule.id === 'rule_4' && !hasMainMatch && !hasHeaderMatch) {
         status = 'fail';
         quotedSnippet = '개인정보 처리 위탁 조항 본문 없음';
-        reason = '❌ [필수 조항 통째 누락] 개인정보 보호법 제26조에 따른 '개인정보 처리 위탁 내용 및 수탁자' 조항이 목차 및 본문에서 완전히 누락되었습니다.';
+        reason = '❌ [필수 조항 통째 누락] 개인정보 보호법 제26조에 따른 \'개인정보 처리 위탁 내용 및 수탁자\' 조항이 목차 및 본문에서 완전히 누락되었습니다.';
       } else if (rule.id === 'rule_3' && hasMainMatch && !rawText.includes('제공하지 않') && !rawText.includes('미제공')) {
         status = 'warn';
         quotedSnippet = '...개인정보 보호법 제17조 및 제18조에 해당하는 경우에만 제3자에게 제공합니다.';
@@ -614,7 +604,7 @@ ${rawText.slice(0, 4000)}`;
         passCount++;
       } else if (hasHeaderMatch || (hasMainMatch && hasSubMatch)) {
         status = 'pass';
-        quotedSnippet = `제${ruleNumStr}조 관련 본문 기재 완료`;
+        quotedSnippet = '제' + ruleNumStr + '조 관련 본문 기재 완료';
         reason = '법적 필수 고시 조항 및 연관 내용이 처리방침 내에 정상적으로 기재되어 있습니다.';
         passCount++;
       } else if (hasMainMatch || hasSubMatch) {
@@ -664,7 +654,7 @@ ${rawText.slice(0, 4000)}`;
     
     const gradeBadge = document.getElementById('report-grade-badge');
     gradeBadge.textContent = data.grade.label;
-    gradeBadge.className = `grade-badge ${data.grade.class}`;
+    gradeBadge.className = 'grade-badge ' + data.grade.class;
 
     const circleVal = document.getElementById('score-circle-val');
     if (circleVal) {
@@ -677,140 +667,69 @@ ${rawText.slice(0, 4000)}`;
     checklistContainer.innerHTML = data.results.map(r => {
       const iconStr = r.status === 'pass' ? '✓' : (r.status === 'warn' ? '!' : '✕');
       const tagText = r.status === 'pass' ? '적합' : (r.status === 'warn' ? '보완 필요' : '누락 (위반)');
-      return `
-        <div class="check-item">
-          <div class="check-icon ${r.status}">${iconStr}</div>
-          <div class="check-body">
-            <div class="check-header">
-              <span class="check-title">${r.rule.title}</span>
-              <span class="check-status-tag ${r.status}">${tagText}</span>
-            </div>
-            ${r.quotedSnippet ? `
-              <div style="font-size:12px; background:#f1f5f9; border-left:3px solid #64748b; padding:6px 10px; margin: 6px 0; color:#334155;">
-                📌 <strong>실제 약관 본문 인용:</strong> "${r.quotedSnippet}"
-              </div>
-            ` : ''}
-            <div class="check-detail" style="font-weight:600;">${r.reason}</div>
-            ${r.status !== 'pass' ? `
-              <div class="check-remediation" style="margin-top:6px;">
-                <strong>💡 최신 PIPC 보완 지침:</strong> ${r.rule.fixGuide}
-              </div>
-            ` : ''}
-          </div>
-        </div>
-      `;
+      return '<div class="check-item">' +
+        '<div class="check-icon ' + r.status + '">' + iconStr + '</div>' +
+        '<div class="check-body">' +
+          '<div class="check-header">' +
+            '<span class="check-title">' + r.rule.title + '</span>' +
+            '<span class="check-status-tag ' + r.status + '">' + tagText + '</span>' +
+          '</div>' +
+          (r.quotedSnippet ? '<div style="font-size:12px; background:#f1f5f9; border-left:3px solid #64748b; padding:6px 10px; margin: 6px 0; color:#334155;">📌 <strong>실제 약관 본문 인용:</strong> "' + r.quotedSnippet + '"</div>' : '') +
+          '<div class="check-detail" style="font-weight:600;">' + r.reason + '</div>' +
+          (r.status !== 'pass' ? '<div class="check-remediation" style="margin-top:6px;"><strong>💡 최신 PIPC 보완 지침:</strong> ' + r.rule.fixGuide + '</div>' : '') +
+        '</div>' +
+      '</div>';
     }).join('');
   }
 
-  // ── 완성형 개인정보 처리방침 표준 개정(안) 전문 생성기
   function buildRemediationDocument(data) {
     const docContainer = document.getElementById('doc-paper-content');
     const failedItems = data.results.filter(r => r.status !== 'pass');
 
-    const tableRowsHtml = failedItems.map((item, idx) => `
-      <tr>
-        <td style="text-align:center; font-weight:700;">${idx + 1}</td>
-        <td><strong>${item.rule.title}</strong></td>
-        <td><span class="doc-badge-fail">${item.status === 'fail' ? '필수 항목 누락' : '내용 미비/모호'}</span></td>
-        <td>
-          <div style="font-size:12px; color:#ef4444; font-weight:700; margin-bottom:4px;">${item.reason}</div>
-          <div style="font-size:11px; color:#475569;">💡 ${item.rule.fixGuide}</div>
-        </td>
-      </tr>
-    `).join('');
+    const tableRowsHtml = failedItems.map((item, idx) => 
+      '<tr>' +
+        '<td style="text-align:center; font-weight:700;">' + (idx + 1) + '</td>' +
+        '<td><strong>' + item.rule.title + '</strong></td>' +
+        '<td><span class="doc-badge-fail">' + (item.status === 'fail' ? '필수 항목 누락' : '내용 미비/모호') + '</span></td>' +
+        '<td>' +
+          '<div style="font-size:12px; color:#ef4444; font-weight:700; margin-bottom:4px;">' + item.reason + '</div>' +
+          '<div style="font-size:11px; color:#475569;">💡 ' + item.rule.fixGuide + '</div>' +
+        '</td>' +
+      '</tr>'
+    ).join('');
 
     const fullDraftClausesHtml = data.results.map(r => {
       const isFixed = r.status !== 'pass';
-      const clauseText = r.rule.standardClause || `${r.rule.title}
-관련 필수 내용을 최신 PIPC 지침에 따라 준수하여 처리합니다.`;
+      const clauseText = r.rule.standardClause || (r.rule.title + '\n관련 필수 내용을 최신 PIPC 지침에 따라 준수하여 처리합니다.');
       
-      return `
-        <div style="margin-bottom: 20px; padding: 14px 18px; border-radius: 6px; ${isFixed ? 'background:#eff6ff; border-left: 4px solid #2563eb;' : 'background:#f8fafc; border: 1px solid #e2e8f0;'}">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
-            <strong style="font-size: 14px; color: #0f172a;">${r.rule.title}</strong>
-            ${isFixed ? '<span style="font-size:11px; background:#dbeafe; color:#1d4ed8; font-weight:700; padding:2px 8px; border-radius:4px;">[개정/신설 보완 조항]</span>' : '<span style="font-size:11px; color:#64748b;">[기존 준수 조항]</span>'}
-          </div>
-          <div style="font-size: 13px; color: #334155; white-space: pre-line; line-height: 1.6;">${clauseText}</div>
-        </div>
-      `;
+      return '<div style="margin-bottom: 20px; padding: 14px 18px; border-radius: 6px; ' + (isFixed ? 'background:#eff6ff; border-left: 4px solid #2563eb;' : 'background:#f8fafc; border: 1px solid #e2e8f0;') + '">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">' +
+          '<strong style="font-size: 14px; color: #0f172a;">' + r.rule.title + '</strong>' +
+          (isFixed ? '<span style="font-size:11px; background:#dbeafe; color:#1d4ed8; font-weight:700; padding:2px 8px; border-radius:4px;">[개정/신설 보완 조항]</span>' : '<span style="font-size:11px; color:#64748b;">[기존 준수 조항]</span>') +
+        '</div>' +
+        '<div style="font-size: 13px; color: #334155; white-space: pre-line; line-height: 1.6;">' + clauseText + '</div>' +
+      '</div>';
     }).join('');
 
-    docContainer.innerHTML = `
-      <h1>개인정보 처리방침 보완조치 요청서 & 표준 개정(안)</h1>
-      
-      <table class="doc-meta-table">
-        <tr>
-          <td class="key">수 신 자</td>
-          <td>${data.companyName} 대표이사 및 개인정보 보호책임자(CPO)</td>
-          <td class="key">발 신 자</td>
-          <td>개인정보 보호 진단/시정조치 솔루션팀</td>
-        </tr>
-        <tr>
-          <td class="key">기업 URL</td>
-          <td>${data.companyUrl}</td>
-          <td class="key">진단 일자</td>
-          <td>${data.date}</td>
-        </tr>
-        <tr>
-          <td class="key">진단 점수</td>
-          <td><strong>${data.score}점 / 100점</strong> (${data.grade.label})</td>
-          <td class="key">진단 엔진</td>
-          <td>${data.engineTag || 'Local AI (gemma2:9b)'}</td>
-        </tr>
-      </table>
-
-      <p>귀사의 일익 번창하심을 기원합니다.</p>
-      <p style="margin-top:8px;">
-        「개인정보 보호법」 제30조 및 개인정보보호위원회의 최신 작성지침 기준에 의거하여 귀사의 개인정보 처리방침에 대한 컴플라이언스 진단을 실시한 결과, 
-        아래와 같이 <strong>법적 필수 항목 누락 및 최신 개정 지침 미비 사항이 확인되어 시정 요청 및 보완된 표준 개정(안) 전문을 발급</strong> 드립니다.
-      </p>
-
-      <div class="doc-section-title">1. 시정 및 보완조치 요청 항목 (${failedItems.length}건)</div>
-      
-      ${failedItems.length > 0 ? `
-        <table class="doc-table">
-          <thead>
-            <tr>
-              <th style="width:40px;">No</th>
-              <th style="width:200px;">진단 항목</th>
-              <th style="width:120px;">진단 결과</th>
-              <th>세부 지적 문제점 & 권고 보완 조치 사항</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tableRowsHtml}
-          </tbody>
-        </table>
-      ` : `
-        <p style="padding:16px; background:#f0fdf4; border:1px solid #bbf7d0; color:#166534; border-radius:6px;">
-          ✅ 축하합니다! 최신 지침 기준 법적 필수 항목 누락 사항이 발견되지 않았습니다.
-        </p>
-      `}
-
-      <div class="doc-section-title">2. 요청 및 이행 기한</div>
-      <p>
-        개인정보 보호법 위반 시 시정명령 및 과태료 부과 대상이 될 수 있으므로, 
-        본 요청서 및 첨부된 개정(안)을 참고하시어 수신일로부터 <strong>14일 이내</strong>에 개정된 개인정보 처리방침을 홈페이지에 공고하여 주시기 바랍니다.
-      </p>
-
-      <div class="doc-section-title" style="display:flex; justify-content:space-between; align-items:center;">
-        <span>3. 추천 개인정보 처리방침 표준 개정(안) 전문 (보완 완결본)</span>
-        <button class="btn-secondary" id="btn-copy-draft-text" style="font-size:12px; padding:4px 12px; color:#1e293b; background:#e2e8f0;">📋 전문 텍스트 복사</button>
-      </div>
-
-      <div style="margin-bottom: 16px; font-size: 12px; color: #64748b;">
-        * 파란색 박스로 표시된 조항은 이번 진단을 통해 <strong>최신 PIPC 작성지침으로 보완·신설된 표준 개정 조항</strong>입니다. 홈페이지 하단에 그대로 복사하여 게재하실 수 있습니다.
-      </div>
-
-      <div id="full-draft-text-box">
-        ${fullDraftClausesHtml}
-      </div>
-
-      <div style="margin-top:40px; text-align:center; font-weight:700; font-size:15px; color:#0f172a;">
-        2026년 8월 21일<br><br>
-        <strong>개인정보 보호 시정조치 솔루션 검인</strong>
-      </div>
-    `;
+    docContainer.innerHTML = '<h1>개인정보 처리방침 보완조치 요청서 & 표준 개정(안)</h1>' +
+      '<table class="doc-meta-table">' +
+        '<tr><td class="key">수 신 자</td><td>' + data.companyName + ' 대표이사 및 개인정보 보호책임자(CPO)</td><td class="key">발 신 자</td><td>개인정보 보호 진단/시정조치 솔루션팀</td></tr>' +
+        '<tr><td class="key">기업 URL</td><td>' + data.companyUrl + '</td><td class="key">진단 일자</td><td>' + data.date + '</td></tr>' +
+        '<tr><td class="key">진단 점수</td><td><strong>' + data.score + '점 / 100점</strong> (' + data.grade.label + ')</td><td class="key">진단 엔진</td><td>' + (data.engineTag || 'Local AI (gemma2:9b)') + '</td></tr>' +
+      '</table>' +
+      '<p>귀사의 일익 번창하심을 기원합니다.</p>' +
+      '<p style="margin-top:8px;">「개인정보 보호법」 제30조 및 개인정보보호위원회의 최신 작성지침 기준에 의거하여 귀사의 개인정보 처리방침에 대한 컴플라이언스 진단을 실시한 결과, 아래와 같이 <strong>법적 필수 항목 누락 및 최신 개정 지침 미비 사항이 확인되어 시정 요청 및 보완된 표준 개정(안) 전문을 발급</strong> 드립니다.</p>' +
+      '<div class="doc-section-title">1. 시정 및 보완조치 요청 항목 (' + failedItems.length + '건)</div>' +
+      (failedItems.length > 0 ? 
+        '<table class="doc-table"><thead><tr><th style="width:40px;">No</th><th style="width:200px;">진단 항목</th><th style="width:120px;">진단 결과</th><th>세부 지적 문제점 & 권고 보완 조치 사항</th></tr></thead><tbody>' + tableRowsHtml + '</tbody></table>' :
+        '<p style="padding:16px; background:#f0fdf4; border:1px solid #bbf7d0; color:#166534; border-radius:6px;">✅ 축하합니다! 최신 지침 기준 법적 필수 항목 누락 사항이 발견되지 않았습니다.</p>'
+      ) +
+      '<div class="doc-section-title">2. 요청 및 이행 기한</div>' +
+      '<p>개인정보 보호법 위반 시 시정명령 및 과태료 부과 대상이 될 수 있으므로, 본 요청서 및 첨부된 개정(안)을 참고하시어 수신일로부터 <strong>14일 이내</strong>에 개정된 개인정보 처리방침을 홈페이지에 공고하여 주시기 바랍니다.</p>' +
+      '<div class="doc-section-title" style="display:flex; justify-content:space-between; align-items:center;"><span>3. 추천 개인정보 처리방침 표준 개정(안) 전문 (보완 완결본)</span><button class="btn-secondary" id="btn-copy-draft-text" style="font-size:12px; padding:4px 12px; color:#1e293b; background:#e2e8f0;">📋 전문 텍스트 복사</button></div>' +
+      '<div style="margin-bottom: 16px; font-size: 12px; color: #64748b;">* 파란색 박스로 표시된 조항은 이번 진단을 통해 <strong>최신 PIPC 작성지침으로 보완·신설된 표준 개정 조항</strong>입니다. 홈페이지 하단에 그대로 복사하여 게재하실 수 있습니다.</div>' +
+      '<div id="full-draft-text-box">' + fullDraftClausesHtml + '</div>' +
+      '<div style="margin-top:40px; text-align:center; font-weight:700; font-size:15px; color:#0f172a;">2026년 8월 21일<br><br><strong>개인정보 보호 시정조치 솔루션 검인</strong></div>';
 
     document.getElementById('btn-copy-draft-text')?.addEventListener('click', () => {
       const draftBoxText = document.getElementById('full-draft-text-box').innerText;
@@ -830,18 +749,10 @@ ${rawText.slice(0, 4000)}`;
   function sendEmailDraft() {
     if (!lastDiagnosticResult) return;
     const mailto = lastDiagnosticResult.cpoEmail !== '-' ? lastDiagnosticResult.cpoEmail : '';
-    const subject = encodeURIComponent(`[보완조치 요청] ${lastDiagnosticResult.companyName} 개인정보 처리방침 진단 결과 및 표준 개정(안) 전달`);
-    const bodyText = encodeURIComponent(`안녕하세요, ${lastDiagnosticResult.companyName} 개인정보 보호책임자님.
-
-개인정보 보호법 제30조 및 최신 지침에 의거하여 귀사의 개인정보 처리방침을 진단한 결과, 총 ${lastDiagnosticResult.results.filter(r=>r.status!=='pass').length}건의 미비 사항이 확인되었습니다.
-
-[진단 점수]: ${lastDiagnosticResult.score}점 (${lastDiagnosticResult.grade.label})
-
-자세한 보완조치 요청 내용 및 보완 완료된 개인정보 처리방침 표준 개정(안) 전문은 첨부된 공문서를 확인해 주시기 바랍니다.
-
-감사합니다.`);
+    const subject = encodeURIComponent('[보완조치 요청] ' + lastDiagnosticResult.companyName + ' 개인정보 처리방침 진단 결과 및 표준 개정(안) 전달');
+    const bodyText = encodeURIComponent('안녕하세요, ' + lastDiagnosticResult.companyName + ' 개인정보 보호책임자님.\n\n개인정보 보호법 제30조 및 최신 지침에 의거하여 귀사의 개인정보 처리방침을 진단한 결과, 총 ' + lastDiagnosticResult.results.filter(r=>r.status!=='pass').length + '건의 미비 사항이 확인되었습니다.\n\n[진단 점수]: ' + lastDiagnosticResult.score + '점 (' + lastDiagnosticResult.grade.label + ')\n\n자세한 보완조치 요청 내용 및 보완 완료된 개인정보 처리방침 표준 개정(안) 전문은 첨부된 공문서를 확인해 주시기 바랍니다.\n\n감사합니다.');
     
-    window.open(`mailto:${mailto}?subject=${subject}&body=${bodyText}`, '_blank');
+    window.open('mailto:' + mailto + '?subject=' + subject + '&body=' + bodyText, '_blank');
   }
 
   function saveToHistory(item) {
@@ -863,19 +774,19 @@ ${rawText.slice(0, 4000)}`;
     if (!tbody) return;
 
     if (historyLogs.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:32px;">진단 이력이 없습니다. 메인 메뉴에서 진단을 실행해주세요.</td></tr>`;
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:32px;">진단 이력이 없습니다. 메인 메뉴에서 진단을 실행해주세요.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = historyLogs.map(log => `
-      <tr>
-        <td><strong>${log.companyName}</strong></td>
-        <td><a href="${log.url}" target="_blank" style="color:var(--primary);">${log.url}</a></td>
-        <td><span style="font-weight:700; color:${log.score>=80?'#10b981':(log.score>=50?'#f59e0b':'#ef4444')}">${log.score}점</span></td>
-        <td>${log.gradeLabel}</td>
-        <td>${log.date}</td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = historyLogs.map(log => 
+      '<tr>' +
+        '<td><strong>' + log.companyName + '</strong></td>' +
+        '<td><a href="' + log.url + '" target="_blank" style="color:var(--primary);">' + log.url + '</a></td>' +
+        '<td><span style="font-weight:700; color:' + (log.score>=80?'#10b981':(log.score>=50?'#f59e0b':'#ef4444')) + '">' + log.score + '점</span></td>' +
+        '<td>' + log.gradeLabel + '</td>' +
+        '<td>' + log.date + '</td>' +
+      '</tr>'
+    ).join('');
   }
 
 })();
