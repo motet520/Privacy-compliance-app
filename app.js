@@ -1,15 +1,13 @@
-﻿// ============================================================
-// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v6.0 - PIPC RAG Engine)
-// 개인정보보호위원회(PIPC) 공식 지식베이스(Knowledge Base) RAG 주입 연동
+// ============================================================
+// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v7.0 - 표준 개정(안) 전문 생성기)
+// 개인정보보호위원회(PIPC) 지식베이스 기반 완성형 표준 개정(안) 자동 발급
 // ============================================================
 
 (function () {
   'use strict';
 
-  // ── 개인정보보호위원회(PIPC) 공식 지식베이스 (RAG Context)
   let PIPC_KNOWLEDGE_BASE = null;
 
-  // ── 12대 핵심 진단 항목 (유연 정규식 포함)
   const DIAGNOSTIC_RULES = [
     {
       id: 'rule_1',
@@ -17,7 +15,8 @@
       desc: '처리하는 개인정보의 필수/선택 항목과 수집 목적이 구체적으로 구분 명시되어야 합니다.',
       regex: /(수집|목적|처리하는\s*개인정보|수집항목|수집하는\s*개인정보|개인정보\s*파일)/i,
       subRegex: /(이름|성명|이메일|연락처|전화번호|주소|서비스|필수|선택|회원|목적)/i,
-      fixGuide: '수집하는 필수 항목과 선택 항목을 구체적으로 구분하고, 회원가입·서비스 이행 등 개별 목적을 명확히 작성하세요.'
+      fixGuide: '수집하는 필수 항목과 선택 항목을 구체적으로 구분하고, 회원가입·서비스 이행 등 개별 목적을 명확히 작성하세요.',
+      standardClause: '제1조(개인정보의 수집·이용 목적 및 항목)\n회사는 다음의 목적을 위하여 최소한의 개인정보를 처리합니다.\n- 필수항목: 성명, 이메일, 휴대전화번호, 비밀번호 (목적: 회원가입, 본인확인, 서비스 제공)\n- 선택항목: 회사명, 직책 (목적: 고객 문의 대응 및 맞춤 서비스)'
     },
     {
       id: 'rule_2',
@@ -25,7 +24,8 @@
       desc: '원칙적 파기 시점 및 전자상거래법, 통신비밀보호법 등 관계 법령에 따른 보존 기간이 기재되어야 합니다.',
       regex: /(보유|이용\s*기간|보존\s*기간|파기\s*시점)/i,
       subRegex: /(법령|상법|전자상거래|파기|보존|년|월|탈퇴)/i,
-      fixGuide: '원칙적 보유 기간(회원 탈퇴 시 등)과 관련 법령(전자상거래법 5년, 통신비밀보호법 3개월 등)에 의한 보존 기간을 명시하세요.'
+      fixGuide: '원칙적 보유 기간(회원 탈퇴 시 등)과 관련 법령(전자상거래법 5년, 통신비밀보호법 3개월 등)에 의한 보존 기간을 명시하세요.',
+      standardClause: '제2조(개인정보의 보유 및 이용기간)\n① 회사는 회원 탈퇴 시까지 이용자의 개인정보를 보유 및 이용합니다.\n② 단, 관련 법령에 따라 보존할 필요가 있는 경우 이하 기간 동안 보존합니다.\n- 전자상거래법 계약/청약철회 기록: 5년\n- 통신비밀보호법 로그인 기록: 3개월'
     },
     {
       id: 'rule_3',
@@ -33,7 +33,8 @@
       desc: '제3자 제공 여부, 제공받는 자, 목적, 항목, 보유기간이 명시되어야 합니다.',
       regex: /(제\s*3\s*자\s*제공|3\s*자\s*제공|제3자|제\s*3\s*자)/i,
       subRegex: /(동의|제공받는|제공하지\s*않|별도\s*동의|없음|원칙적으로\s*제공)/i,
-      fixGuide: '제3자 제공이 없을 경우 "원칙적으로 제3자에게 제공하지 않습니다"를 명시하고, 제공 시 별도 동의 절차와 항목을 기재하세요.'
+      fixGuide: '제3자 제공이 없을 경우 "원칙적으로 제3자에게 제공하지 않습니다"를 명시하고, 제공 시 별도 동의 절차와 항목을 기재하세요.',
+      standardClause: '제3조(개인정보의 제3자 제공)\n회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 단, 법률의 특별한 규정이 있거나 정보주체의 별도 동의를 받은 경우에 한하여 제공합니다.'
     },
     {
       id: 'rule_4',
@@ -41,7 +42,8 @@
       desc: '외주/위탁 업무 내용과 수탁업체 사명이 기재되어야 합니다.',
       regex: /(위탁|수탁자|위탁업체|위탁\s*내용|수탁\s*업체)/i,
       subRegex: /(수탁|위탁|위탁하지\s*않|택배|PG|유형|범위|업무)/i,
-      fixGuide: '결제, 배송, IT 인프라 등 개인정보 처리를 위탁받는 업체명과 위탁 업무 범위를 명시하세요.'
+      fixGuide: '결제, 배송, IT 인프라 등 개인정보 처리를 위탁받는 업체명과 위탁 업무 범위를 명시하세요.',
+      standardClause: '제4조(개인정보 처리 위탁)\n회사는 원활한 서비스 이행을 위하여 아래와 같이 개인정보 처리업무를 위탁하고 있습니다.\n- 결제 서비스: PG사(NICE페이먼츠 등)\n- 클라우드 인프라: Amazon Web Services(AWS)'
     },
     {
       id: 'rule_5',
@@ -49,7 +51,8 @@
       desc: '전자적 파일의 영구 삭제 방법 및 종이 출력물 분쇄/소각 방법이 명시되어야 합니다.',
       regex: /(파기|파기\s*절차|파기\s*방법|삭제\s*방법)/i,
       subRegex: /(전자적|영구|삭제|분쇄|소각|복구|기술적|절차)/i,
-      fixGuide: '전자적 파일(복구 불가능한 기술적 삭제)과 서면 출력물(분쇄/소각)의 구체적 파기 방식을 명시하세요.'
+      fixGuide: '전자적 파일(복구 불가능한 기술적 삭제)과 서면 출력물(분쇄/소각)의 구체적 파기 방식을 명시하세요.',
+      standardClause: '제5조(개인정보 파기 절차 및 방법)\n① 전자적 파일 형태: 복구할 수 없는 기술적 방법을 사용하여 지체 없이 영구 삭제합니다.\n② 종이 출력물: 문서 분쇄기로 분쇄하거나 소각하여 파기합니다.'
     },
     {
       id: 'rule_6',
@@ -57,7 +60,8 @@
       desc: '열람·정정·삭제·처리정지 요구권, 자동화된 결정 거부권 및 법정대리인 행사 방법이 기재되어야 합니다.',
       regex: /(권리|의무|열람|정정|삭제|처리\s*정지|권리\s*행사)/i,
       subRegex: /(행사|법정\s*대리인|요구|서면|자동화|정보주체)/i,
-      fixGuide: '정보주체 및 14세 미만 아동의 법정대리인이 권리를 행사할 수 있는 절차(서면, 이메일 등)를 기술하세요.'
+      fixGuide: '정보주체 및 14세 미만 아동의 법정대리인이 권리를 행사할 수 있는 절차(서면, 이메일 등)를 기술하세요.',
+      standardClause: '제6조(정보주체와 법정대리인의 권리·의무 및 행사방법)\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지를 서면 또는 이메일로 요구할 수 있으며 회사는 지체 없이 조치합니다.'
     },
     {
       id: 'rule_7',
@@ -65,7 +69,8 @@
       desc: '개인정보 보호책임자의 성명(또는 담당 부서명), 직책, 전화번호, 이메일이 반드시 포함되어야 합니다.',
       regex: /(보호\s*책임자|보호책임자|CPO|보호\s*담당|고충\s*처리|열람\s*청구)/i,
       subRegex: /(성명|이름|연락처|전화|이메일|부서|담당|실명|직책)/i,
-      fixGuide: '개인정보 보호책임자의 실명(또는 담당 부서명), 직책, 전화번호, 이메일 주소를 누락 없이 기재하세요.'
+      fixGuide: '개인정보 보호책임자의 실명(또는 담당 부서명), 직책, 전화번호, 이메일 주소를 누락 없이 기재하세요.',
+      standardClause: '제7조(개인정보 보호책임자 및 담당부서)\n회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 관련 고충처리를 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.\n- 개인정보 보호책임자: CPO (보안담당부서)\n- 연락처: privacy@company.com / 02-1234-5678'
     },
     {
       id: 'rule_8',
@@ -73,7 +78,8 @@
       desc: '기술적, 관리적, 물리적 보안 대책이 작성되어야 합니다.',
       regex: /(안전성|안전성\s*확보|보안\s*대책|보안\s*조치)/i,
       subRegex: /(기술적|관리적|암호화|접근\s*권한|백신|물리적|조치)/i,
-      fixGuide: '비밀번호 암호화, 백신 프로그램 설치, 접근 권한 최소화 등 안전성 확보를 위한 대책을 서술하세요.'
+      fixGuide: '비밀번호 암호화, 백신 프로그램 설치, 접근 권한 최소화 등 안전성 확보를 위한 대책을 서술하세요.',
+      standardClause: '제8조(개인정보의 안전성 확보 조치)\n회사는 개인정보의 안전성 확보를 위해 다음 대책을 이행하고 있습니다.\n- 기술적 대책: 비밀번호 암호화 저장, 백신 프로그램 운영\n- 관리적 대책: 개인정보 취급자 최소화 및 정기 보안 교육\n- 물리적 대책: 전산실 출입 통제'
     },
     {
       id: 'rule_9',
@@ -81,7 +87,8 @@
       desc: '쿠키의 사용 목적 및 웹브라우저/모바일 차단 설정 통한 쿠키 거부 방법이 안내되어야 합니다.',
       regex: /(쿠키|cookie|자동\s*수집|수집\s*장치)/i,
       subRegex: /(설치|운영|거부|설정|브라우저|미사용|수집하지\s*않|거부\s*방법)/i,
-      fixGuide: '쿠키 수집 목적을 설명하고, 미사용 시 "쿠키를 수집·운영하지 않음"을 명시하세요.'
+      fixGuide: '쿠키 수집 목적을 설명하고, 미사용 시 "쿠키를 수집·운영하지 않음"을 명시하세요.',
+      standardClause: '제9조(개인정보 자동 수집 장치의 설치·운영 및 거부)\n회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정(도구 > 인터넷 옵션 > 개인정보)을 통해 쿠키 저장을 거부할 수 있습니다.'
     },
     {
       id: 'rule_10',
@@ -89,7 +96,8 @@
       desc: '개인정보분쟁조정위원회(1833-6972), 침해신고센터(118), 대검찰청, 경찰청 등의 안내가 포함되어야 합니다.',
       regex: /(구제|분쟁|권익|침해\s*신고|구제\s*방법)/i,
       subRegex: /(개인정보분쟁조정위원회|118|경찰청|대검찰청|상담|1833-6972|분쟁\s*조정)/i,
-      fixGuide: '개인정보 침해 신고 센터(118), 개인정보 분쟁조정위원회(1833-6972) 등의 기관명과 연락처를 기재하세요.'
+      fixGuide: '개인정보 침해 신고 센터(118), 개인정보 분쟁조정위원회(1833-6972) 등의 기관명과 연락처를 기재하세요.',
+      standardClause: '제10조(권익침해 구제방법)\n개인정보 침해에 대한 피해구제, 상담은 아래 기관에 문의하실 수 있습니다.\n- 개인정보 침해신고센터: (국번없이) 118\n- 개인정보 분쟁조정위원회: (국번없이) 1833-6972\n- 대검찰청 사이버수사과: (국번없이) 1301\n- 경찰청 사이버범죄신고: (국번없이) 182'
     },
     {
       id: 'rule_11',
@@ -98,7 +106,8 @@
       isOptional: true,
       regex: /(AI|인공지능|생성형|프롬프트|학습)/i,
       subRegex: /(거부|옵트아웃|Opt-out|입력|학습|해당\s*없음|미사용|수집하지\s*않)/i,
-      fixGuide: 'AI 서비스 미도입 기관은 "AI 기반 데이터 처리 해당 없음"으로 간주하여 정상 판정됩니다.'
+      fixGuide: 'AI 서비스 미도입 기관은 "AI 기반 데이터 처리 해당 없음"으로 간주하여 정상 판정됩니다.',
+      standardClause: '제11조(생성형 AI 서비스 데이터 처리 및 거부)\n회사는 AI 서비스 이용 시 입력된 프롬프트 데이터를 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.'
     },
     {
       id: 'rule_12',
@@ -107,109 +116,35 @@
       isOptional: true,
       regex: /(행태정보|맞춤형\s*광고|광고\s*식별자|ADID|IDFA)/i,
       subRegex: /(차단|거부|설정|방문기록|해당\s*없음|미수집|수집하지\s*않)/i,
-      fixGuide: '공공기관 및 비상업 웹사이트는 "맞춤형 광고 행태정보 수집 없음"으로 정상 판정됩니다.'
+      fixGuide: '공공기관 및 비상업 웹사이트는 "맞춤형 광고 행태정보 수집 없음"으로 정상 판정됩니다.',
+      standardClause: '제12조(맞춤형 광고 행태정보 수집 및 차단)\n회사는 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 수집하지 않습니다.'
     }
   ];
 
-  // ── 샘플 데이터
   const SAMPLE_POLICIES = {
     sample_bad: {
       companyName: '(주)에이비씨 쇼핑몰',
       url: 'https://www.abc-sample-mall.co.kr/privacy',
       cpo: '미지정 (담당자 누락)',
       email: 'contact@abc-sample-mall.co.kr',
-      text: `[개인정보 처리방침]
-
-1. 수집하는 개인정보 항목
-회사는 회원가입 시 이름, 이메일, 전화번호를 수집합니다.
-
-2. 개인정보의 이용목적
-회원 관리 및 상품 배송 목적으로 이용합니다.
-
-3. 개인정보의 보유기간
-회원 탈퇴 시까지 보유합니다.
-
-4. 개인정보의 파기
-목적이 달성된 개인정보는 지체없이 파기합니다.
-
-5. 고객센터
-이메일: contact@abc-sample-mall.co.kr`
+      text: `[개인정보 처리방침]\n\n1. 수집하는 개인정보 항목\n회사는 회원가입 시 이름, 이메일, 전화번호를 수집합니다.\n\n2. 개인정보의 이용목적\n회원 관리 및 상품 배송 목적으로 이용합니다.\n\n3. 개인정보의 보유기간\n회원 탈퇴 시까지 보유합니다.\n\n4. 개인정보의 파기\n목적이 달성된 개인정보는 지체없이 파기합니다.\n\n5. 고객센터\n이메일: contact@abc-sample-mall.co.kr`
     },
     sample_mid: {
       companyName: '(주)XYZ 핀테크 스타트업',
       url: 'https://xyz-startup.io/privacy',
       cpo: '김철수 팀장',
       email: 'privacy@xyz-startup.io',
-      text: `(주)XYZ 핀테크 개인정보 처리방침
-
-1. 수집하는 개인정보 항목 및 목적
-회사는 회원가입 및 서비스 제공을 위해 아래 정보를 수집합니다.
-- 필수항목: 성명, 이메일, 휴대전화번호, 비밀번호
-- 목적: 본인확인, 서비스 이용안내, 공지사항 전달
-
-2. 개인정보 보유 및 이용기간
-- 회원 탈퇴 시 즉시 파기합니다.
-- 단, 관련 법령(전자상거래법)에 의해 5년간 보존합니다.
-
-3. 개인정보 제3자 제공 및 위탁
-- 회사는 제3자 제공을 하지 않습니다.
-- 데이터 보관을 위해 AWS Cloud에 위탁 관리합니다.
-
-4. 정보주체의 권리
-이용자는 언제든지 본인의 개인정보 열람 및 정정을 요구할 수 있습니다.
-
-5. 개인정보 보호책임자
-성명: 김철수
-연락처: privacy@xyz-startup.io`
+      text: `(주)XYZ 핀테크 개인정보 처리방침\n\n1. 수집하는 개인정보 항목 및 목적\n회사는 회원가입 및 서비스 제공을 위해 아래 정보를 수집합니다.\n- 필수항목: 성명, 이메일, 휴대전화번호, 비밀번호\n- 목적: 본인확인, 서비스 이용안내, 공지사항 전달\n\n2. 개인정보 보유 및 이용기간\n- 회원 탈퇴 시 즉시 파기합니다.\n- 단, 관련 법령(전자상거래법)에 의해 5년간 보존합니다.\n\n3. 개인정보 제3자 제공 및 위탁\n- 회사는 제3자 제공을 하지 않습니다.\n- 데이터 보관을 위해 AWS Cloud에 위탁 관리합니다.\n\n4. 정보주체의 권리\n이용자는 언제든지 본인의 개인정보 열람 및 정정을 요구할 수 있습니다.\n\n5. 개인정보 보호책임자\n성명: 김철수\n연락처: privacy@xyz-startup.io`
     },
     sample_good: {
       companyName: '(주)한국보안기술',
       url: 'https://www.korea-sec-tech.co.kr/privacy',
       cpo: '박민수 이사 (보안기획실)',
       email: 'cpo@korea-sec-tech.co.kr',
-      text: `(주)한국보안기술 개인정보 처리방침 (최신 지침 적용판)
-
-1. 개인정보의 수집·이용 목적 및 항목
-회사는 서비스 제공을 위해 필수항목(성명, 이메일, 연락처, 회사명)을 수집하며, 회원 관리 및 고객 문의 대응 목적으로 이용합니다.
-
-2. 개인정보의 보유 및 이용 기간
-이용자의 개인정보는 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 전자상거래법에 따라 계약/청약철회 기록은 5년 보존합니다.
-
-3. 개인정보의 제3자 제공
-회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.
-
-4. 개인정보 처리 위탁 내용 및 수탁자
-회사는 원활한 서비스 제공을 위해 PG결제(NICE페이먼츠), 택배배송(CJ대한통운)에 위탁하고 있습니다.
-
-5. 개인정보의 파기 절차 및 방법
-전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 영구 파기하며, 종이 출력물은 분쇄기로 분쇄합니다.
-
-6. 정보주체와 법정대리인의 권리·의무 및 행사방법
-정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지 및 자동화된 결정 거부를 요구할 수 있습니다.
-
-7. 개인정보 보호책임자(CPO) 성명 및 연락처
-- 성명: 박민수 이사 (보안기획실)
-- 전화번호: 02-1234-5678
-- 이메일: cpo@korea-sec-tech.co.kr
-
-8. 개인정보의 안전성 확보 조치
-회사는 비밀번호 암호화 저장, 백신 프로그램 설치, 접근 권한의 관리 등 기술적·관리적 안전성 확보 조치를 취하고 있습니다.
-
-9. 개인정보 자동 수집 장치(쿠키)의 설치·운영 및 거부
-회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.
-
-10. 권익침해 구제방법
-개인정보 침해 관련 상담은 개인정보분쟁조정위원회(1833-6972) 또는 개인정보침해신고센터(118)로 문의하실 수 있습니다.
-
-11. 생성형 AI 서비스 데이터 처리 및 거부(Opt-out) 안내
-회사는 AI 서비스 제공 시 입력된 프롬프트 데이터를 이용자의 동의 없이 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.
-
-12. 맞춤형 광고 행태정보 수집 안내
-회사는 타겟 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 제3자에게 수집·제공하지 않습니다.`
+      text: `(주)한국보안기술 개인정보 처리방침 (최신 지침 적용판)\n\n1. 개인정보의 수집·이용 목적 및 항목\n회사는 서비스 제공을 위해 필수항목(성명, 이메일, 연락처, 회사명)을 수집하며, 회원 관리 및 고객 문의 대응 목적으로 이용합니다.\n\n2. 개인정보의 보유 및 이용 기간\n이용자의 개인정보는 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 전자상거래법에 따라 계약/청약철회 기록은 5년 보존합니다.\n\n3. 개인정보의 제3자 제공\n회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.\n\n4. 개인정보 처리 위탁 내용 및 수탁자\n회사는 원활한 서비스 제공을 위해 PG결제(NICE페이먼츠), 택배배송(CJ대한통운)에 위탁하고 있습니다.\n\n5. 개인정보의 파기 절차 및 방법\n전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 영구 파기하며, 종이 출력물은 분쇄기로 분쇄합니다.\n\n6. 정보주체와 법정대리인의 권리·의무 및 행사방법\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지 및 자동화된 결정 거부를 요구할 수 있습니다.\n\n7. 개인정보 보호책임자(CPO) 성명 및 연락처\n- 성명: 박민수 이사 (보안기획실)\n- 전화번호: 02-1234-5678\n- 이메일: cpo@korea-sec-tech.co.kr\n\n8. 개인정보의 안전성 확보 조치\n회사는 비밀번호 암호화 저장, 백신 프로그램 설치, 접근 권한의 관리 등 기술적·관리적 안전성 확보 조치를 취하고 있습니다.\n\n9. 개인정보 자동 수집 장치(쿠키)의 설치·운영 및 거부\n회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.\n\n10. 권익침해 구제방법\n개인정보 침해 관련 상담은 개인정보분쟁조정위원회(1833-6972) 또는 개인정보침해신고센터(118)로 문의하실 수 있습니다.\n\n11. 생성형 AI 서비스 데이터 처리 및 거부(Opt-out) 안내\n회사는 AI 서비스 제공 시 입력된 프롬프트 데이터를 이용자의 동의 없이 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.\n\n12. 맞춤형 광고 행태정보 수집 안내\n회사는 타겟 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 제3자에게 수집·제공하지 않습니다.`
     }
   };
 
-  // ── 애플리케이션 상태
   let activeInputMode = 'url';
   let extractedOcrText = '';
   let fetchedUrlText = '';
@@ -217,7 +152,6 @@
   let historyLogs = JSON.parse(localStorage.getItem('privacy_diag_history') || '[]');
   let isOllamaOnline = false;
 
-  // ── DOM 요소 참조
   let inputCompanyName, inputCpoEmail, inputUrlLink, inputPolicyText, btnRunScan, btnRunAiScan;
   let selectOllamaModel, aiStatusBadge;
   let btnModeUrl, btnModeImage, btnModeText;
@@ -268,7 +202,6 @@
     checkOllamaStatus();
   });
 
-  // ── PIPC 지식베이스 로드 (RAG Context)
   async function loadPipcKnowledgeBase() {
     try {
       const res = await fetch('./knowledge_base/pipc_guidelines.json');
@@ -340,7 +273,6 @@
     document.getElementById('btn-email-doc')?.addEventListener('click', sendEmailDraft);
   }
 
-  // ── 로컬 Ollama AI 서버 상태 체크 (http://localhost:11434/api/tags)
   async function checkOllamaStatus() {
     try {
       const res = await fetch('http://localhost:11434/api/tags');
@@ -435,7 +367,8 @@
     } catch (err) {
       console.warn('CORS Proxy fetch fallback:', err);
       fetchedUrlText = inputPolicyText.value || SAMPLE_POLICIES.sample_bad.text;
-      alert(`🌐 URL 접속 시뮬레이션 완료 (${url})\n약관 텍스트 파싱을 완료하였습니다.`);
+      alert(`🌐 URL 접속 시뮬레이션 완료 (${url})
+약관 텍스트 파싱을 완료하였습니다.`);
     } finally {
       document.getElementById('btn-crawl-url').innerText = origText;
     }
@@ -495,7 +428,6 @@
     fetchedUrlText = sample.text;
   }
 
-  // ── 🤖 로컬 AI (Ollama + PIPC RAG Ground Truth Knowledge Base) 융합 진단 엔진
   async function runOllamaAiDiagnostic() {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
@@ -512,7 +444,6 @@
     btnRunAiScan.disabled = true;
     btnRunAiScan.innerText = `🤖 Ollama (${selectedModel}) + PIPC RAG 심층 분석 중...`;
 
-    // PIPC RAG 컨텍스트 생성
     let ragContextStr = '';
     if (PIPC_KNOWLEDGE_BASE && PIPC_KNOWLEDGE_BASE.rules) {
       ragContextStr = PIPC_KNOWLEDGE_BASE.rules.map(r => `
@@ -520,7 +451,8 @@
 - PIPC 공식 작성기준: ${r.pipcCriteria}
 - 적합 판정 예시: "${r.passExample}"
 - 부적합 판정 예시: "${r.failExample}"
-      `).join('\n');
+      `).join('
+');
     }
 
     try {
@@ -618,7 +550,6 @@ ${rawText.slice(0, 4000)}`;
     return inputPolicyText.value.trim();
   }
 
-  // ── 정규식 기반 진단 엔진 (Fallback Engine)
   function runDiagnostic() {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
@@ -641,7 +572,7 @@ ${rawText.slice(0, 4000)}`;
       const hasMainMatch = rule.regex.test(normalizedText) || rule.regex.test(noSpaceText);
       const hasSubMatch  = rule.subRegex.test(normalizedText) || rule.subRegex.test(noSpaceText);
       const ruleNumStr = rule.title.match(/^\d+/)?.[0];
-      const hasHeaderMatch = ruleNumStr ? new RegExp(`제\\s*${ruleNumStr}\\s*조`, 'i').test(noSpaceText) : false;
+      const hasHeaderMatch = ruleNumStr ? new RegExp(`제\s*${ruleNumStr}\s*조`, 'i').test(noSpaceText) : false;
 
       let status = 'fail';
       let reason = '';
@@ -731,6 +662,7 @@ ${rawText.slice(0, 4000)}`;
     }).join('');
   }
 
+  // ── 완성형 개인정보 처리방침 표준 개정(안) 전문 생성기
   function buildRemediationDocument(data) {
     const docContainer = document.getElementById('doc-paper-content');
     const failedItems = data.results.filter(r => r.status !== 'pass');
@@ -744,8 +676,24 @@ ${rawText.slice(0, 4000)}`;
       </tr>
     `).join('');
 
+    const fullDraftClausesHtml = data.results.map(r => {
+      const isFixed = r.status !== 'pass';
+      const clauseText = r.rule.standardClause || `${r.rule.title}
+관련 필수 내용을 최신 PIPC 지침에 따라 준수하여 처리합니다.`;
+      
+      return `
+        <div style="margin-bottom: 20px; padding: 14px 18px; border-radius: 6px; ${isFixed ? 'background:#eff6ff; border-left: 4px solid #2563eb;' : 'background:#f8fafc; border: 1px solid #e2e8f0;'}">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+            <strong style="font-size: 14px; color: #0f172a;">${r.rule.title}</strong>
+            ${isFixed ? '<span style="font-size:11px; background:#dbeafe; color:#1d4ed8; font-weight:700; padding:2px 8px; border-radius:4px;">[개정/신설 보완 조항]</span>' : '<span style="font-size:11px; color:#64748b;">[기존 준수 조항]</span>'}
+          </div>
+          <div style="font-size: 13px; color: #334155; white-space: pre-line; line-height: 1.6;">${clauseText}</div>
+        </div>
+      `;
+    }).join('');
+
     docContainer.innerHTML = `
-      <h1>개인정보 처리방침 보완조치 요청서</h1>
+      <h1>개인정보 처리방침 보완조치 요청서 & 표준 개정(안)</h1>
       
       <table class="doc-meta-table">
         <tr>
@@ -771,7 +719,7 @@ ${rawText.slice(0, 4000)}`;
       <p>귀사의 일익 번창하심을 기원합니다.</p>
       <p style="margin-top:8px;">
         「개인정보 보호법」 제30조 및 개인정보보호위원회의 최신 작성지침 기준에 의거하여 귀사의 개인정보 처리방침에 대한 컴플라이언스 진단을 실시한 결과, 
-        아래와 같이 <strong>법적 필수 항목 누락 및 최신 개정 지침 미비 사항이 확인되어 시정 및 보완조치를 요청</strong> 드립니다.
+        아래와 같이 <strong>법적 필수 항목 누락 및 최신 개정 지침 미비 사항이 확인되어 시정 요청 및 보완된 표준 개정(안) 전문을 발급</strong> 드립니다.
       </p>
 
       <div class="doc-section-title">1. 시정 및 보완조치 요청 항목 (${failedItems.length}건)</div>
@@ -799,12 +747,20 @@ ${rawText.slice(0, 4000)}`;
       <div class="doc-section-title">2. 요청 및 이행 기한</div>
       <p>
         개인정보 보호법 위반 시 시정명령 및 과태료 부과 대상이 될 수 있으므로, 
-        본 요청서를 수신한 날로부터 <strong>14일 이내</strong>에 개정된 개인정보 처리방침을 홈페이지에 공고하여 주시기 바랍니다.
+        본 요청서 및 첨부된 개정(안)을 참고하시어 수신일로부터 <strong>14일 이내</strong>에 개정된 개인정보 처리방침을 홈페이지에 공고하여 주시기 바랍니다.
       </p>
 
-      <div class="doc-section-title">3. 표준 개정(안) 가이드 서식</div>
-      <div style="background:#f8fafc; border:1px dashed #cbd5e1; padding:16px; border-radius:6px; font-size:12px; color:#475569;">
-        * 첨부된 최신 보완조치 가이드를 참고하여 약관 개정 후 홈페이지 하단에 "개인정보 처리방침" 링크를 등록해 주시기 바랍니다.
+      <div class="doc-section-title" style="display:flex; justify-content:space-between; align-items:center;">
+        <span>3. 추천 개인정보 처리방침 표준 개정(안) 전문 (보완 완결본)</span>
+        <button class="btn-secondary" id="btn-copy-draft-text" style="font-size:12px; padding:4px 12px; color:#1e293b; background:#e2e8f0;">📋 전문 텍스트 복사</button>
+      </div>
+
+      <div style="margin-bottom: 16px; font-size: 12px; color: #64748b;">
+        * 파란색 박스로 표시된 조항은 이번 진단을 통해 <strong>최신 PIPC 작성지침으로 보완·신설된 표준 개정 조항</strong>입니다. 홈페이지 하단에 그대로 복사하여 게재하실 수 있습니다.
+      </div>
+
+      <div id="full-draft-text-box">
+        ${fullDraftClausesHtml}
       </div>
 
       <div style="margin-top:40px; text-align:center; font-weight:700; font-size:15px; color:#0f172a;">
@@ -812,6 +768,13 @@ ${rawText.slice(0, 4000)}`;
         <strong>개인정보 보호 시정조치 솔루션 검인</strong>
       </div>
     `;
+
+    document.getElementById('btn-copy-draft-text')?.addEventListener('click', () => {
+      const draftBoxText = document.getElementById('full-draft-text-box').innerText;
+      navigator.clipboard.writeText(draftBoxText).then(() => {
+        alert('✅ 개인정보 처리방침 표준 개정(안) 전문 텍스트가 복사되었습니다!');
+      });
+    });
   }
 
   function copyDocToClipboard() {
@@ -824,8 +787,16 @@ ${rawText.slice(0, 4000)}`;
   function sendEmailDraft() {
     if (!lastDiagnosticResult) return;
     const mailto = lastDiagnosticResult.cpoEmail !== '-' ? lastDiagnosticResult.cpoEmail : '';
-    const subject = encodeURIComponent(`[보완조치 요청] ${lastDiagnosticResult.companyName} 개인정보 처리방침 진단 결과 및 시정 요청`);
-    const bodyText = encodeURIComponent(`안녕하세요, ${lastDiagnosticResult.companyName} 개인정보 보호책임자님.\n\n개인정보 보호법 제30조 및 최신 지침에 의거하여 귀사의 개인정보 처리방침을 진단한 결과, 총 ${lastDiagnosticResult.results.filter(r=>r.status!=='pass').length}건의 미비 사항이 확인되었습니다.\n\n[진단 점수]: ${lastDiagnosticResult.score}점 (${lastDiagnosticResult.grade.label})\n\n자세한 보완조치 요청 내용은 첨부된 공문서를 확인해 주시고, 14일 이내에 개정 완료해 주시기를 바랍니다.\n\n감사합니다.`);
+    const subject = encodeURIComponent(`[보완조치 요청] ${lastDiagnosticResult.companyName} 개인정보 처리방침 진단 결과 및 표준 개정(안) 전달`);
+    const bodyText = encodeURIComponent(`안녕하세요, ${lastDiagnosticResult.companyName} 개인정보 보호책임자님.
+
+개인정보 보호법 제30조 및 최신 지침에 의거하여 귀사의 개인정보 처리방침을 진단한 결과, 총 ${lastDiagnosticResult.results.filter(r=>r.status!=='pass').length}건의 미비 사항이 확인되었습니다.
+
+[진단 점수]: ${lastDiagnosticResult.score}점 (${lastDiagnosticResult.grade.label})
+
+자세한 보완조치 요청 내용 및 보완 완료된 개인정보 처리방침 표준 개정(안) 전문은 첨부된 공문서를 확인해 주시기 바랍니다.
+
+감사합니다.`);
     
     window.open(`mailto:${mailto}?subject=${subject}&body=${bodyText}`, '_blank');
   }
