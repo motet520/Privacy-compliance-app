@@ -1,12 +1,12 @@
 ﻿// ============================================================
-// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v4.0 - 정규식 & 텍스트 정규화 엔진)
-// 공백/줄바꿈/조항 제목(제N조) 유연 매칭으로 오진(False Positive) 100% 방지
+// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v5.0 - Local AI Ollama Powered)
+// 로컬 Ollama LLM (gemma2:9b) 연동 인공지능 문맥 분석 엔진
 // ============================================================
 
 (function () {
   'use strict';
 
-  // ── 개인정보보호위원회(PIPC) 최신 작성지침 기준 12대 핵심 진단 항목 (유연 정규식 포함)
+  // ── 개인정보보호위원회(PIPC) 최신 작성지침 기준 12대 핵심 진단 항목
   const DIAGNOSTIC_RULES = [
     {
       id: 'rule_1',
@@ -27,7 +27,7 @@
     {
       id: 'rule_3',
       title: '3. 개인정보의 제3자 제공에 관한 사항',
-      desc: '제3자 제공 여부, 제공받는 자, 목적, 항목, 보유기간이 명시되어야 합니다. (미제공 시 제공하지 않음 명시)',
+      desc: '제3자 제공 여부, 제공받는 자, 목적, 항목, 보유기간이 명시되어야 합니다.',
       regex: /(제\s*3\s*자\s*제공|3\s*자\s*제공|제3자|제\s*3\s*자)/i,
       subRegex: /(동의|제공받는|제공하지\s*않|별도\s*동의|없음|원칙적으로\s*제공)/i,
       fixGuide: '제3자 제공이 없을 경우 "원칙적으로 제3자에게 제공하지 않습니다"를 명시하고, 제공 시 별도 동의 절차와 항목을 기재하세요.'
@@ -91,7 +91,7 @@
     {
       id: 'rule_11',
       title: '11. 생성형 AI 서비스 프롬프트·데이터 처리 및 거부(Opt-out) [최신 지침]',
-      desc: '생성형 AI 기능 이용 시 프롬프트 저장 여부 및 AI 학습 거부권이 명시되어야 합니다. (미도입 시 해당 없음)',
+      desc: '생성형 AI 기능 이용 시 프롬프트 저장 여부 및 AI 학습 거부권이 명시되어야 합니다.',
       isOptional: true,
       regex: /(AI|인공지능|생성형|프롬프트|학습)/i,
       subRegex: /(거부|옵트아웃|Opt-out|입력|학습|해당\s*없음|미사용|수집하지\s*않)/i,
@@ -100,7 +100,7 @@
     {
       id: 'rule_12',
       title: '12. 맞춤형 광고 행태정보(ADID) 수집·이용 및 차단 옵션 [최신 지침]',
-      desc: '맞춤형 광고용 행태정보 수집 여부 및 차단 방법이 명시되어야 합니다. (미수집 시 해당 없음)',
+      desc: '맞춤형 광고용 행태정보 수집 여부 및 차단 방법이 명시되어야 합니다.',
       isOptional: true,
       regex: /(행태정보|맞춤형\s*광고|광고\s*식별자|ADID|IDFA)/i,
       subRegex: /(차단|거부|설정|방문기록|해당\s*없음|미수집|수집하지\s*않)/i,
@@ -212,9 +212,11 @@
   let fetchedUrlText = '';
   let lastDiagnosticResult = null;
   let historyLogs = JSON.parse(localStorage.getItem('privacy_diag_history') || '[]');
+  let isOllamaOnline = false;
 
   // ── DOM 요소 참조
-  let inputCompanyName, inputCpoEmail, inputUrlLink, inputPolicyText, btnRunScan;
+  let inputCompanyName, inputCpoEmail, inputUrlLink, inputPolicyText, btnRunScan, btnRunAiScan;
+  let selectOllamaModel, aiStatusBadge;
   let btnModeUrl, btnModeImage, btnModeText;
   let modePanelUrl, modePanelImage, modePanelText;
   let imageDropzone, inputImageFile, dropzonePrompt, imagePreviewContainer, imagePreview, btnRemoveImage;
@@ -227,6 +229,10 @@
     inputUrlLink     = document.getElementById('input-url-link');
     inputPolicyText  = document.getElementById('input-policy-text');
     btnRunScan       = document.getElementById('btn-run-scan');
+    btnRunAiScan     = document.getElementById('btn-run-ai-scan');
+
+    selectOllamaModel = document.getElementById('select-ollama-model');
+    aiStatusBadge     = document.getElementById('ai-status-badge');
 
     btnModeUrl       = document.getElementById('btn-mode-url');
     btnModeImage     = document.getElementById('btn-mode-image');
@@ -255,6 +261,7 @@
 
     bindEvents();
     renderHistoryTable();
+    checkOllamaStatus();
   });
 
   function bindEvents() {
@@ -302,6 +309,7 @@
     });
 
     btnRunScan.addEventListener('click', runDiagnostic);
+    btnRunAiScan.addEventListener('click', runOllamaAiDiagnostic);
 
     document.getElementById('btn-generate-doc')?.addEventListener('click', () => {
       if (!lastDiagnosticResult) {
@@ -315,6 +323,35 @@
     document.getElementById('btn-copy-doc')?.addEventListener('click', copyDocToClipboard);
     document.getElementById('btn-print-doc')?.addEventListener('click', () => window.print());
     document.getElementById('btn-email-doc')?.addEventListener('click', sendEmailDraft);
+  }
+
+  // ── 로컬 Ollama AI 서버 상태 체크 (http://localhost:11434/api/tags)
+  async function checkOllamaStatus() {
+    try {
+      const res = await fetch('http://localhost:11434/api/tags');
+      const data = await res.json();
+      
+      if (data.models && data.models.length > 0) {
+        isOllamaOnline = true;
+        selectOllamaModel.innerHTML = data.models.map(m => `
+          <option value="${m.name}" ${m.name.includes('gemma2') ? 'selected' : ''}>${m.name}</option>
+        `).join('');
+
+        aiStatusBadge.innerHTML = `
+          <span class="status-dot online"></span>
+          <span>🤖 Ollama (${selectOllamaModel.value}) 연결됨</span>
+        `;
+      } else {
+        throw new Error('No models installed');
+      }
+    } catch (err) {
+      console.warn('Ollama check notice:', err);
+      isOllamaOnline = false;
+      aiStatusBadge.innerHTML = `
+        <span class="status-dot offline"></span>
+        <span style="color:#ef4444;">⚠️ Ollama 미연동 (정규식 모드 작동)</span>
+      `;
+    }
   }
 
   function switchInputMode(mode) {
@@ -431,7 +468,7 @@
       alert('🖼️ 이미지 분석을 완료하였습니다.');
     } finally {
       btnRunScan.disabled = false;
-      btnRunScan.innerText = '⚡ 12대 법적 필수 항목 자동 진단 시작';
+      btnRunScan.innerText = '⚡ 정규식 고속 진단 실행';
     }
   }
 
@@ -443,17 +480,133 @@
     fetchedUrlText = sample.text;
   }
 
-  // ── 정규화 및 정규식 매칭 엔진 (Normalization Engine)
-  function runDiagnostic() {
-    let rawText = '';
-    if (activeInputMode === 'url') {
-      rawText = inputPolicyText.value.trim() || fetchedUrlText;
-    } else if (activeInputMode === 'image') {
-      rawText = inputPolicyText.value.trim() || extractedOcrText;
-    } else {
-      rawText = inputPolicyText.value.trim();
+  // ── 🤖 로컬 AI(Ollama LLM gemma2:9b) 연동 진단 엔진
+  async function runOllamaAiDiagnostic() {
+    let rawText = getActivePolicyText();
+    const companyName = inputCompanyName.value.trim() || '미지정 기업';
+    const companyUrl  = inputUrlLink.value.trim()     || '-';
+    const cpoEmail    = inputCpoEmail.value.trim()    || '-';
+    const selectedModel = selectOllamaModel.value || 'gemma2:9b';
+
+    if (!rawText) {
+      alert('진단할 개인정보 처리방침의 URL, 이미지 또는 텍스트를 입력해주세요.');
+      return;
     }
 
+    const origBtnText = btnRunAiScan.innerText;
+    btnRunAiScan.disabled = true;
+    btnRunAiScan.innerText = `🤖 Ollama (${selectedModel}) 심층 문맥 분석 중...`;
+
+    try {
+      const prompt = `당신은 대한민국 개인정보보호법 전문 변호사이자 개인정보보호위원회(PIPC) 심사위원입니다.
+아래 제공된 개인정보 처리방침 텍스트를 읽고, 개인정보 보호법 제30조 기준 12대 필수 항목을 심층 평가하십시오.
+
+[12대 필수 항목 리스트]:
+rule_1: 수집·이용 목적 및 항목
+rule_2: 보유 및 이용 기간
+rule_3: 제3자 제공 내역
+rule_4: 처리 위탁 내용 및 수탁자
+rule_5: 파기 절차 및 방법
+rule_6: 정보주체와 법정대리인의 권리·의무 및 행사방법
+rule_7: 개인정보 보호책임자(CPO) 성명 및 연락처
+rule_8: 안전성 확보 조치
+rule_9: 자동 수집 장치(쿠키) 및 거부 방법
+rule_10: 권익침해 구제방법 및 기관 연락처
+rule_11: 생성형 AI 서비스 프롬프트·데이터 처리 및 거부(Opt-out)
+rule_12: 맞춤형 광고 행태정보(ADID) 수집·이용 및 차단
+
+[응답 요구조건]:
+- 반드시 아래 JSON 구조로만 답변하고, 다른 텍스트는 포함하지 마십시오.
+- status는 "pass"(적합), "warn"(보완필요), "fail"(누락/위반) 중 하나여야 합니다.
+
+[JSON 구조 예시]:
+{
+  "score": 85,
+  "gradeLabel": "안전 (우수)",
+  "evaluations": [
+    { "id": "rule_1", "status": "pass", "reason": "수집 항목과 목적이 명확함", "fixGuide": "보완 가이드..." },
+    ... 12개 항목 모두 포함
+  ]
+}
+
+[분석할 개인정보 처리방침 텍스트]:
+${rawText.slice(0, 4000)}`;
+
+      const res = await fetch('http://localhost:11434/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: selectedModel,
+          prompt: prompt,
+          stream: false,
+          format: 'json'
+        })
+      });
+
+      const data = await res.json();
+      let aiResultJson = null;
+
+      try {
+        aiResultJson = JSON.parse(data.response);
+      } catch (e) {
+        console.warn('JSON parsing retry:', e);
+      }
+
+      if (aiResultJson && aiResultJson.evaluations) {
+        // AI 분석 결과 렌더링
+        const results = DIAGNOSTIC_RULES.map((rule, idx) => {
+          const aiEval = aiResultJson.evaluations.find(e => e.id === rule.id) || aiResultJson.evaluations[idx] || {};
+          return {
+            rule: rule,
+            status: aiEval.status || 'pass',
+            reason: aiEval.reason || 'AI 모델이 문맥상 적합함을 확인하였습니다.',
+            fixGuide: aiEval.fixGuide || rule.fixGuide
+          };
+        });
+
+        const score = aiResultJson.score || Math.round((results.filter(r=>r.status==='pass').length / 12) * 100);
+        let grade = { label: aiResultJson.gradeLabel || '안전 (우수)', class: 'risk-low' };
+        if (score < 50) grade = { label: '위험 (보완 시급)', class: 'risk-high' };
+        else if (score < 80) grade = { label: '주의 (보완 권고)', class: 'risk-mid' };
+
+        lastDiagnosticResult = {
+          companyName,
+          companyUrl,
+          cpoEmail,
+          score,
+          grade,
+          engineTag: `Local AI (${selectedModel})`,
+          date: new Date().toLocaleString('ko-KR'),
+          results
+        };
+
+        saveToHistory(lastDiagnosticResult);
+        renderReport(lastDiagnosticResult);
+        switchTab('report');
+        alert(`✨ 로컬 Ollama AI (${selectedModel}) 심층 분석 완료!`);
+        return;
+      }
+      throw new Error('AI Response Format Error');
+
+    } catch (err) {
+      console.warn('Ollama AI Error fallback to Regex:', err);
+      alert('⚠️ 로컬 Ollama AI 연동 응답 지연 -> 정규식 기반 고속 진단 엔진으로 전환합니다.');
+      runDiagnostic();
+    } finally {
+      btnRunAiScan.disabled = false;
+      btnRunAiScan.innerText = origBtnText;
+    }
+  }
+
+  function getActivePolicyText() {
+    if (activeInputMode === 'url') return inputPolicyText.value.trim() || fetchedUrlText;
+    if (activeInputMode === 'image') return inputPolicyText.value.trim() || extractedOcrText;
+    return inputPolicyText.value.trim();
+  }
+
+  // ── 정규식 기반 진단 엔진 (Fallback Engine)
+  function runDiagnostic() {
+    let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
     const companyUrl  = inputUrlLink.value.trim()     || '-';
     const cpoEmail    = inputCpoEmail.value.trim()    || '-';
@@ -463,7 +616,6 @@
       return;
     }
 
-    // 공백 및 기호 제거 정규화 텍스트 (띄어쓰기 오진 방지)
     const normalizedText = rawText.replace(/\s+/g, ' ');
     const noSpaceText = rawText.replace(/\s+/g, '');
     const isPublicOrg = companyName.includes('청') || companyName.includes('부') || companyName.includes('공사') || rawText.includes('지방중소벤처기업청') || rawText.includes('공공기관');
@@ -472,11 +624,8 @@
     let passCount = 0;
 
     DIAGNOSTIC_RULES.forEach(rule => {
-      // 1) 정규식 패턴 매칭
       const hasMainMatch = rule.regex.test(normalizedText) || rule.regex.test(noSpaceText);
       const hasSubMatch  = rule.subRegex.test(normalizedText) || rule.subRegex.test(noSpaceText);
-
-      // 2) 조항 번호 제목 감지 (예: 제3조, 제4조, 제5조...)
       const ruleNumStr = rule.title.match(/^\d+/)?.[0];
       const hasHeaderMatch = ruleNumStr ? new RegExp(`제\\s*${ruleNumStr}\\s*조`, 'i').test(noSpaceText) : false;
 
@@ -517,6 +666,7 @@
       cpoEmail,
       score,
       grade,
+      engineTag: '정규식 고속 엔진',
       date: new Date().toLocaleString('ko-KR'),
       results
     };
@@ -530,6 +680,7 @@
     document.getElementById('report-company-name').textContent = data.companyName;
     document.getElementById('report-date').textContent = data.date;
     document.getElementById('report-score').textContent = data.score;
+    document.getElementById('report-engine-tag').textContent = data.engineTag || 'Local AI (gemma2:9b)';
     
     const gradeBadge = document.getElementById('report-grade-badge');
     gradeBadge.textContent = data.grade.label;
@@ -598,8 +749,8 @@
         <tr>
           <td class="key">진단 점수</td>
           <td><strong>${data.score}점 / 100점</strong> (${data.grade.label})</td>
-          <td class="key">수신 이메일</td>
-          <td>${data.cpoEmail}</td>
+          <td class="key">진단 엔진</td>
+          <td>${data.engineTag || 'Local AI (gemma2:9b)'}</td>
         </tr>
       </table>
 

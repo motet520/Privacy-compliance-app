@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션</title>
-  <meta name="description" content="URL 웹 크롤링, 이미지 OCR 광학 분석, 텍스트 분석을 통해 중소기업 개인정보 처리방침의 12대 법적 필수 항목을 자동 진단하고 보완조치 요청서를 발급합니다.">
+  <title>중소기업 개인정보 처리방침 로컬 AI(Ollama) 진단 & 보완조치 솔루션</title>
+  <meta name="description" content="로컬 AI(Ollama gemma2:9b) LLM 모델 연동 및 URL/이미지 분석으로 중소기업 개인정보 처리방침의 12대 법적 필수 항목을 자동 진단하고 보완조치 요청서를 발급합니다.">
   <link rel="stylesheet" href="index.css">
   <!-- Tesseract.js for In-Browser Image OCR -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -15,11 +15,17 @@
   <header class="app-header">
     <div class="header-container">
       <div class="brand">
-        <div class="brand-icon">🛡️</div>
+        <div class="brand-icon">🤖</div>
         <div>
-          <div class="brand-title">SME Privacy Policy Guard</div>
-          <div class="brand-sub">중소기업 개인정보 처리방침 URL & 이미지 OCR 자동 진단 솔루션</div>
+          <div class="brand-title">SME Privacy Guard (Local AI Powered)</div>
+          <div class="brand-sub">로컬 Ollama LLM(gemma2:9b) 연동 심층 컴플라이언스 진단 솔루션</div>
         </div>
+      </div>
+
+      <!-- Local AI Connection Status Badge -->
+      <div class="ai-status-badge" id="ai-status-badge">
+        <span class="status-dot online"></span>
+        <span id="ai-status-text">🤖 Ollama gemma2:9b 연결됨</span>
       </div>
 
       <nav class="nav-tabs">
@@ -37,11 +43,11 @@
     <!-- TAB 1: SCANNER INPUT -->
     <section class="panel active" id="panel-scan">
       <div class="hero-banner">
-        <span class="hero-tag">URL 웹 크롤링 & 이미지 OCR 광학 분석 지원</span>
-        <h1 class="hero-title">중소기업 개인정보 처리방침 멀티모달 진단</h1>
+        <span class="hero-tag">🤖 로컬 AI(Ollama LLM) & 개인정보보호위원회 2026 작성지침 적용</span>
+        <h1 class="hero-title">로컬 AI 기반 개인정보 처리방침 심층 진단</h1>
         <p class="hero-desc">
-          개인정보 처리방침 <strong>홈페이지 URL 링크</strong> 주소를 입력하거나 <strong>약관 캡처 이미지</strong>를 업로드하세요.<br>
-          12대 법적 필수 항목 누락 여부를 자동 파싱하여 공식 보완조치 요청서를 발급합니다.
+          로컬 PC에서 실행 중인 <strong>Ollama LLM (gemma2:9b)</strong> 모델이 약관 텍스트를 문맥 단위로 심층 분석합니다.<br>
+          외부 데이터 유출 없이 100% 온프레미스로 안전하고 정확하게 12대 법적 필수 항목을 점검하세요.
         </p>
       </div>
 
@@ -49,7 +55,13 @@
         <!-- Input Form -->
         <div class="card">
           <div class="card-header">
-            <span class="card-title">📝 진단 방침 입력 방식 선택</span>
+            <span class="card-title">📝 진단 방식 및 데이터 입력</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 12px; color: var(--text-muted);">AI 모델:</span>
+              <select id="select-ollama-model" class="form-select" style="padding: 4px 10px; font-size: 12px; width: auto;">
+                <option value="gemma2:9b">gemma2:9b (로컬 추천)</option>
+              </select>
+            </div>
           </div>
 
           <!-- Input Mode Selector Tabs -->
@@ -122,16 +134,32 @@
             </div>
           </div>
 
-          <button class="btn-primary" id="btn-run-scan" style="margin-top: 20px;">
-            ⚡ 12대 법적 필수 항목 자동 진단 시작
-          </button>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;">
+            <button class="btn-primary" id="btn-run-ai-scan">
+              🤖 로컬 AI(Ollama LLM) 심층 진단 실행
+            </button>
+            <button class="btn-secondary" id="btn-run-scan" style="justify-content: center;">
+              ⚡ 정규식 고속 진단 실행
+            </button>
+          </div>
         </div>
 
         <!-- Info Sidebar -->
         <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="card" style="background: rgba(6, 182, 212, 0.05); border-color: rgba(6, 182, 212, 0.2);">
+            <div class="card-title" style="color: var(--primary); margin-bottom: 8px;">
+              🤖 로컬 AI(Ollama) 연동 장점
+            </div>
+            <ul style="font-size: 12px; color: var(--text-muted); padding-left: 18px; line-height: 1.8;">
+              <li><strong>100% 보안 유지</strong>: 외부 클라우드 전송 없이 로컬(Localhost)에서 완전 동작</li>
+              <li><strong>문맥 이해 진단</strong>: 단순히 키워드 존재 여부가 아닌 문맥 의미를 분석</li>
+              <li><strong>gemma2:9b 모델</strong>: 구글 Gemma 2 기반 9B 파라미터 LLM 인공지능 분석</li>
+            </ul>
+          </div>
+
           <div class="card">
             <div class="card-title" style="margin-bottom: 12px; color: var(--primary);">
-              🛡️ 12대 핵심 진단 항목 (최신 PIPC 지침)
+              🛡️ 12대 핵심 진단 항목
             </div>
             <ul style="font-size: 12px; color: var(--text-muted); padding-left: 18px; line-height: 1.8;">
               <li>수집·이용 목적 및 처리 항목</li>
@@ -144,18 +172,9 @@
               <li>안전성 확보 조치 기술 대책</li>
               <li>쿠키(Cookie) 자동 수집 및 거부</li>
               <li>권익침해 구제 기관 및 연락처</li>
-              <li><strong>[신규] 생성형 AI 프롬프트·학습 및 Opt-out</strong></li>
-              <li><strong>[신규] 맞춤형 광고 행태정보(ADID) 거부</strong></li>
+              <li><strong>[신규] 생성형 AI 프롬프트 및 Opt-out</strong></li>
+              <li><strong>[신규] 맞춤형 광고 행태정보 거부</strong></li>
             </ul>
-          </div>
-
-          <div class="card" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2);">
-            <div class="card-title" style="color: var(--danger); margin-bottom: 8px;">
-              ⚠️ 법적 미비 시 리스크
-            </div>
-            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
-              개인정보 보호법 제30조 미준수 시 동법 제75조에 의하여 <strong>1천만 원 이하의 과태료</strong> 부과 및 개인정보보호위원회 처리방침 평가 시 시정명령 대상이 될 수 있습니다.
-            </p>
           </div>
         </div>
       </div>
@@ -185,7 +204,8 @@
           <div id="report-grade-badge" class="grade-badge risk-high">진단 대기</div>
 
           <div style="font-size: 12px; color: var(--text-dim); margin-top: 16px;">
-            진단 일시: <span id="report-date">-</span>
+            진단 일시: <span id="report-date">-</span><br>
+            진단 엔진: <span id="report-engine-tag" style="color: var(--primary); font-weight: 700;">Local AI (gemma2:9b)</span>
           </div>
 
           <button class="btn-primary" id="btn-generate-doc" style="margin-top: 24px;">
@@ -196,7 +216,7 @@
         <!-- Checklist Results -->
         <div class="card">
           <div class="card-header">
-            <span class="card-title">🔍 12대 필수 항목별 진단 및 개선 권고 상세 (최신 지침 반영)</span>
+            <span class="card-title" id="report-title-heading">🔍 12대 필수 항목별 진단 및 개선 권고 상세</span>
           </div>
           <div class="compliance-checklist" id="report-checklist">
             <!-- Rendered by JS -->
