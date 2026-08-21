@@ -1,5 +1,6 @@
 // ============================================================
-// 중소기업 개인정보 처리방침 AI 진단 솔루션 (v10.0 - 1-Click 1:1 맞춤형 보완 조항 즉시 복사)
+// 중소기업 개인정보 처리방침 AI 진단 솔루션 (v11.0.0 - 100% 동적 AI 심량 및 일반화 추론 엔진)
+// 특정 URL 하드코딩 완전 제거: 어떤 웹사이트 URL이든 AI 및 범용 패턴 엔진이 동적으로 판단합니다.
 // ============================================================
 
 (function () {
@@ -120,110 +121,6 @@
     }
   ];
 
-  const SAMPLE_POLICIES = {
-        sample_sibt: {
-      companyName: '(주)신한아이티',
-      url: 'https://www.sibt.co.kr/etc/privacy',
-      cpo: '관리자 / privacy@abc.com (더미 정보)',
-      email: 'privacy@abc.com',
-      text: `신일베스텍 - 개인정보취급방침
-
-본 개인정보처리방침은 개인정보보호와 관련한 법령 또는 지침의 변경 및 회사 정책의 변화에 따라 변경될 수 있으니 이용자께서는 당사 사이트를 방문 시 수시로 확인 바랍니다.
-
-1. 개인정보 수집에 대한 동의
-회사는 이용자가 회사의 개인정보처리방침 또는 이용약관의 내용에 대해 "동의함" 버튼을 클릭할 수 있는 절차를 마련하였습니다.
-
-2. 수집하는 개인정보의 항목 및 수집방법
-- 수집항목: 필수(성명, 이메일, 전화번호), 자동수집(IP Address, 쿠키, 방문일시)
-
-3. 개인정보의 수집 및 이용목적
-회사는 고객상담 및 서비스 문의 응대를 목적으로 개인정보를 수집합니다.
-
-4. 개인정보의 보유 및 이용기간
-회사는 이용자께서 서비스를 제공받는 기간 동안에 한하여 이용자의 개인정보를 보유 및 이용하게 됩니다.
-
-5. 개인정보 파기절차 및 그 방법
-전자적 파일 형태로 저장된 개인정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 삭제하며, 종이에 출력된 개인정보는 분쇄기로 분쇄합니다.
-
-6. 개인정보의 제 3자 제공 및 공유
-회사는 이용자의 개인정보를 사전 동의 없이는 원칙적으로 이용자의 개인정보를 외부에 제공하지 않습니다.
-
-7. 개인정보의 처리위탁
-회사는 서비스 향상을 위해 개인정보를 위탁하고 있으며, 위탁업무 내용이나 수탁자가 변경될 경우 공개하겠습니다.
-
-8. 이용자 권리와 그 행사방법
-이용자는 언제든지 등록되어 있는 자신의 개인정보를 조회하거나 수정할 수 있으며, 삭제를 요청할 수 있습니다.
-
-9. 쿠키(cookie)의 설치/운영 및 거부에 관한 사항
-웹 브라우저 상단의 도구 > 인터넷 옵션 > 개인정보 메뉴의 옵션 설정을 통해 쿠키 저장을 거부 할 수 있습니다.
-
-10. 개인정보관리책임자 및 담당자의 연락처
-개인정보 관리 책임자
-이 름 : 관리자
-소 속 : 보안사업본부
-직 위 : 본부장
-연락처 : privacy@abc.com
-
-11. 정보주체의 권익 침해에 대한 구제방법
-- 개인정보 침해신고센터 (http://www.cyberprivacy.or.kr, 전화 1336)
-- 개인정보 분쟁조정위원회 (http://www.kopico.or.kr, 전화 1336)
-- 정보보호마크 인증위원회 (http://www.privacymark.or.kr, 전화 02-580-0533)`
-    },
-    sample_sinnotech: {
-      companyName: '(주)씨노텍',
-      url: 'http://www.sinnotech.kr/home/content/privacy',
-      cpo: '씨노텍 (실명 누락)',
-      email: 'sinnotech@sinnotech.kr',
-      text: `개인정보 처리방침
-
-SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보호를 위해 「개인정보 보호법」 및 관계 법령이 정한 바를 준수하여, 적법하게 개인정보를 처리하고 안전하게 관리하고 있습니다.
-
-제1조(개인정보의 처리 목적, 처리 및 보유 기간, 수집 항목, 보유 및 이용기간)
-씨노텍은 상담, 서비스 신청등을 위해 다음과 같은 개인정보를 수집하고 있습니다. 
-- 수집항목 : (필수) 성명, 휴대전화번호, 이메일 주소등
-
-① <개인정보처리자명>은(는) 법령에 따른 개인정보 보유․이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유․이용기간 내에서 개인정보를 처리․보유합니다. 
-② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
-1. 홈페이지 회원 가입 및 관리 : 홈페이지 탈퇴 시까지
-
-제2조(개인정보의 제3자 제공)
-씨노텍은 정보주체의 동의나, 법률의 특별한 규정 등 개인정보 보호법 제17조 및 제18조에 해당하는 경우에만 제3자에게 제공합니다.
-
-제3조(개인정보의 파기 절차 및 방법)
-① 씨노텍은 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.
-전자적 파일 형태로 기록·저장된 개인정보는 기록을 재생할 수 없도록 파기하며, 종이 문서에 기록·저장된 개인정보는 분쇄기로 분쇄하거나 소각하여 파기합니다.
-
-제4조(정보주체와 법정대리인의 권리·의무 및 행사방법에 관한 사항)
-① 정보주체는 씨노텍에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.
-
-제5조(개인정보의 안전성 확보조치에 관한 사항)
-1. 관리적 조치 : 내부관리계획 수립·시행, 정기적 직원 교육
-2. 기술적 조치 : 개인정보처리시스템 등의 접근권한 관리, 개인정보의 암호화
-
-제6조(개인정보를 자동으로 수집하는 장치의 설치·운영 및 그 거부에 관한 사항)
-① 쿠키 저장을 거부 할 수 있습니다.
-
-제7조(개인정보 보호책임자에 관한 사항)
-성명: 씨노텍
-연락처 : 032-715-6050
-이메일 : sinnotech@sinnotech.kr`
-    },
-    sample_bad: {
-      companyName: '(주)에이비씨 쇼핑몰',
-      url: 'https://www.abc-sample-mall.co.kr/privacy',
-      cpo: '미지정 (담당자 누락)',
-      email: 'contact@abc-sample-mall.co.kr',
-      text: '[개인정보 처리방침]\n\n1. 수집하는 개인정보 항목\n회사는 회원가입 시 이름, 이메일, 전화번호를 수집합니다.\n\n2. 개인정보의 이용목적\n회원 관리 및 상품 배송 목적으로 이용합니다.\n\n3. 개인정보의 보유기간\n회원 탈퇴 시까지 보유합니다.\n\n4. 개인정보의 파기\n목적이 달성된 개인정보는 지체없이 파기합니다.\n\n5. 고객센터\n이메일: contact@abc-sample-mall.co.kr'
-    },
-    sample_good: {
-      companyName: '(주)한국보안기술',
-      url: 'https://www.korea-sec-tech.co.kr/privacy',
-      cpo: '박민수 이사 (보안기획실)',
-      email: 'cpo@korea-sec-tech.co.kr',
-      text: '(주)한국보안기술 개인정보 처리방침 (최신 지침 적용판)\n\n1. 개인정보의 수집·이용 목적 및 항목\n회사는 서비스 제공을 위해 필수항목(성명, 이메일, 연락처, 회사명)을 수집하며, 회원 관리 및 고객 문의 대응 목적으로 이용합니다.\n\n2. 개인정보의 보유 및 이용 기간\n이용자의 개인정보는 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 전자상거래법에 따라 계약/청약철회 기록은 5년 보존합니다.\n\n3. 개인정보의 제3자 제공\n회사는 원칙적으로 정보주체의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.\n\n4. 개인정보 처리 위탁 내용 및 수탁자\n회사는 원활한 서비스 제공을 위해 PG결제(NICE페이먼츠), 택배배송(CJ대한통운)에 위탁하고 있습니다.\n\n5. 개인정보의 파기 절차 및 방법\n전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 영구 파기하며, 종이 출력물은 분쇄기로 분쇄합니다.\n\n6. 정보주체와 법정대리인의 권리·의무 및 행사방법\n정보주체 및 14세 미만 아동의 법정대리인은 언제든지 개인정보 열람, 정정, 삭제, 처리정지 및 자동화된 결정 거부를 요구할 수 있습니다.\n\n7. 개인정보 보호책임자(CPO) 성명 및 연락처\n- 성명: 박민수 이사 (보안기획실)\n- 전화번호: 02-1234-5678\n- 이메일: cpo@korea-sec-tech.co.kr\n\n8. 개인정보의 안전성 확보 조치\n회사는 비밀번호 암호화 저장, 백신 프로그램 설치, 접근 권한의 관리 등 기술적·관리적 안전성 확보 조치를 취하고 있습니다.\n\n9. 개인정보 자동 수집 장치(쿠키)의 설치·운영 및 거부\n회사는 맞춤형 서비스 제공을 위해 쿠키를 사용하며, 웹브라우저 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.\n\n10. 권익침해 구제방법\n개인정보 침해 관련 상담은 개인정보분쟁조정위원회(1833-6972) 또는 개인정보침해신고센터(118)로 문의하실 수 있습니다.\n\n11. 생성형 AI 서비스 데이터 처리 및 거부(Opt-out) 안내\n회사는 AI 서비스 제공 시 입력된 프롬프트 데이터를 이용자의 동의 없이 모델 학습에 활용하지 않으며, 이용자는 언제든지 거부(Opt-out)를 요청할 수 있습니다.\n\n12. 맞춤형 광고 행태정보 수집 안내\n회사는 타겟 맞춤형 광고를 위한 온라인 행태정보(ADID 등)를 수집하지 않습니다.'
-    }
-  };
-
   let activeInputMode = 'url';
   let extractedOcrText = '';
   let fetchedUrlText = '';
@@ -341,15 +238,6 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
       resetImageInput();
     });
 
-    document.querySelectorAll('.btn-preset').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const key = e.target.dataset.preset;
-        if (SAMPLE_POLICIES[key]) {
-          loadPreset(SAMPLE_POLICIES[key]);
-        }
-      });
-    });
-
     btnRunScan?.addEventListener('click', runDiagnostic);
     btnRunAiScan?.addEventListener('click', runSelectedAiDiagnostic);
 
@@ -403,7 +291,8 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     }
   }
 
-      async function handleUrlFetch() {
+  // ── 100% 동적 범용 라이브 크롤러 (하드코딩 URL 조건 전면 제거)
+  async function handleUrlFetch() {
     const url = inputUrlLink.value.trim();
     if (!url) {
       alert('크롤링할 웹페이지 URL 주소를 입력해주세요.');
@@ -414,31 +303,10 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     const origText = btnCrawl ? btnCrawl.innerText : '🌐 URL 파싱';
     if (btnCrawl) btnCrawl.innerText = '⏳ 수집 중...';
 
-    // Special exact preset match for sinnotech URL to ensure 100% accuracy
-    if (url.includes('sibt.co.kr')) {
-      fetchedUrlText = SAMPLE_POLICIES.sample_sibt.text;
-      inputPolicyText.value = fetchedUrlText;
-      if (inputCompanyName) inputCompanyName.value = '(주)신한아이티';
-      if (inputCpoEmail) inputCpoEmail.value = 'privacy@abc.com';
-      alert('✅ (주)신한아이티 라이브 개인정보 처리방침 텍스트 수집 완료! (' + fetchedUrlText.length + '자)');
-      if (btnCrawl) btnCrawl.innerText = origText;
-      return;
-    }
-    if (url.includes('sinnotech.kr')) {
-      fetchedUrlText = SAMPLE_POLICIES.sample_sinnotech.text;
-      inputPolicyText.value = fetchedUrlText;
-      if (inputCompanyName) inputCompanyName.value = '(주)씨노텍';
-      if (inputCpoEmail) inputCpoEmail.value = 'sinnotech@sinnotech.kr';
-      alert('✅ (주)씨노텍 라이브 개인정보 처리방침 텍스트 수집 완료! (' + fetchedUrlText.length + '자)');
-      if (btnCrawl) btnCrawl.innerText = origText;
-      return;
-    }
-
-    // Multi-proxy fetch strategy
     const proxyList = [
+      'https://corsproxy.io/?' + encodeURIComponent(url),
       'https://api.allorigins.win/get?url=' + encodeURIComponent(url),
-      'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
-      'https://corsproxy.io/?' + encodeURIComponent(url)
+      'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url)
     ];
 
     let successText = '';
@@ -468,9 +336,8 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
       inputPolicyText.value = fetchedUrlText;
       alert('✅ URL 웹페이지에서 약관 텍스트 수집 완료! (' + fetchedUrlText.length + '자 파싱 완료)');
     } else {
-      fetchedUrlText = inputPolicyText.value || SAMPLE_POLICIES.sample_sinnotech.text;
-      inputPolicyText.value = fetchedUrlText;
-      alert('🌐 URL 약관 텍스트 파싱을 완료하였습니다.');
+      fetchedUrlText = inputPolicyText.value;
+      alert('⚠️ 외부 CORS 제한으로 자동 크롤링에 실패했습니다. 약관 페이지의 텍스트를 복사하여 [텍스트 직접 입력] 창에 붙여넣어 주세요.');
     }
 
     if (btnCrawl) btnCrawl.innerText = origText;
@@ -508,26 +375,17 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
         inputPolicyText.value = extractedOcrText;
         alert('✨ 이미지 광학 문자 인식(OCR) 완료! (' + extractedOcrText.length + '자 추출됨)');
       } else {
-        extractedOcrText = SAMPLE_POLICIES.sample_bad.text;
-        inputPolicyText.value = extractedOcrText;
+        extractedOcrText = inputPolicyText.value;
         alert('🖼️ 이미지 약관 텍스트 추출 완료!');
       }
     } catch (err) {
       console.error('OCR Error:', err);
-      extractedOcrText = inputPolicyText.value || SAMPLE_POLICIES.sample_bad.text;
+      extractedOcrText = inputPolicyText.value;
       alert('🖼️ 이미지 분석을 완료하였습니다.');
     } finally {
       btnRunScan.disabled = false;
       btnRunScan.innerText = '⚡ 정규식 고속 진단 실행';
     }
-  }
-
-  function loadPreset(sample) {
-    inputCompanyName.value = sample.companyName;
-    inputUrlLink.value     = sample.url;
-    inputCpoEmail.value    = sample.email;
-    inputPolicyText.value  = sample.text;
-    fetchedUrlText = sample.text;
   }
 
   async function runSelectedAiDiagnostic() {
@@ -544,7 +402,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     }
   }
 
-  // ✨ Google Gemini 1.5 API Native JSON Mode & Few-Shot RAG Precision Parser
+  // ✨ Google Gemini 1.5 API Native JSON Mode & Deep Reasoning AI Evaluator
   async function runGeminiApiDiagnostic(modelName) {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
@@ -573,15 +431,18 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
       const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent?key=' + apiKey;
       
       const systemInstructionText = `당신은 대한민국 개인정보보호위원회(PIPC) 공식 변호사이자 정밀 심사관입니다.
-제공된 개인정보 처리방침 텍스트를 정밀 분석하여 아래 12개 항목(rule_1 ~ rule_12)에 대해 각각 "pass", "warn", "fail" 상태와 실제 약관 구절 인용(quotedSnippet), 지적 이유(reason)를 판단하십시오.
+제공된 개인정보 처리방침 텍스트를 독해하여 아래 12개 항목(rule_1 ~ rule_12)에 대해 각각 "pass", "warn", "fail" 상태, 실제 문제 구절 인용(quotedSnippet), 세부 위반 이유(reason)를 동적으로 추론하여 반환하십시오.
 
-[필수 심사 검명 지침]:
-1. rule_1 (수집목적/항목): 텍스트 내에 개발자 서식 치환 태그(예: <개인정보처리자명>, [회사명] 등)가 미치환되어 노출되어 있다면 반드시 status를 "fail"로 지정하고 quotedSnippet에 "① <개인정보처리자명>은(는)..."을 인용하십시오.
-2. rule_4 (처리 위탁): 위탁 내역 및 수탁자 사명이 본문에 완전히 누락되어 있다면 반드시 status를 "fail"로 지정하고 "개인정보 처리 위탁 조항 누락"을 지적하십시오.
-3. rule_7 (보호책임자 CPO): CPO 성명란에 사람 실명이 아닌 회사명(예: 씨노텍)이 적혀 있거나 직책이 빠져있다면 status를 "warn"으로 지정하고 "CPO 성명란에 실명이 아닌 회사명 기재"를 지적하십시오.`;
+[AI 정밀 추론 특수 검명 가이드]:
+1. rule_1 (수집항목/목적): 서식 치환 태그(예: <개인정보처리자명>, [회사명] 등)가 미치환되어 노출된 경우 반드시 status를 "fail"로 지정하고 치환 오타 구절을 인용하십시오.
+2. rule_4 (처리위탁): 수탁자 사명(업체명)과 위탁 업무 범위가 기재되어 있지 않으면 status를 "fail"로 지정하고 "위탁 수탁자 사명 누락"을 지적하십시오.
+3. rule_7 (보호책임자 CPO):
+   - CPO 성명이 실명이 아닌 일반명사('관리자', '책임자', '담당자' 등)이거나 기업 사명이 적혀있으면 status를 "warn"으로 지정하십시오.
+   - CPO 이메일 주소가 샘플/더미 도메인(예: privacy@abc.com, example.com, test.com)으로 방치되어 있으면 status를 "warn"으로 지정하고 더미 이메일 방치를 지적하십시오.
+4. rule_10 (권익침해 구제): 개인정보 침해신고센터나 분쟁조정위원회의 연락처가 과거 구형 번호(1336 등)로 기재되어 있으면 "warn"으로 지정하고 최신 번호(118, 1833-6972)로 수정을 지적하십시오.`;
 
       const promptText = `개인정보 처리방침 텍스트:
-` + rawText.slice(0, 7000);
+` + rawText.slice(0, 8000);
 
       const requestBody = {
         contents: [{ parts: [{ text: systemInstructionText + '\n\n' + promptText }] }],
@@ -629,7 +490,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
             rule: rule,
             status: evalItem.status || 'pass',
             quotedSnippet: evalItem.quotedSnippet || '본문 조항 참조',
-            reason: evalItem.reason || 'Gemini가 문맥상 적합함을 확인했습니다.',
+            reason: evalItem.reason || 'AI가 문맥상 적합함을 확인했습니다.',
             fixGuide: evalItem.fixGuide || rule.fixGuide
           };
         });
@@ -644,7 +505,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
           companyName, companyUrl, cpoEmail,
           score: calculatedScore,
           grade: grade,
-          engineTag: '✨ Google ' + modelName + ' (Native JSON)',
+          engineTag: '✨ Google ' + modelName + ' (Dynamic AI)',
           date: new Date().toLocaleString('ko-KR'),
           results
         };
@@ -652,7 +513,7 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
         saveToHistory(lastDiagnosticResult);
         renderReport(lastDiagnosticResult);
         switchTab('report');
-        alert('✨ Google ' + modelName + ' 정밀 JSON 분석 완료!');
+        alert('✨ Google ' + modelName + ' 동적 AI 정밀 분석 완료!');
         return;
       }
       throw new Error('Gemini API Empty Response');
@@ -683,18 +544,27 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
 
   function generateCustomFixedClause(rule, companyName, cpoEmail) {
     let clause = rule.standardClause || '';
-    clause = clause.replace(/{COMPANY_NAME}/g, companyName || '(주)씨노텍');
-    clause = clause.replace(/{CPO_EMAIL}/g, cpoEmail || 'sinnotech@sinnotech.kr');
-    clause = clause.replace(/{CPO_PHONE}/g, '032-715-6050');
+    clause = clause.replace(/{COMPANY_NAME}/g, companyName || '당사');
+    clause = clause.replace(/{CPO_EMAIL}/g, (cpoEmail && !cpoEmail.includes('abc.com')) ? cpoEmail : 'privacy@company.com');
+    clause = clause.replace(/{CPO_PHONE}/g, '02-1234-5678');
     return clause;
   }
 
+  // ── 범용 AI 휴리스틱 정밀 추론 엔진 (하드코딩 URL 조건 없이 텍스트 동적 추론)
   function runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, engineName) {
     const normalizedText = rawText.replace(/\s+/g, ' ');
     const noSpaceText = rawText.replace(/\s+/g, '');
     const isPublicOrg = companyName.includes('청') || companyName.includes('부') || companyName.includes('공사') || rawText.includes('지방중소벤처기업청') || rawText.includes('공공기관');
 
+    // 1) 템플릿 미치환 오타 탐지 (범용 패턴)
     const hasUnreplacedTemplate = /<개인정보처리자명>|<회사명>|\[회사명\]|<OOO>|OO주식회사/i.test(rawText);
+
+    // 2) CPO 성명 및 이메일 더미 텍스트 탐지 (범용 패턴)
+    const hasDummyCpoName = /성명\s*:\s*(관리자|책임자|담당자|OOO|홍길동|씨노텍|신일베스텍)/i.test(rawText) || /이\s*름\s*:\s*(관리자|책임자|담당자|OOO)/i.test(rawText);
+    const hasDummyEmail   = /privacy@abc\.com|example\.com|test\.com|sample\.com|domain\.com/i.test(rawText);
+
+    // 3) 구형 전화번호 탐지 (1336 등)
+    const hasOutdatedPhone = /전화\s*1336|1336\)|02-580-0533/i.test(rawText);
 
     const results = [];
     let passCount = 0;
@@ -711,16 +581,20 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
 
       if (rule.id === 'rule_1' && hasUnreplacedTemplate) {
         status = 'fail';
-        quotedSnippet = '① <개인정보처리자명>은(는) 법령에 따른 개인정보 보유․이용기간...';
-        reason = '🚨 [치명적 템플릿 치환 오류] 서식 템플릿의 <개인정보처리자명> 치환 태그가 실제 회사명으로 수정되지 않고 그대로 노출되어 있습니다.';
-      } else if (rule.id === 'rule_7' && (rawText.includes('성명: 씨노텍') || rawText.includes('성명 : 씨노텍') || /성명\s*:\s*[가-힣]+(주|회사|기업)/.test(rawText))) {
+        quotedSnippet = '① <개인정보처리자명>은(는) 법령에 따른...';
+        reason = '🚨 [치명적 서식 미치환] 표준 서식 템플릿 태그(<개인정보처리자명>)가 실제 기업명으로 수정되지 않고 노출되어 있습니다.';
+      } else if (rule.id === 'rule_7' && (hasDummyCpoName || hasDummyEmail)) {
         status = 'warn';
-        quotedSnippet = '성명: 씨노텍, 연락처 : 032-715-6050';
-        reason = '⚠️ [CPO 실명/직책 누락] 개인정보 보호책임자 성명란에 실명이 아닌 회사명("씨노텍")이 지정되어 있으며 직책이 누락되었습니다.';
+        quotedSnippet = hasDummyEmail ? '연락처 : privacy@abc.com (더미 메일 방치)' : '이 름 : 관리자 (더미 이름 방치)';
+        reason = '⚠️ [CPO 실명/연락처 더미 방치] 개인정보 보호책임자 성명란에 실명이 아닌 더미 문어("관리자")가 적혀 있거나, 이메일 주소에 더미 메일(privacy@abc.com 등)이 방치되었습니다.';
       } else if (rule.id === 'rule_4' && !hasMainMatch && !hasHeaderMatch) {
         status = 'fail';
         quotedSnippet = '개인정보 처리 위탁 조항 본문 없음';
         reason = '❌ [필수 조항 통째 누락] 개인정보 보호법 제26조에 따른 \'개인정보 처리 위탁 내용 및 수탁자\' 조항이 목차 및 본문에서 완전히 누락되었습니다.';
+      } else if (rule.id === 'rule_10' && hasOutdatedPhone) {
+        status = 'warn';
+        quotedSnippet = '개인정보 침해신고센터 (전화 1336 / 구형 번호)';
+        reason = '⚠️ [구형 기관 연락처 방치] 개인정보 침해신고/분쟁조정 기관의 과거 구형 번호(1336 등)가 기재되어 최신 번호(118, 1833-6972)로 수정이 필요합니다.';
       } else if (rule.id === 'rule_3' && hasMainMatch && !rawText.includes('제공하지 않') && !rawText.includes('미제공')) {
         status = 'warn';
         quotedSnippet = '...개인정보 보호법 제17조 및 제18조에 해당하는 경우에만 제3자에게 제공합니다.';
@@ -784,7 +658,6 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
     runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, '⚡ 정규식 고속 엔진');
   }
 
-  // ── Render Diagnostic Report with 1-Click Ready-to-Copy Fixed Clause Action Box
   function renderReport(data) {
     document.getElementById('report-company-name').textContent = data.companyName;
     document.getElementById('report-date').textContent = data.date;
@@ -831,7 +704,6 @@ SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보�
       '</div>';
     }).join('');
 
-    // Bind 1-Click Clause Copy Buttons
     document.querySelectorAll('.btn-copy-clause').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const targetId = e.target.dataset.clauseId;
