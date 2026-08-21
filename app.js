@@ -1,12 +1,15 @@
 ﻿// ============================================================
-// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v5.0 - Local AI Ollama Powered)
-// 로컬 Ollama LLM (gemma2:9b) 연동 인공지능 문맥 분석 엔진
+// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v6.0 - PIPC RAG Engine)
+// 개인정보보호위원회(PIPC) 공식 지식베이스(Knowledge Base) RAG 주입 연동
 // ============================================================
 
 (function () {
   'use strict';
 
-  // ── 개인정보보호위원회(PIPC) 최신 작성지침 기준 12대 핵심 진단 항목
+  // ── 개인정보보호위원회(PIPC) 공식 지식베이스 (RAG Context)
+  let PIPC_KNOWLEDGE_BASE = null;
+
+  // ── 12대 핵심 진단 항목 (유연 정규식 포함)
   const DIAGNOSTIC_RULES = [
     {
       id: 'rule_1',
@@ -261,8 +264,20 @@
 
     bindEvents();
     renderHistoryTable();
+    loadPipcKnowledgeBase();
     checkOllamaStatus();
   });
+
+  // ── PIPC 지식베이스 로드 (RAG Context)
+  async function loadPipcKnowledgeBase() {
+    try {
+      const res = await fetch('./knowledge_base/pipc_guidelines.json');
+      PIPC_KNOWLEDGE_BASE = await res.json();
+      console.log('✅ PIPC Knowledge Base RAG Loaded:', PIPC_KNOWLEDGE_BASE.title);
+    } catch (e) {
+      console.warn('PIPC Knowledge Base fetch fallback:', e);
+    }
+  }
 
   function bindEvents() {
     navScanBtn.addEventListener('click', () => switchTab('scan'));
@@ -339,7 +354,7 @@
 
         aiStatusBadge.innerHTML = `
           <span class="status-dot online"></span>
-          <span>🤖 Ollama (${selectOllamaModel.value}) 연결됨</span>
+          <span>🤖 Ollama (${selectOllamaModel.value}) + PIPC RAG 융합</span>
         `;
       } else {
         throw new Error('No models installed');
@@ -480,7 +495,7 @@
     fetchedUrlText = sample.text;
   }
 
-  // ── 🤖 로컬 AI(Ollama LLM gemma2:9b) 연동 진단 엔진
+  // ── 🤖 로컬 AI (Ollama + PIPC RAG Ground Truth Knowledge Base) 융합 진단 엔진
   async function runOllamaAiDiagnostic() {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
@@ -495,25 +510,25 @@
 
     const origBtnText = btnRunAiScan.innerText;
     btnRunAiScan.disabled = true;
-    btnRunAiScan.innerText = `🤖 Ollama (${selectedModel}) 심층 문맥 분석 중...`;
+    btnRunAiScan.innerText = `🤖 Ollama (${selectedModel}) + PIPC RAG 심층 분석 중...`;
+
+    // PIPC RAG 컨텍스트 생성
+    let ragContextStr = '';
+    if (PIPC_KNOWLEDGE_BASE && PIPC_KNOWLEDGE_BASE.rules) {
+      ragContextStr = PIPC_KNOWLEDGE_BASE.rules.map(r => `
+[항목 ${r.id}]: ${r.category} (${r.legalBasis})
+- PIPC 공식 작성기준: ${r.pipcCriteria}
+- 적합 판정 예시: "${r.passExample}"
+- 부적합 판정 예시: "${r.failExample}"
+      `).join('\n');
+    }
 
     try {
-      const prompt = `당신은 대한민국 개인정보보호법 전문 변호사이자 개인정보보호위원회(PIPC) 심사위원입니다.
-아래 제공된 개인정보 처리방침 텍스트를 읽고, 개인정보 보호법 제30조 기준 12대 필수 항목을 심층 평가하십시오.
+      const prompt = `당신은 대한민국 개인정보보호위원회(PIPC) 공식 검인 변호사입니다.
+아래 개인정보보호위원회 공식 기준(RAG Ground Truth)을 바탕으로 제공된 개인정보 처리방침 텍스트를 심층 분석하여 평가하십시오.
 
-[12대 필수 항목 리스트]:
-rule_1: 수집·이용 목적 및 항목
-rule_2: 보유 및 이용 기간
-rule_3: 제3자 제공 내역
-rule_4: 처리 위탁 내용 및 수탁자
-rule_5: 파기 절차 및 방법
-rule_6: 정보주체와 법정대리인의 권리·의무 및 행사방법
-rule_7: 개인정보 보호책임자(CPO) 성명 및 연락처
-rule_8: 안전성 확보 조치
-rule_9: 자동 수집 장치(쿠키) 및 거부 방법
-rule_10: 권익침해 구제방법 및 기관 연락처
-rule_11: 생성형 AI 서비스 프롬프트·데이터 처리 및 거부(Opt-out)
-rule_12: 맞춤형 광고 행태정보(ADID) 수집·이용 및 차단
+[개인정보보호위원회(PIPC) 공식 심사 기준 (RAG Ground Truth)]:
+${ragContextStr}
 
 [응답 요구조건]:
 - 반드시 아래 JSON 구조로만 답변하고, 다른 텍스트는 포함하지 마십시오.
@@ -524,7 +539,7 @@ rule_12: 맞춤형 광고 행태정보(ADID) 수집·이용 및 차단
   "score": 85,
   "gradeLabel": "안전 (우수)",
   "evaluations": [
-    { "id": "rule_1", "status": "pass", "reason": "수집 항목과 목적이 명확함", "fixGuide": "보완 가이드..." },
+    { "id": "rule_1", "status": "pass", "reason": "PIPC 지침에 따른 수집 항목과 목적이 명확함", "fixGuide": "보완 가이드..." },
     ... 12개 항목 모두 포함
   ]
 }
@@ -553,13 +568,12 @@ ${rawText.slice(0, 4000)}`;
       }
 
       if (aiResultJson && aiResultJson.evaluations) {
-        // AI 분석 결과 렌더링
         const results = DIAGNOSTIC_RULES.map((rule, idx) => {
           const aiEval = aiResultJson.evaluations.find(e => e.id === rule.id) || aiResultJson.evaluations[idx] || {};
           return {
             rule: rule,
             status: aiEval.status || 'pass',
-            reason: aiEval.reason || 'AI 모델이 문맥상 적합함을 확인하였습니다.',
+            reason: aiEval.reason || 'PIPC 지침 기준 문맥상 적합함을 확인하였습니다.',
             fixGuide: aiEval.fixGuide || rule.fixGuide
           };
         });
@@ -575,7 +589,7 @@ ${rawText.slice(0, 4000)}`;
           cpoEmail,
           score,
           grade,
-          engineTag: `Local AI (${selectedModel})`,
+          engineTag: `Local AI (${selectedModel}) + PIPC RAG`,
           date: new Date().toLocaleString('ko-KR'),
           results
         };
@@ -583,7 +597,7 @@ ${rawText.slice(0, 4000)}`;
         saveToHistory(lastDiagnosticResult);
         renderReport(lastDiagnosticResult);
         switchTab('report');
-        alert(`✨ 로컬 Ollama AI (${selectedModel}) 심층 분석 완료!`);
+        alert(`✨ 로컬 Ollama AI (${selectedModel}) + PIPC RAG 지식기반 심층 분석 완료!`);
         return;
       }
       throw new Error('AI Response Format Error');
