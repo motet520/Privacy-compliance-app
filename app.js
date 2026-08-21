@@ -291,7 +291,7 @@
     }
   }
 
-  // ── 100% 동적 범용 라이브 크롤러 (하드코딩 URL 조건 전면 제거)
+    // ── 100% 동적 범용 라이브 크롤러 (로컬 Python 백엔드 API + 멀티 프록시 백업)
   async function handleUrlFetch() {
     const url = inputUrlLink.value.trim();
     if (!url) {
@@ -303,31 +303,47 @@
     const origText = btnCrawl ? btnCrawl.innerText : '🌐 URL 파싱';
     if (btnCrawl) btnCrawl.innerText = '⏳ 수집 중...';
 
-    const proxyList = [
-      'https://corsproxy.io/?' + encodeURIComponent(url),
-      'https://api.allorigins.win/get?url=' + encodeURIComponent(url),
-      'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url)
-    ];
-
     let successText = '';
-    for (const pUrl of proxyList) {
-      try {
-        const res = await fetch(pUrl);
-        const data = await res.json().catch(() => null) || await res.text().catch(() => '');
-        const html = typeof data === 'object' && data.contents ? data.contents : (typeof data === 'string' ? data : '');
-        
-        if (html && html.length > 200) {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-          doc.querySelectorAll('script, style, nav, footer, header').forEach(el => el.remove());
-          const bodyText = doc.body.innerText || doc.body.textContent || '';
-          if (bodyText.length > 100) {
-            successText = bodyText.trim();
-            break;
+
+    // 1순위: 로컬 Python 서버 크롤러 백엔드 API 호출 (CORS 제약 100% 없음)
+    try {
+      const localApiUrl = '/api/crawl?url=' + encodeURIComponent(url);
+      const res = await fetch(localApiUrl);
+      const data = await res.json();
+      if (data.status === 'success' && data.text && data.text.length > 50) {
+        successText = data.text;
+      }
+    } catch (e) {
+      console.warn('Local Python crawler backend not available, falling back to public CORS proxies:', e);
+    }
+
+    // 2순위: 퍼블릭 CORS 프록시 서비스 순차 백업
+    if (!successText) {
+      const proxyList = [
+        'https://corsproxy.io/?' + encodeURIComponent(url),
+        'https://api.allorigins.win/get?url=' + encodeURIComponent(url),
+        'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url)
+      ];
+
+      for (const pUrl of proxyList) {
+        try {
+          const res = await fetch(pUrl);
+          const data = await res.json().catch(() => null) || await res.text().catch(() => '');
+          const html = typeof data === 'object' && data.contents ? data.contents : (typeof data === 'string' ? data : '');
+          
+          if (html && html.length > 200) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            doc.querySelectorAll('script, style, nav, footer, header').forEach(el => el.remove());
+            const bodyText = doc.body.innerText || doc.body.textContent || '';
+            if (bodyText.length > 100) {
+              successText = bodyText.trim();
+              break;
+            }
           }
+        } catch (e) {
+          console.warn('Proxy fetch attempt failed:', pUrl, e);
         }
-      } catch (e) {
-        console.warn('Proxy fetch attempt failed:', pUrl, e);
       }
     }
 
@@ -337,7 +353,7 @@
       alert('✅ URL 웹페이지에서 약관 텍스트 수집 완료! (' + fetchedUrlText.length + '자 파싱 완료)');
     } else {
       fetchedUrlText = inputPolicyText.value;
-      alert('⚠️ 외부 CORS 제한으로 자동 크롤링에 실패했습니다. 약관 페이지의 텍스트를 복사하여 [텍스트 직접 입력] 창에 붙여넣어 주세요.');
+      alert('⚠️ 외부 보안 정책(CORS)으로 자동 크롤링에 실패하였습니다. 해당 웹사이트 약관의 텍스트를 복사하여 [텍스트 직접 입력] 탭에 붙여넣어 주세요.');
     }
 
     if (btnCrawl) btnCrawl.innerText = origText;
