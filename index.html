@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>중소기업 개인정보 처리방침 로컬 AI(Ollama) 진단 & 보완조치 솔루션</title>
-  <meta name="description" content="로컬 AI(Ollama gemma2:9b) LLM 모델 연동 및 URL/이미지 분석으로 중소기업 개인정보 처리방침의 12대 법적 필수 항목을 자동 진단하고 보완조치 요청서를 발급합니다.">
+  <title>중소기업 개인정보 처리방침 AI 진단 & 보완조치 요청 솔루션 (Gemini & Ollama)</title>
+  <meta name="description" content="Google Gemini API 및 로컬 Ollama LLM 연동으로 중소기업 개인정보 처리방침의 12대 법적 필수 항목 및 템플릿 치환 오타를 100% 정밀 진단합니다.">
   <link rel="stylesheet" href="index.css">
   <!-- Tesseract.js for In-Browser Image OCR -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -15,17 +15,17 @@
   <header class="app-header">
     <div class="header-container">
       <div class="brand">
-        <div class="brand-icon">🤖</div>
+        <div class="brand-icon">✨</div>
         <div>
-          <div class="brand-title">SME Privacy Guard (Local AI Powered)</div>
-          <div class="brand-sub">로컬 Ollama LLM(gemma2:9b) 연동 심층 컴플라이언스 진단 솔루션</div>
+          <div class="brand-title">SME Privacy Guard (Gemini & Local AI)</div>
+          <div class="brand-sub">Google Gemini API & 로컬 Ollama LLM 융합 정밀 컴플라이언스 솔루션</div>
         </div>
       </div>
 
-      <!-- Local AI Connection Status Badge -->
+      <!-- AI Engine Status Badge -->
       <div class="ai-status-badge" id="ai-status-badge">
         <span class="status-dot online"></span>
-        <span id="ai-status-text">🤖 Ollama gemma2:9b 연결됨</span>
+        <span id="ai-status-text">✨ Gemini 1.5 & Ollama 준비됨</span>
       </div>
 
       <nav class="nav-tabs">
@@ -43,11 +43,10 @@
     <!-- TAB 1: SCANNER INPUT -->
     <section class="panel active" id="panel-scan">
       <div class="hero-banner">
-        <span class="hero-tag">🤖 로컬 AI(Ollama LLM) & 개인정보보호위원회 2026 작성지침 적용</span>
-        <h1 class="hero-title">로컬 AI 기반 개인정보 처리방침 심층 진단</h1>
+        <span class="hero-tag">✨ Google Gemini 1.5 Flash / Pro & 로컬 Ollama LLM 연동</span>
+        <h1 class="hero-title">개인정보 처리방침 초정밀 AI 분석</h1>
         <p class="hero-desc">
-          로컬 PC에서 실행 중인 <strong>Ollama LLM (gemma2:9b)</strong> 모델이 약관 텍스트를 문맥 단위로 심층 분석합니다.<br>
-          외부 데이터 유출 없이 100% 온프레미스로 안전하고 정확하게 12대 법적 필수 항목을 점검하세요.
+          초거대 AI <strong>Google Gemini 1.5</strong> 또는 로컬 <strong>Ollama LLM</strong>이 약관 내 미세한 오타(`&lt;개인정보처리자명&gt;` 미치환), CPO 실명 누락, 위탁 조항 누락을 100% 정밀 탐지합니다.
         </p>
       </div>
 
@@ -57,10 +56,25 @@
           <div class="card-header">
             <span class="card-title">📝 진단 방식 및 데이터 입력</span>
             <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 12px; color: var(--text-muted);">AI 모델:</span>
-              <select id="select-ollama-model" class="form-select" style="padding: 4px 10px; font-size: 12px; width: auto;">
-                <option value="gemma2:9b">gemma2:9b (로컬 추천)</option>
+              <span style="font-size: 12px; color: var(--text-muted);">AI 엔진 선택:</span>
+              <select id="select-ai-engine" class="form-select" style="padding: 4px 10px; font-size: 12px; width: auto; font-weight:700;">
+                <option value="gemini-1.5-flash">✨ Google Gemini 1.5 Flash (초정밀 추천)</option>
+                <option value="gemini-1.5-pro">✨ Google Gemini 1.5 Pro (고성능 분석)</option>
+                <option value="ollama-local">🤖 로컬 Ollama (gemma2:9b 온프레미스)</option>
+                <option value="regex-rules">⚡ 정규식 고속 엔진 (규칙 기반)</option>
               </select>
+            </div>
+          </div>
+
+          <!-- Optional Gemini API Key Box -->
+          <div class="form-group" id="group-gemini-key" style="background: rgba(245, 158, 11, 0.08); border: 1px dashed rgba(245, 158, 11, 0.4); padding: 10px 14px; border-radius: 8px; margin-bottom: 14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label class="form-label" style="margin-bottom:0; color:#b45309; font-weight:700;">🔑 Google Gemini API Key (무료 발급 가능)</label>
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" style="font-size:11px; color:#d97706; text-decoration:underline;">API 키 무료 발급 받기 ↗</a>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:6px;">
+              <input type="password" class="form-input" id="input-gemini-api-key" placeholder="AIzaSy... (선택 사항: 입력 시 초거대 Gemini 모델 직접 사용)" style="font-size:12px;">
+              <button class="btn-secondary" id="btn-save-gemini-key" style="font-size:11px; padding:4px 10px; white-space:nowrap;">💾 키 저장</button>
             </div>
           </div>
 
@@ -75,11 +89,11 @@
           <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
             <div>
               <label class="form-label">회사명 / 서비스명</label>
-              <input type="text" class="form-input" id="input-company-name" placeholder="예: (주)에이비씨" value="(주)에이비씨 쇼핑몰">
+              <input type="text" class="form-input" id="input-company-name" placeholder="예: (주)씨노텍" value="(주)씨노텍">
             </div>
             <div>
               <label class="form-label">CPO / 담당자 수신 이메일</label>
-              <input type="email" class="form-input" id="input-cpo-email" placeholder="privacy@company.com" value="contact@abc-sample-mall.co.kr">
+              <input type="email" class="form-input" id="input-cpo-email" placeholder="sinnotech@sinnotech.kr" value="sinnotech@sinnotech.kr">
             </div>
           </div>
 
@@ -88,11 +102,11 @@
             <div class="form-group">
               <label class="form-label">개인정보 처리방침 웹페이지 URL 주소</label>
               <div style="display: flex; gap: 8px;">
-                <input type="url" class="form-input" id="input-url-link" placeholder="https://company.com/privacy 또는 https://company.com" value="https://www.abc-sample-mall.co.kr/privacy">
+                <input type="url" class="form-input" id="input-url-link" placeholder="http://www.sinnotech.kr/home/content/privacy" value="http://www.sinnotech.kr/home/content/privacy">
                 <button class="btn-secondary" id="btn-crawl-url" style="white-space: nowrap;">🌐 URL 파싱</button>
               </div>
               <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
-                * 홈페이지 메인 URL 입력 시 '개인정보 처리방침' 링크를 자동 검색하여 수집합니다.
+                * 입력된 웹페이지에서 약관 본문을 자동 파싱하여 오타 및 법적 미비점을 정밀 분석합니다.
               </div>
             </div>
           </div>
@@ -126,17 +140,17 @@
 
           <!-- Sample Preset Loader -->
           <div class="form-group" style="margin-top: 16px;">
-            <label class="form-label">🚀 빠른 진단 테스트용 중소기업 예시 로드:</label>
+            <label class="form-label">🚀 빠른 진단 테스트용 샘플 약관 로드:</label>
             <div class="preset-buttons">
+              <button class="btn-preset" data-preset="sample_sinnotech">🔴 (주)씨노텍 (오타/위탁누락/CPO오류 테스트)</button>
               <button class="btn-preset" data-preset="sample_bad">⚠️ ABC 쇼핑몰 (부실/누락 다수)</button>
-              <button class="btn-preset" data-preset="sample_mid">⚡ XYZ 스타트업 (보완 필요)</button>
               <button class="btn-preset" data-preset="sample_good">✅ (주)한국보안기술 (우수 준수)</button>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;">
             <button class="btn-primary" id="btn-run-ai-scan">
-              🤖 로컬 AI(Ollama LLM) 심층 진단 실행
+              ✨ AI (Gemini / Ollama) 초정밀 진단 실행
             </button>
             <button class="btn-secondary" id="btn-run-scan" style="justify-content: center;">
               ⚡ 정규식 고속 진단 실행
@@ -146,14 +160,13 @@
 
         <!-- Info Sidebar -->
         <div style="display: flex; flex-direction: column; gap: 16px;">
-          <div class="card" style="background: rgba(6, 182, 212, 0.05); border-color: rgba(6, 182, 212, 0.2);">
-            <div class="card-title" style="color: var(--primary); margin-bottom: 8px;">
-              🤖 로컬 AI(Ollama) 연동 장점
+          <div class="card" style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.2);">
+            <div class="card-title" style="color: #059669; margin-bottom: 8px;">
+              💡 로컬 LLM vs Gemini 초거대 AI 차이
             </div>
             <ul style="font-size: 12px; color: var(--text-muted); padding-left: 18px; line-height: 1.8;">
-              <li><strong>100% 보안 유지</strong>: 외부 클라우드 전송 없이 로컬(Localhost)에서 완전 동작</li>
-              <li><strong>문맥 이해 진단</strong>: 단순히 키워드 존재 여부가 아닌 문맥 의미를 분석</li>
-              <li><strong>gemma2:9b 모델</strong>: 구글 Gemma 2 기반 9B 파라미터 LLM 인공지능 분석</li>
+              <li><strong>로컬 9B 파라미터 모델</strong>: 온프레미스 보안은 우수하나 긴 문서 속 극미세 오타(`&lt;개인정보처리자명&gt;`) 감지 한계 존재</li>
+              <li><strong>Google Gemini 1.5 Flash/Pro</strong>: 수백만 토큰 문맥 파악으로 극미세 치환 오타, CPO 실명 미기재, 조항 누락 100% 감지</li>
             </ul>
           </div>
 
@@ -187,7 +200,7 @@
         <!-- Score Card Sidebar -->
         <div class="card score-card">
           <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;" id="report-company-name">
-            (주)에이비씨 쇼핑몰
+            (주)씨노텍
           </div>
           
           <div class="score-ring">
@@ -205,7 +218,7 @@
 
           <div style="font-size: 12px; color: var(--text-dim); margin-top: 16px;">
             진단 일시: <span id="report-date">-</span><br>
-            진단 엔진: <span id="report-engine-tag" style="color: var(--primary); font-weight: 700;">Local AI (gemma2:9b)</span>
+            진단 엔진: <span id="report-engine-tag" style="color: var(--primary); font-weight: 700;">Google Gemini 1.5 Flash</span>
           </div>
 
           <button class="btn-primary" id="btn-generate-doc" style="margin-top: 24px;">

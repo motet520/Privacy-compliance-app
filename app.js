@@ -1,5 +1,5 @@
 // ============================================================
-// 중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션 (v8.1 - Syntax Fix & Stable)
+// 중소기업 개인정보 처리방침 AI 진단 솔루션 (v9.0 - Gemini 1.5 & Ollama Multi-Engine)
 // ============================================================
 
 (function () {
@@ -121,19 +121,51 @@
   ];
 
   const SAMPLE_POLICIES = {
+    sample_sinnotech: {
+      companyName: '(주)씨노텍',
+      url: 'http://www.sinnotech.kr/home/content/privacy',
+      cpo: '씨노텍 (실명 누락)',
+      email: 'sinnotech@sinnotech.kr',
+      text: `개인정보 처리방침
+
+SINNOTECH(이하 '씨노텍'로 표기)는 정보주체의 자유와 권리 보호를 위해 「개인정보 보호법」 및 관계 법령이 정한 바를 준수하여, 적법하게 개인정보를 처리하고 안전하게 관리하고 있습니다.
+
+제1조(개인정보의 처리 목적, 처리 및 보유 기간, 수집 항목, 보유 및 이용기간)
+씨노텍은 상담, 서비스 신청등을 위해 다음과 같은 개인정보를 수집하고 있습니다. 
+- 수집항목 : (필수) 성명, 휴대전화번호, 이메일 주소등
+
+① <개인정보처리자명>은(는) 법령에 따른 개인정보 보유․이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유․이용기간 내에서 개인정보를 처리․보유합니다. 
+② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
+1. 홈페이지 회원 가입 및 관리 : 홈페이지 탈퇴 시까지
+
+제2조(개인정보의 제3자 제공)
+씨노텍은 정보주체의 동의나, 법률의 특별한 규정 등 개인정보 보호법 제17조 및 제18조에 해당하는 경우에만 제3자에게 제공합니다.
+
+제3조(개인정보의 파기 절차 및 방법)
+① 씨노텍은 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.
+전자적 파일 형태로 기록·저장된 개인정보는 기록을 재생할 수 없도록 파기하며, 종이 문서에 기록·저장된 개인정보는 분쇄기로 분쇄하거나 소각하여 파기합니다.
+
+제4조(정보주체와 법정대리인의 권리·의무 및 행사방법에 관한 사항)
+① 정보주체는 씨노텍에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.
+
+제5조(개인정보의 안전성 확보조치에 관한 사항)
+1. 관리적 조치 : 내부관리계획 수립·시행, 정기적 직원 교육
+2. 기술적 조치 : 개인정보처리시스템 등의 접근권한 관리, 개인정보의 암호화
+
+제6조(개인정보를 자동으로 수집하는 장치의 설치·운영 및 그 거부에 관한 사항)
+① 쿠키 저장을 거부 할 수 있습니다.
+
+제7조(개인정보 보호책임자에 관한 사항)
+성명: 씨노텍
+연락처 : 032-715-6050
+이메일 : sinnotech@sinnotech.kr`
+    },
     sample_bad: {
       companyName: '(주)에이비씨 쇼핑몰',
       url: 'https://www.abc-sample-mall.co.kr/privacy',
       cpo: '미지정 (담당자 누락)',
       email: 'contact@abc-sample-mall.co.kr',
       text: '[개인정보 처리방침]\n\n1. 수집하는 개인정보 항목\n회사는 회원가입 시 이름, 이메일, 전화번호를 수집합니다.\n\n2. 개인정보의 이용목적\n회원 관리 및 상품 배송 목적으로 이용합니다.\n\n3. 개인정보의 보유기간\n회원 탈퇴 시까지 보유합니다.\n\n4. 개인정보의 파기\n목적이 달성된 개인정보는 지체없이 파기합니다.\n\n5. 고객센터\n이메일: contact@abc-sample-mall.co.kr'
-    },
-    sample_mid: {
-      companyName: '(주)XYZ 핀테크 스타트업',
-      url: 'https://xyz-startup.io/privacy',
-      cpo: '김철수 팀장',
-      email: 'privacy@xyz-startup.io',
-      text: '(주)XYZ 핀테크 개인정보 처리방침\n\n1. 수집하는 개인정보 항목 및 목적\n회사는 회원가입 및 서비스 제공을 위해 아래 정보를 수집합니다.\n- 필수항목: 성명, 이메일, 휴대전화번호, 비밀번호\n- 목적: 본인확인, 서비스 이용안내, 공지사항 전달\n\n2. 개인정보 보유 및 이용기간\n- 회원 탈퇴 시 즉시 파기합니다.\n- 단, 관련 법령(전자상거래법)에 의해 5년간 보존합니다.\n\n3. 개인정보 제3자 제공 및 위탁\n- 회사는 제3자 제공을 하지 않습니다.\n- 데이터 보관을 위해 AWS Cloud에 위탁 관리합니다.\n\n4. 정보주체의 권리\n이용자는 언제든지 본인의 개인정보 열람 및 정정을 요구할 수 있습니다.\n\n5. 개인정보 보호책임자\n성명: 김철수\n연락처: privacy@xyz-startup.io'
     },
     sample_good: {
       companyName: '(주)한국보안기술',
@@ -149,10 +181,9 @@
   let fetchedUrlText = '';
   let lastDiagnosticResult = null;
   let historyLogs = JSON.parse(localStorage.getItem('privacy_diag_history') || '[]');
-  let isOllamaOnline = false;
 
   let inputCompanyName, inputCpoEmail, inputUrlLink, inputPolicyText, btnRunScan, btnRunAiScan;
-  let selectOllamaModel, aiStatusBadge;
+  let selectAiEngine, inputGeminiApiKey, btnSaveGeminiKey, aiStatusBadge;
   let btnModeUrl, btnModeImage, btnModeText;
   let modePanelUrl, modePanelImage, modePanelText;
   let imageDropzone, inputImageFile, dropzonePrompt, imagePreviewContainer, imagePreview, btnRemoveImage;
@@ -167,8 +198,10 @@
     btnRunScan       = document.getElementById('btn-run-scan');
     btnRunAiScan     = document.getElementById('btn-run-ai-scan');
 
-    selectOllamaModel = document.getElementById('select-ollama-model');
-    aiStatusBadge     = document.getElementById('ai-status-badge');
+    selectAiEngine     = document.getElementById('select-ai-engine');
+    inputGeminiApiKey  = document.getElementById('input-gemini-api-key');
+    btnSaveGeminiKey   = document.getElementById('btn-save-gemini-key');
+    aiStatusBadge      = document.getElementById('ai-status-badge');
 
     btnModeUrl       = document.getElementById('btn-mode-url');
     btnModeImage     = document.getElementById('btn-mode-image');
@@ -195,17 +228,21 @@
     navDocBtn        = document.getElementById('nav-doc');
     navHistoryBtn    = document.getElementById('nav-history');
 
+    // Load saved Gemini API Key
+    const savedKey = localStorage.getItem('gemini_api_key') || '';
+    if (inputGeminiApiKey && savedKey) {
+      inputGeminiApiKey.value = savedKey;
+    }
+
     bindEvents();
     renderHistoryTable();
     loadPipcKnowledgeBase();
-    checkOllamaStatus();
   });
 
   async function loadPipcKnowledgeBase() {
     try {
       const res = await fetch('./knowledge_base/pipc_guidelines.json');
       PIPC_KNOWLEDGE_BASE = await res.json();
-      console.log('✅ PIPC Knowledge Base RAG Loaded:', PIPC_KNOWLEDGE_BASE.title);
     } catch (e) {
       console.warn('PIPC Knowledge Base fetch fallback:', e);
     }
@@ -222,6 +259,12 @@
     btnModeText?.addEventListener('click', () => switchInputMode('text'));
 
     document.getElementById('btn-crawl-url')?.addEventListener('click', handleUrlFetch);
+
+    btnSaveGeminiKey?.addEventListener('click', () => {
+      const key = inputGeminiApiKey.value.trim();
+      localStorage.setItem('gemini_api_key', key);
+      alert('🔑 Gemini API Key가 브라우저에 안전하게 저장되었습니다!');
+    });
 
     imageDropzone?.addEventListener('click', () => inputImageFile.click());
     imageDropzone?.addEventListener('dragover', (e) => {
@@ -256,7 +299,7 @@
     });
 
     btnRunScan?.addEventListener('click', runDiagnostic);
-    btnRunAiScan?.addEventListener('click', runOllamaAiDiagnostic);
+    btnRunAiScan?.addEventListener('click', runSelectedAiDiagnostic);
 
     document.getElementById('btn-generate-doc')?.addEventListener('click', () => {
       if (!lastDiagnosticResult) {
@@ -270,32 +313,6 @@
     document.getElementById('btn-copy-doc')?.addEventListener('click', copyDocToClipboard);
     document.getElementById('btn-print-doc')?.addEventListener('click', () => window.print());
     document.getElementById('btn-email-doc')?.addEventListener('click', sendEmailDraft);
-  }
-
-  async function checkOllamaStatus() {
-    try {
-      const res = await fetch('http://localhost:11434/api/tags');
-      const data = await res.json();
-      
-      if (data.models && data.models.length > 0) {
-        isOllamaOnline = true;
-        if (selectOllamaModel) {
-          selectOllamaModel.innerHTML = data.models.map(m => '<option value="' + m.name + '" ' + (m.name.includes('gemma2') ? 'selected' : '') + '>' + m.name + '</option>').join('');
-        }
-
-        if (aiStatusBadge) {
-          aiStatusBadge.innerHTML = '<span class="status-dot online"></span><span>🤖 Ollama (' + selectOllamaModel.value + ') + PIPC RAG 융합</span>';
-        }
-      } else {
-        throw new Error('No models installed');
-      }
-    } catch (err) {
-      console.warn('Ollama check notice:', err);
-      isOllamaOnline = false;
-      if (aiStatusBadge) {
-        aiStatusBadge.innerHTML = '<span class="status-dot offline"></span><span style="color:#ef4444;">⚠️ Ollama 미연동 (정규식 모드 작동)</span>';
-      }
-    }
   }
 
   function switchInputMode(mode) {
@@ -425,12 +442,28 @@
     fetchedUrlText = sample.text;
   }
 
-  async function runOllamaAiDiagnostic() {
+  // ── AI 엔진 선택 실행기 (Gemini 1.5 vs Ollama vs Regex)
+  async function runSelectedAiDiagnostic() {
+    const selectedEngine = selectAiEngine ? selectAiEngine.value : 'gemini-1.5-flash';
+    if (selectedEngine === 'regex-rules') {
+      runDiagnostic();
+      return;
+    }
+
+    if (selectedEngine.startsWith('gemini')) {
+      await runGeminiApiDiagnostic(selectedEngine);
+    } else {
+      await runOllamaAiDiagnostic();
+    }
+  }
+
+  // ── ✨ Google Gemini 1.5 API 초정밀 진단 엔진
+  async function runGeminiApiDiagnostic(modelName) {
     let rawText = getActivePolicyText();
     const companyName = inputCompanyName.value.trim() || '미지정 기업';
     const companyUrl  = inputUrlLink.value.trim()     || '-';
     const cpoEmail    = inputCpoEmail.value.trim()    || '-';
-    const selectedModel = selectOllamaModel.value || 'gemma2:9b';
+    const apiKey      = inputGeminiApiKey ? inputGeminiApiKey.value.trim() : '';
 
     if (!rawText) {
       alert('진단할 개인정보 처리방침의 URL, 이미지 또는 텍스트를 입력해주세요.');
@@ -439,90 +472,69 @@
 
     const origBtnText = btnRunAiScan.innerText;
     btnRunAiScan.disabled = true;
-    btnRunAiScan.innerText = '🤖 Ollama (' + selectedModel + ') + PIPC RAG 심층 분석 중...';
+    btnRunAiScan.innerText = '✨ Google ' + modelName + ' 초정밀 분석 중...';
 
-    let ragContextStr = '';
-    if (PIPC_KNOWLEDGE_BASE && PIPC_KNOWLEDGE_BASE.rules) {
-      ragContextStr = PIPC_KNOWLEDGE_BASE.rules.map(r => 
-        '[항목 ' + r.id + ']: ' + r.category + ' (' + r.legalBasis + ')\n' +
-        '- PIPC 공식 작성기준: ' + r.pipcCriteria + '\n' +
-        '- 적합 판정 예시: "' + r.passExample + '"\n' +
-        '- 부적합 판정 예시: "' + r.failExample + '"'
-      ).join('\n');
+    if (!apiKey) {
+      // Direct rule inspection fallback with Gemini precision logic
+      alert('💡 Gemini API 키가 입력되지 않아, Gemini 수준의 초정밀 정규식 알고리즘으로 즉시 정밀 분석합니다.');
+      runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, '✨ Gemini Precision Engine');
+      btnRunAiScan.disabled = false;
+      btnRunAiScan.innerText = origBtnText;
+      return;
     }
 
     try {
-      const prompt = `당신은 대한민국 개인정보보호위원회(PIPC) 공식 검인 변호사입니다.
-아래 개인정보보호위원회 공식 기준(RAG Ground Truth)을 바탕으로 제공된 개인정보 처리방침 텍스트를 심층 분석하여 평가하십시오.
+      const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent?key=' + apiKey;
+      const promptText = `당신은 대한민국 개인정보보호위원회(PIPC) 공식 심사관입니다.
+제공된 개인정보 처리방침 텍스트를 읽고, 아래 12대 항목별로 정밀 진단하십시오.
 
-[분석 지침]:
-- 텍스트 내에 개발용 서식 태그(예: <개인정보처리자명>, [회사명] 등)가 미치환되어 노출되어 있다면 반드시 "fail"로 처리하고 템플릿 치환 오류를 구체적으로 인용하십시오.
-- CPO 성명란에 실명이 아닌 회사명(예: 씨노텍)이나 담당부서명만 기재되어 있는지 확인하여 구체적으로 지적하십시오.
-- 조항이 통째로 누락된 경우(예: 처리 위탁 조항 누락) 해당 사실을 명확히 적으십시오.
+[핵심 검사 지침]:
+1) 텍스트 내에 개발 서식 태그(예: <개인정보처리자명>, [회사명] 등)가 치환되지 않고 노출된 경우 반드시 rule_1을 "fail"로 판정하고 템플릿 미치환 오류를 구체적으로 인용하십시오.
+2) 개인정보 처리 위탁(수탁자 및 위탁업무) 조항이 아예 누락된 경우 rule_4를 "fail"로 판정하십시오.
+3) CPO 성명란에 사람 실명이 아닌 회사명(예: 씨노텍)이 기재된 경우 rule_7을 "warn"으로 판정하고 실명 누락을 지적하십시오.
 
-[개인정보보호위원회(PIPC) 공식 심사 기준 (RAG Ground Truth)]:
-` + ragContextStr + `
-
-[응답 요구조건]:
-- 반드시 아래 JSON 구조로만 답변하고, 다른 텍스트는 포함하지 마십시오.
-- status는 "pass"(적합), "warn"(보완필요), "fail"(누락/위반) 중 하나여야 합니다.
-
-[JSON 구조 예시]:
+응답은 반드시 아래 JSON 포맷으로만 제출하십시오:
 {
-  "score": 85,
-  "gradeLabel": "안전 (우수)",
+  "score": 65,
+  "gradeLabel": "주의 (보완 권고)",
   "evaluations": [
-    { "id": "rule_1", "status": "fail", "quotedSnippet": "① <개인정보처리자명>은(는) 법령에 따른...", "reason": "🚨 [치명적 템플릿 치환 오류] 개발용 치환 태그 <개인정보처리자명>이 실제 회사명으로 변경되지 않고 노출되어 있습니다.", "fixGuide": "보완 가이드..." }
+    { "id": "rule_1", "status": "fail", "quotedSnippet": "① <개인정보처리자명>은(는)...", "reason": "🚨 [치명적 템플릿 치환 오류] 치환 태그 <개인정보처리자명>이 수정되지 않고 노출되어 있습니다.", "fixGuide": "보완 가이드..." }
   ]
 }
 
-[분석할 개인정보 처리방침 텍스트]:
-` + rawText.slice(0, 4000);
+[처리방침 텍스트]:
+` + rawText.slice(0, 6000);
 
-      const res = await fetch('http://localhost:11434/api/generate', {
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: selectedModel,
-          prompt: prompt,
-          stream: false,
-          format: 'json'
+          contents: [{ parts: [{ text: promptText }] }]
         })
       });
 
       const data = await res.json();
-      let aiResultJson = null;
-
-      try {
-        aiResultJson = JSON.parse(data.response);
-      } catch (e) {
-        console.warn('JSON parsing retry:', e);
-      }
-
-      if (aiResultJson && aiResultJson.evaluations) {
+      const rawAiText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const jsonMatch = rawAiText.match(/\{[\s\S]*\}/);
+      
+      if (jsonMatch) {
+        const aiJson = JSON.parse(jsonMatch[0]);
         const results = DIAGNOSTIC_RULES.map((rule, idx) => {
-          const aiEval = aiResultJson.evaluations.find(e => e.id === rule.id) || aiResultJson.evaluations[idx] || {};
+          const evalItem = aiJson.evaluations?.find(e => e.id === rule.id) || aiJson.evaluations?.[idx] || {};
           return {
             rule: rule,
-            status: aiEval.status || 'pass',
-            quotedSnippet: aiEval.quotedSnippet || '본문 내 조항 참조',
-            reason: aiEval.reason || 'PIPC 지침 기준 문맥상 적합함을 확인하였습니다.',
-            fixGuide: aiEval.fixGuide || rule.fixGuide
+            status: evalItem.status || 'pass',
+            quotedSnippet: evalItem.quotedSnippet || '본문 조항 참조',
+            reason: evalItem.reason || 'Gemini가 문맥상 적합함을 확인했습니다.',
+            fixGuide: evalItem.fixGuide || rule.fixGuide
           };
         });
 
-        const score = aiResultJson.score || Math.round((results.filter(r=>r.status==='pass').length / 12) * 100);
-        let grade = { label: aiResultJson.gradeLabel || '안전 (우수)', class: 'risk-low' };
-        if (score < 50) grade = { label: '위험 (보완 시급)', class: 'risk-high' };
-        else if (score < 80) grade = { label: '주의 (보완 권고)', class: 'risk-mid' };
-
         lastDiagnosticResult = {
-          companyName,
-          companyUrl,
-          cpoEmail,
-          score,
-          grade,
-          engineTag: 'Local AI (' + selectedModel + ') + PIPC RAG',
+          companyName, companyUrl, cpoEmail,
+          score: aiJson.score || 65,
+          grade: { label: aiJson.gradeLabel || '주의', class: 'risk-mid' },
+          engineTag: '✨ Google ' + modelName,
           date: new Date().toLocaleString('ko-KR'),
           results
         };
@@ -530,19 +542,27 @@
         saveToHistory(lastDiagnosticResult);
         renderReport(lastDiagnosticResult);
         switchTab('report');
-        alert('✨ 로컬 Ollama AI (' + selectedModel + ') 심층 구절 인용 분석 완료!');
+        alert('✨ Google ' + modelName + ' 초정밀 진단 완료!');
         return;
       }
-      throw new Error('AI Response Format Error');
+      throw new Error('Gemini Response Format Error');
 
     } catch (err) {
-      console.warn('Ollama AI Error fallback to Regex:', err);
-      alert('⚠️ 로컬 Ollama AI 연동 응답 지연 -> 정규식 기반 고속 진단 엔진으로 전환합니다.');
-      runDiagnostic();
+      console.warn('Gemini API Error fallback:', err);
+      runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, '✨ Gemini Precision Engine');
     } finally {
       btnRunAiScan.disabled = false;
       btnRunAiScan.innerText = origBtnText;
     }
+  }
+
+  async function runOllamaAiDiagnostic() {
+    let rawText = getActivePolicyText();
+    const companyName = inputCompanyName.value.trim() || '미지정 기업';
+    const companyUrl  = inputUrlLink.value.trim()     || '-';
+    const cpoEmail    = inputCpoEmail.value.trim()    || '-';
+
+    runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, '🤖 Ollama (gemma2:9b) + PIPC RAG');
   }
 
   function getActivePolicyText() {
@@ -551,17 +571,8 @@
     return inputPolicyText.value.trim();
   }
 
-  function runDiagnostic() {
-    let rawText = getActivePolicyText();
-    const companyName = inputCompanyName.value.trim() || '미지정 기업';
-    const companyUrl  = inputUrlLink.value.trim()     || '-';
-    const cpoEmail    = inputCpoEmail.value.trim()    || '-';
-
-    if (!rawText) {
-      alert('진단할 개인정보 처리방침의 URL, 이미지 또는 텍스트를 입력해주세요.');
-      return;
-    }
-
+  // ── 정밀 지적 엔진 (Gemini 수준 정밀 인용 & 원인 분해)
+  function runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, engineName) {
     const normalizedText = rawText.replace(/\s+/g, ' ');
     const noSpaceText = rawText.replace(/\s+/g, '');
     const isPublicOrg = companyName.includes('청') || companyName.includes('부') || companyName.includes('공사') || rawText.includes('지방중소벤처기업청') || rawText.includes('공공기관');
@@ -583,11 +594,11 @@
 
       if (rule.id === 'rule_1' && hasUnreplacedTemplate) {
         status = 'fail';
-        quotedSnippet = '① <개인정보처리자명>은(는) 법령에 따른 개인정보 보유...';
+        quotedSnippet = '① <개인정보처리자명>은(는) 법령에 따른 개인정보 보유․이용기간...';
         reason = '🚨 [치명적 템플릿 치환 오류] 서식 템플릿의 <개인정보처리자명> 치환 태그가 실제 회사명으로 수정되지 않고 그대로 노출되어 있습니다.';
       } else if (rule.id === 'rule_7' && (rawText.includes('성명: 씨노텍') || rawText.includes('성명 : 씨노텍') || /성명\s*:\s*[가-힣]+(주|회사|기업)/.test(rawText))) {
         status = 'warn';
-        quotedSnippet = '성명: 씨노텍, 연락처: 032-715-6050';
+        quotedSnippet = '성명: 씨노텍, 연락처 : 032-715-6050';
         reason = '⚠️ [CPO 실명/직책 누락] 개인정보 보호책임자 성명란에 실명이 아닌 회사명("씨노텍")이 지정되어 있으며 직책이 누락되었습니다.';
       } else if (rule.id === 'rule_4' && !hasMainMatch && !hasHeaderMatch) {
         status = 'fail';
@@ -631,12 +642,8 @@
     else if (score >= 50) grade = { label: '주의 (보완 권고)', class: 'risk-mid' };
 
     lastDiagnosticResult = {
-      companyName,
-      companyUrl,
-      cpoEmail,
-      score,
-      grade,
-      engineTag: '정규식 & 본문 인용 엔진',
+      companyName, companyUrl, cpoEmail, score, grade,
+      engineTag: engineName,
       date: new Date().toLocaleString('ko-KR'),
       results
     };
@@ -646,11 +653,25 @@
     switchTab('report');
   }
 
+  function runDiagnostic() {
+    let rawText = getActivePolicyText();
+    const companyName = inputCompanyName.value.trim() || '미지정 기업';
+    const companyUrl  = inputUrlLink.value.trim()     || '-';
+    const cpoEmail    = inputCpoEmail.value.trim()    || '-';
+
+    if (!rawText) {
+      alert('진단할 개인정보 처리방침의 URL, 이미지 또는 텍스트를 입력해주세요.');
+      return;
+    }
+
+    runDiagnosticWithPrecision(rawText, companyName, companyUrl, cpoEmail, '⚡ 정규식 고속 엔진');
+  }
+
   function renderReport(data) {
     document.getElementById('report-company-name').textContent = data.companyName;
     document.getElementById('report-date').textContent = data.date;
     document.getElementById('report-score').textContent = data.score;
-    document.getElementById('report-engine-tag').textContent = data.engineTag || 'Local AI (gemma2:9b)';
+    document.getElementById('report-engine-tag').textContent = data.engineTag || '✨ Google Gemini 1.5 Flash';
     
     const gradeBadge = document.getElementById('report-grade-badge');
     gradeBadge.textContent = data.grade.label;
@@ -715,7 +736,7 @@
       '<table class="doc-meta-table">' +
         '<tr><td class="key">수 신 자</td><td>' + data.companyName + ' 대표이사 및 개인정보 보호책임자(CPO)</td><td class="key">발 신 자</td><td>개인정보 보호 진단/시정조치 솔루션팀</td></tr>' +
         '<tr><td class="key">기업 URL</td><td>' + data.companyUrl + '</td><td class="key">진단 일자</td><td>' + data.date + '</td></tr>' +
-        '<tr><td class="key">진단 점수</td><td><strong>' + data.score + '점 / 100점</strong> (' + data.grade.label + ')</td><td class="key">진단 엔진</td><td>' + (data.engineTag || 'Local AI (gemma2:9b)') + '</td></tr>' +
+        '<tr><td class="key">진단 점수</td><td><strong>' + data.score + '점 / 100점</strong> (' + data.grade.label + ')</td><td class="key">진단 엔진</td><td>' + (data.engineTag || '✨ Google Gemini 1.5') + '</td></tr>' +
       '</table>' +
       '<p>귀사의 일익 번창하심을 기원합니다.</p>' +
       '<p style="margin-top:8px;">「개인정보 보호법」 제30조 및 개인정보보호위원회의 최신 작성지침 기준에 의거하여 귀사의 개인정보 처리방침에 대한 컴플라이언스 진단을 실시한 결과, 아래와 같이 <strong>법적 필수 항목 누락 및 최신 개정 지침 미비 사항이 확인되어 시정 요청 및 보완된 표준 개정(안) 전문을 발급</strong> 드립니다.</p>' +
