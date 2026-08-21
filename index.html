@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>중소기업 개인정보 처리방침 진단 & 보완조치 요청 솔루션</title>
+  <meta name="description" content="중소기업 개인정보 처리방침의 10대 법적 필수 항목을 자동 진단하고, 위반 및 누락 조항에 대한 공식 보완조치 요청서 및 개선 권고안을 즉시 생성합니다.">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">🛡️</div>
+        <div>
+          <div class="brand-title">SME Privacy Policy Guard</div>
+          <div class="brand-sub">중소기업 개인정보 처리방침 진단 & 보완조치 솔루션</div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-tab active" id="nav-scan">🔍 처리방침 진단</button>
+        <button class="nav-tab" id="nav-report">📊 진단 결과 리포트</button>
+        <button class="nav-tab" id="nav-doc">📄 보완조치 요청서</button>
+        <button class="nav-tab" id="nav-history">📜 진단 이력</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-container">
+
+    <!-- TAB 1: SCANNER INPUT -->
+    <section class="panel active" id="panel-scan">
+      <div class="hero-banner">
+        <span class="hero-tag">개인정보 보호법 제30조 가이드라인 적용</span>
+        <h1 class="hero-title">중소기업 개인정보 처리방침 컴플라이언스 진단</h1>
+        <p class="hero-desc">
+          기업의 개인정보 처리방침을 입력하시면 10대 법적 필수 항목 누락 여부를 정밀 분석하고,<br>
+          담당자 수신용 공식 보완조치 요청서 및 시정 권고안을 자동으로 발급합니다.
+        </p>
+      </div>
+
+      <div class="scanner-grid">
+        <!-- Input Form -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📝 진단 대상 기업 정보 및 방침 입력</span>
+          </div>
+
+          <!-- Sample Preset Loader -->
+          <div class="form-group">
+            <label class="form-label">🚀 빠른 테스트용 중소기업 예시 로드:</label>
+            <div class="preset-buttons">
+              <button class="btn-preset" data-preset="sample_bad">⚠️ ABC 쇼핑몰 (부실/누락 다수)</button>
+              <button class="btn-preset" data-preset="sample_mid">⚡ XYZ 스타트업 (보완 필요)</button>
+              <button class="btn-preset" data-preset="sample_good">✅ (주)한국보안기술 (우수 준수)</button>
+            </div>
+          </div>
+
+          <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="form-label">회사명 / 서비스명</label>
+              <input type="text" class="form-input" id="input-company-name" placeholder="예: (주)에이비씨" value="(주)에이비씨 쇼핑몰">
+            </div>
+            <div>
+              <label class="form-label">홈페이지 URL</label>
+              <input type="text" class="form-input" id="input-company-url" placeholder="https://..." value="https://www.abc-sample-mall.co.kr">
+            </div>
+            <div>
+              <label class="form-label">CPO / 담당자 이메일</label>
+              <input type="email" class="form-input" id="input-cpo-email" placeholder="privacy@company.com" value="contact@abc-sample-mall.co.kr">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">개인정보 처리방침 전문 텍스트 (Paste Text)</label>
+            <textarea class="form-textarea" id="input-policy-text" placeholder="홈페이지 하단의 개인정보 처리방침 전문을 여기에 복사하여 붙여넣으세요..."></textarea>
+          </div>
+
+          <button class="btn-primary" id="btn-run-scan">
+            ⚡ 10대 법적 필수 항목 자동 진단 시작
+          </button>
+        </div>
+
+        <!-- Info Sidebar -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="card">
+            <div class="card-title" style="margin-bottom: 12px; color: var(--primary);">
+              🛡️ 10대 핵심 진단 항목
+            </div>
+            <ul style="font-size: 12px; color: var(--text-muted); padding-left: 18px; line-height: 1.8;">
+              <li>수집·이용 목적 및 처리 항목</li>
+              <li>보유 및 이용 기간 / 파기 시점</li>
+              <li>제3자 제공 내역 및 별도 동의</li>
+              <li>처리 위탁 내용 및 수탁업체 명시</li>
+              <li>전자적/서면 파기 절차 및 방법</li>
+              <li>정보주체 권리·의무 및 행사 방법</li>
+              <li>개인정보 보호책임자(CPO) 연락처</li>
+              <li>안전성 확보 조치 기술 대책</li>
+              <li>쿠키(Cookie) 자동 수집 및 거부</li>
+              <li>권익침해 구제 기관 및 연락처</li>
+            </ul>
+          </div>
+
+          <div class="card" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2);">
+            <div class="card-title" style="color: var(--danger); margin-bottom: 8px;">
+              ⚠️ 법적 미비 시 리스크
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+              개인정보 보호법 제30조 미준수 시 동법 제75조에 의하여 <strong>1천만 원 이하의 과태료</strong>가 부과될 수 있습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TAB 2: DIAGNOSTIC REPORT -->
+    <section class="panel" id="panel-report">
+      <div class="report-grid">
+        <!-- Score Card Sidebar -->
+        <div class="card score-card">
+          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;" id="report-company-name">
+            (주)에이비씨 쇼핑몰
+          </div>
+          
+          <div class="score-ring">
+            <svg class="score-circle-svg" viewBox="0 0 160 160">
+              <circle class="score-circle-bg" cx="80" cy="80" r="70"></circle>
+              <circle class="score-circle-val" id="score-circle-val" cx="80" cy="80" r="70"></circle>
+            </svg>
+            <div class="score-inner">
+              <div class="score-number" id="report-score">0</div>
+              <div class="score-label">100점 만점</div>
+            </div>
+          </div>
+
+          <div id="report-grade-badge" class="grade-badge risk-high">진단 대기</div>
+
+          <div style="font-size: 12px; color: var(--text-dim); margin-top: 16px;">
+            진단 일시: <span id="report-date">-</span>
+          </div>
+
+          <button class="btn-primary" id="btn-generate-doc" style="margin-top: 24px;">
+            📄 보완조치 요청 공문서 발급
+          </button>
+        </div>
+
+        <!-- Checklist Results -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🔍 10대 필수 항목별 진단 및 개선 권고 상세</span>
+          </div>
+          <div class="compliance-checklist" id="report-checklist">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TAB 3: FORMAL REMEDIATION REQUEST DOCUMENT -->
+    <section class="panel" id="panel-request-doc">
+      <div class="action-toolbar">
+        <button class="btn-secondary" id="btn-copy-doc">📋 텍스트 복사</button>
+        <button class="btn-secondary" id="btn-print-doc">🖨️ 인쇄 / PDF 저장</button>
+        <button class="btn-primary" id="btn-email-doc" style="width: auto;">📧 담당자에게 이메일 발송</button>
+      </div>
+
+      <div class="doc-paper" id="doc-paper-content">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+
+    <!-- TAB 4: HISTORY LOGS -->
+    <section class="panel" id="panel-history">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📜 최근 진단 및 보완 조치 이력 목록</span>
+        </div>
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>진단 대상 기업명</th>
+              <th>홈페이지 URL</th>
+              <th>컴플라이언스 점수</th>
+              <th>위험 등급</th>
+              <th>진단 일자</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
